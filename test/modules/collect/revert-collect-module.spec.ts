@@ -34,7 +34,7 @@ makeSuiteCleanRoom('Revert Collect Module', function () {
     ).to.not.be.reverted;
     await expect(
       healthHub.post({
-        profileId: FIRST_PROFILE_ID,
+        H_profileId: FIRST_PROFILE_ID,
         contentURI: MOCK_URI,
         collectModule: revertCollectModule.address,
         collectModuleInitData: [],
@@ -52,7 +52,7 @@ makeSuiteCleanRoom('Revert Collect Module', function () {
     });
 
     it('UserTwo should mirror the original post, fail to collect from their mirror without following the original profile', async function () {
-      const secondProfileId = FIRST_PROFILE_ID + 1;
+      const secondH_ProfileId = FIRST_PROFILE_ID + 1;
       await expect(
         healthHub.connect(userTwo).createProfile({
           to: userTwoAddress,
@@ -65,8 +65,8 @@ makeSuiteCleanRoom('Revert Collect Module', function () {
       ).to.not.be.reverted;
       await expect(
         healthHub.connect(userTwo).mirror({
-          profileId: secondProfileId,
-          profileIdPointed: FIRST_PROFILE_ID,
+          H_profileId: secondH_ProfileId,
+          H_profileIdPointed: FIRST_PROFILE_ID,
           pubIdPointed: 1,
           referenceModuleData: [],
           referenceModule: ZERO_ADDRESS,
@@ -74,7 +74,7 @@ makeSuiteCleanRoom('Revert Collect Module', function () {
         })
       ).to.not.be.reverted;
 
-      await expect(healthHub.connect(userTwo).collect(secondProfileId, 1, [])).to.be.revertedWith(
+      await expect(healthHub.connect(userTwo).collect(secondH_ProfileId, 1, [])).to.be.revertedWith(
         ERRORS.COLLECT_NOT_ALLOWED
       );
     });
@@ -87,7 +87,7 @@ makeSuiteCleanRoom('Revert Collect Module', function () {
     });
 
     it('UserTwo should mirror the original post, fail to collect from their mirror while following the original profile', async function () {
-      const secondProfileId = FIRST_PROFILE_ID + 1;
+      const secondH_ProfileId = FIRST_PROFILE_ID + 1;
       await expect(
         healthHub.connect(userTwo).createProfile({
           to: userTwoAddress,
@@ -100,8 +100,8 @@ makeSuiteCleanRoom('Revert Collect Module', function () {
       ).to.not.be.reverted;
       await expect(
         healthHub.connect(userTwo).mirror({
-          profileId: secondProfileId,
-          profileIdPointed: FIRST_PROFILE_ID,
+          H_profileId: secondH_ProfileId,
+          H_profileIdPointed: FIRST_PROFILE_ID,
           pubIdPointed: 1,
           referenceModuleData: [],
           referenceModule: ZERO_ADDRESS,
@@ -110,7 +110,7 @@ makeSuiteCleanRoom('Revert Collect Module', function () {
       ).to.not.be.reverted;
 
       await expect(healthHub.connect(userTwo).follow([FIRST_PROFILE_ID], [[]])).to.not.be.reverted;
-      await expect(healthHub.connect(userTwo).collect(secondProfileId, 1, [])).to.be.revertedWith(
+      await expect(healthHub.connect(userTwo).collect(secondH_ProfileId, 1, [])).to.be.revertedWith(
         ERRORS.COLLECT_NOT_ALLOWED
       );
     });

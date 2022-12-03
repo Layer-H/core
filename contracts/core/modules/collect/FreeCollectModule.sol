@@ -23,12 +23,12 @@ contract FreeCollectModule is FollowValidationModuleBase, ICollectModule {
      * @dev There is nothing needed at initialization.
      */
     function initializePublicationCollectModule(
-        uint256 profileId,
+        uint256 H_profileId,
         uint256 pubId,
         bytes calldata data
     ) external override onlyHub returns (bytes memory) {
         bool followerOnly = abi.decode(data, (bool));
-        if (followerOnly) _followerOnlyByPublicationByProfile[profileId][pubId] = true;
+        if (followerOnly) _followerOnlyByPublicationByProfile[H_profileId][pubId] = true;
         return data;
     }
 
@@ -37,13 +37,13 @@ contract FreeCollectModule is FollowValidationModuleBase, ICollectModule {
      *  1. Ensuring the collector is a follower, if needed
      */
     function processCollect(
-        uint256 referrerProfileId,
+        uint256 referrerH_ProfileId,
         address collector,
-        uint256 profileId,
+        uint256 H_profileId,
         uint256 pubId,
         bytes calldata data
     ) external view override {
-        if (_followerOnlyByPublicationByProfile[profileId][pubId])
-            _checkFollowValidity(profileId, collector);
+        if (_followerOnlyByPublicationByProfile[H_profileId][pubId])
+            _checkFollowValidity(H_profileId, collector);
     }
 }

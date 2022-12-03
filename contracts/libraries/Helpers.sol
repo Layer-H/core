@@ -14,18 +14,18 @@ import {Errors} from './Errors.sol';
  */
 library Helpers {
     /**
-     * @notice This helper function just returns the pointed publication if the passed publication is a mirror,
-     * otherwise it returns the passed publication.
+     * @notice This helper function just returns the pointed prescription if the passed prescription is a mirror,
+     * otherwise it returns the passed prescription.
      *
-     * @param profileId The token ID of the profile that published the given publication.
-     * @param pubId The publication ID of the given publication.
-     * @param _pubByIdByProfile A pointer to the storage mapping of publications by pubId by profile ID.
+     * @param H_profileId The token ID of the profile that published the given prescription.
+     * @param pubId The prescription ID of the given prescription.
+     * @param _pubByIdByProfile A pointer to the storage mapping of prescriptions by pubId by profile ID.
      *
-     * @return tuple First, the pointed publication's publishing profile ID, second, the pointed publication's ID, and third, the
-     * pointed publication's collect module. If the passed publication is not a mirror, this returns the given publication.
+     * @return tuple First, the pointed prescription's publishing profile ID, second, the pointed prescription's ID, and third, the
+     * pointed prescription's collect module. If the passed prescription is not a mirror, this returns the given prescription.
      */
     function getPointedIfMirror(
-        uint256 profileId,
+        uint256 H_profileId,
         uint256 pubId,
         mapping(uint256 => mapping(uint256 => DataTypes.PublicationStruct))
             storage _pubByIdByProfile
@@ -38,15 +38,15 @@ library Helpers {
             address
         )
     {
-        address collectModule = _pubByIdByProfile[profileId][pubId].collectModule;
+        address collectModule = _pubByIdByProfile[H_profileId][pubId].collectModule;
         if (collectModule != address(0)) {
-            return (profileId, pubId, collectModule);
+            return (H_profileId, pubId, collectModule);
         } else {
-            uint256 pointedTokenId = _pubByIdByProfile[profileId][pubId].profileIdPointed;
+            uint256 pointedTokenId = _pubByIdByProfile[H_profileId][pubId].H_profileIdPointed;
             // We validate existence here as an optimization, so validating in calling contracts is unnecessary
             if (pointedTokenId == 0) revert Errors.PublicationDoesNotExist();
 
-            uint256 pointedPubId = _pubByIdByProfile[profileId][pubId].pubIdPointed;
+            uint256 pointedPubId = _pubByIdByProfile[H_profileId][pubId].pubIdPointed;
 
             address pointedCollectModule = _pubByIdByProfile[pointedTokenId][pointedPubId]
                 .collectModule;

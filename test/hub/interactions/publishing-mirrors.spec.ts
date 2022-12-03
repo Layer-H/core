@@ -49,7 +49,7 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
 
       await expect(
         healthHub.post({
-          profileId: FIRST_PROFILE_ID,
+          H_profileId: FIRST_PROFILE_ID,
           contentURI: MOCK_URI,
           collectModule: freeCollectModule.address,
           collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -63,8 +63,8 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
       it('UserTwo should fail to publish a mirror to a profile owned by User', async function () {
         await expect(
           healthHub.connect(userTwo).mirror({
-            profileId: FIRST_PROFILE_ID,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             referenceModuleData: [],
             referenceModule: ZERO_ADDRESS,
@@ -76,8 +76,8 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
       it('User should fail to mirror with an unwhitelisted reference module', async function () {
         await expect(
           healthHub.mirror({
-            profileId: FIRST_PROFILE_ID,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             referenceModuleData: [],
             referenceModule: userAddress,
@@ -89,8 +89,8 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
       it('User should fail to mirror with invalid reference module data format', async function () {
         await expect(
           healthHub.mirror({
-            profileId: FIRST_PROFILE_ID,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             referenceModuleData: [],
             referenceModule: mockReferenceModule.address,
@@ -99,11 +99,11 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
         ).to.be.revertedWith(ERRORS.NO_REASON_ABI_DECODE);
       });
 
-      it('User should fail to mirror a publication that does not exist', async function () {
+      it('User should fail to mirror a prescription that does not exist', async function () {
         await expect(
           healthHub.mirror({
-            profileId: FIRST_PROFILE_ID,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 2,
             referenceModuleData: [],
             referenceModule: ZERO_ADDRESS,
@@ -114,7 +114,7 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
     });
 
     context('Scenarios', function () {
-      it('Should return the expected token IDs when mirroring publications', async function () {
+      it('Should return the expected token IDs when mirroring prescriptions', async function () {
         await expect(
           healthHub.createProfile({
             to: testWallet.address,
@@ -139,8 +139,8 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
         expect(
           await mirrorReturningTokenId({
             vars: {
-              profileId: FIRST_PROFILE_ID,
-              profileIdPointed: FIRST_PROFILE_ID,
+              H_profileId: FIRST_PROFILE_ID,
+              H_profileIdPointed: FIRST_PROFILE_ID,
               pubIdPointed: 1,
               referenceModuleData: [],
               referenceModule: ZERO_ADDRESS,
@@ -153,8 +153,8 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
           await mirrorReturningTokenId({
             sender: userTwo,
             vars: {
-              profileId: FIRST_PROFILE_ID + 2,
-              profileIdPointed: FIRST_PROFILE_ID,
+              H_profileId: FIRST_PROFILE_ID + 2,
+              H_profileIdPointed: FIRST_PROFILE_ID,
               pubIdPointed: 2,
               referenceModuleData: [],
               referenceModule: ZERO_ADDRESS,
@@ -180,8 +180,8 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
         expect(
           await mirrorReturningTokenId({
             vars: {
-              profileId: FIRST_PROFILE_ID + 1,
-              profileIdPointed: FIRST_PROFILE_ID,
+              H_profileId: FIRST_PROFILE_ID + 1,
+              H_profileIdPointed: FIRST_PROFILE_ID,
               pubIdPointed: '1',
               referenceModuleData: [],
               referenceModule: ZERO_ADDRESS,
@@ -199,8 +199,8 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
         expect(
           await mirrorReturningTokenId({
             vars: {
-              profileId: FIRST_PROFILE_ID,
-              profileIdPointed: FIRST_PROFILE_ID + 1,
+              H_profileId: FIRST_PROFILE_ID,
+              H_profileIdPointed: FIRST_PROFILE_ID + 1,
               pubIdPointed: 1,
               referenceModuleData: [],
               referenceModule: ZERO_ADDRESS,
@@ -213,8 +213,8 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
       it('User should create a mirror with empty reference module and reference module data, fetched mirror data should be accurate', async function () {
         await expect(
           healthHub.mirror({
-            profileId: FIRST_PROFILE_ID,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             referenceModuleData: [],
             referenceModule: ZERO_ADDRESS,
@@ -223,7 +223,7 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
         ).to.not.be.reverted;
 
         const pub = await healthHub.getPub(FIRST_PROFILE_ID, 2);
-        expect(pub.profileIdPointed).to.eq(FIRST_PROFILE_ID);
+        expect(pub.H_profileIdPointed).to.eq(FIRST_PROFILE_ID);
         expect(pub.pubIdPointed).to.eq(1);
         expect(pub.contentURI).to.eq('');
         expect(pub.collectModule).to.eq(ZERO_ADDRESS);
@@ -234,8 +234,8 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
       it('User should mirror a mirror with empty reference module and reference module data, fetched mirror data should be accurate and point to the original post', async function () {
         await expect(
           healthHub.mirror({
-            profileId: FIRST_PROFILE_ID,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             referenceModuleData: [],
             referenceModule: ZERO_ADDRESS,
@@ -245,8 +245,8 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
 
         await expect(
           healthHub.mirror({
-            profileId: FIRST_PROFILE_ID,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 2,
             referenceModuleData: [],
             referenceModule: ZERO_ADDRESS,
@@ -255,7 +255,7 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
         ).to.not.be.reverted;
 
         const pub = await healthHub.getPub(FIRST_PROFILE_ID, 3);
-        expect(pub.profileIdPointed).to.eq(FIRST_PROFILE_ID);
+        expect(pub.H_profileIdPointed).to.eq(FIRST_PROFILE_ID);
         expect(pub.pubIdPointed).to.eq(1);
         expect(pub.contentURI).to.eq('');
         expect(pub.collectModule).to.eq(ZERO_ADDRESS);
@@ -267,7 +267,7 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
         const data = abiCoder.encode(['uint256'], ['1']);
         await expect(
           healthHub.post({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: freeCollectModule.address,
             collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -278,8 +278,8 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
 
         await expect(
           healthHub.mirror({
-            profileId: FIRST_PROFILE_ID,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 2,
             referenceModuleData: [],
             referenceModule: ZERO_ADDRESS,
@@ -309,7 +309,7 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
 
       await expect(
         healthHub.connect(testWallet).post({
-          profileId: FIRST_PROFILE_ID,
+          H_profileId: FIRST_PROFILE_ID,
           contentURI: MOCK_URI,
           collectModule: freeCollectModule.address,
           collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -338,8 +338,8 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
 
         await expect(
           healthHub.mirrorWithSig({
-            profileId: FIRST_PROFILE_ID,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: '1',
             referenceModuleData: [],
             referenceModule: ZERO_ADDRESS,
@@ -372,8 +372,8 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
 
         await expect(
           healthHub.mirrorWithSig({
-            profileId: FIRST_PROFILE_ID,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: '1',
             referenceModuleData: [],
             referenceModule: ZERO_ADDRESS,
@@ -406,8 +406,8 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
 
         await expect(
           healthHub.mirrorWithSig({
-            profileId: FIRST_PROFILE_ID,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: '1',
             referenceModuleData: [],
             referenceModule: ZERO_ADDRESS,
@@ -439,8 +439,8 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
 
         await expect(
           healthHub.mirrorWithSig({
-            profileId: FIRST_PROFILE_ID,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: '1',
             referenceModuleData: [],
             referenceModule: userAddress,
@@ -455,7 +455,7 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
         ).to.be.revertedWith(ERRORS.REFERENCE_MODULE_NOT_WHITELISTED);
       });
 
-      it('TestWallet should fail to mirror a publication with sig that does not exist yet', async function () {
+      it('TestWallet should fail to mirror a prescription with sig that does not exist yet', async function () {
         const nonce = (await healthHub.sigNonces(testWallet.address)).toNumber();
         const referenceModuleInitData = [];
         const referenceModuleData = [];
@@ -473,8 +473,8 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
 
         await expect(
           healthHub.mirrorWithSig({
-            profileId: FIRST_PROFILE_ID,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: '2',
             referenceModuleData: [],
             referenceModule: ZERO_ADDRESS,
@@ -509,8 +509,8 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
 
         await expect(
           healthHub.mirrorWithSig({
-            profileId: FIRST_PROFILE_ID,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: '1',
             referenceModuleData: [],
             referenceModule: ZERO_ADDRESS,
@@ -545,8 +545,8 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
 
         await expect(
           healthHub.mirrorWithSig({
-            profileId: FIRST_PROFILE_ID,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: '1',
             referenceModuleData: [],
             referenceModule: ZERO_ADDRESS,
@@ -561,7 +561,7 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
         ).to.not.be.reverted;
 
         const pub = await healthHub.getPub(FIRST_PROFILE_ID, 2);
-        expect(pub.profileIdPointed).to.eq(FIRST_PROFILE_ID);
+        expect(pub.H_profileIdPointed).to.eq(FIRST_PROFILE_ID);
         expect(pub.pubIdPointed).to.eq(1);
         expect(pub.contentURI).to.eq('');
         expect(pub.collectModule).to.eq(ZERO_ADDRESS);
@@ -572,8 +572,8 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
       it('TestWallet should mirror a mirror with sig, fetched mirror data should be accurate', async function () {
         await expect(
           healthHub.connect(testWallet).mirror({
-            profileId: FIRST_PROFILE_ID,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             referenceModuleData: [],
             referenceModule: ZERO_ADDRESS,
@@ -598,8 +598,8 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
 
         await expect(
           healthHub.mirrorWithSig({
-            profileId: FIRST_PROFILE_ID,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: '2',
             referenceModuleData: [],
             referenceModule: ZERO_ADDRESS,
@@ -614,7 +614,7 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
         ).to.not.be.reverted;
 
         const pub = await healthHub.getPub(FIRST_PROFILE_ID, 3);
-        expect(pub.profileIdPointed).to.eq(FIRST_PROFILE_ID);
+        expect(pub.H_profileIdPointed).to.eq(FIRST_PROFILE_ID);
         expect(pub.pubIdPointed).to.eq(1);
         expect(pub.contentURI).to.eq('');
         expect(pub.collectModule).to.eq(ZERO_ADDRESS);

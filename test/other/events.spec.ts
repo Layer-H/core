@@ -324,7 +324,7 @@ makeSuiteCleanRoom('Events', function () {
 
       receipt = await waitForTx(
         healthHub.post({
-          profileId: FIRST_PROFILE_ID,
+          H_profileId: FIRST_PROFILE_ID,
           contentURI: MOCK_URI,
           collectModule: freeCollectModule.address,
           collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -354,7 +354,7 @@ makeSuiteCleanRoom('Events', function () {
       );
       await waitForTx(
         healthHub.post({
-          profileId: FIRST_PROFILE_ID,
+          H_profileId: FIRST_PROFILE_ID,
           contentURI: MOCK_URI,
           collectModule: freeCollectModule.address,
           collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -365,9 +365,9 @@ makeSuiteCleanRoom('Events', function () {
 
       receipt = await waitForTx(
         healthHub.comment({
-          profileId: FIRST_PROFILE_ID,
+          H_profileId: FIRST_PROFILE_ID,
           contentURI: MOCK_URI,
-          profileIdPointed: FIRST_PROFILE_ID,
+          H_profileIdPointed: FIRST_PROFILE_ID,
           pubIdPointed: 1,
           referenceModuleData: [],
           collectModule: freeCollectModule.address,
@@ -402,7 +402,7 @@ makeSuiteCleanRoom('Events', function () {
       );
       await waitForTx(
         healthHub.post({
-          profileId: FIRST_PROFILE_ID,
+          H_profileId: FIRST_PROFILE_ID,
           contentURI: MOCK_URI,
           collectModule: freeCollectModule.address,
           collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -413,8 +413,8 @@ makeSuiteCleanRoom('Events', function () {
 
       receipt = await waitForTx(
         healthHub.mirror({
-          profileId: FIRST_PROFILE_ID,
-          profileIdPointed: FIRST_PROFILE_ID,
+          H_profileId: FIRST_PROFILE_ID,
+          H_profileIdPointed: FIRST_PROFILE_ID,
           pubIdPointed: 1,
           referenceModuleData: [],
           referenceModule: ZERO_ADDRESS,
@@ -485,7 +485,7 @@ makeSuiteCleanRoom('Events', function () {
       );
       await waitForTx(
         healthHub.post({
-          profileId: FIRST_PROFILE_ID,
+          H_profileId: FIRST_PROFILE_ID,
           contentURI: MOCK_URI,
           collectModule: feeCollectModule.address,
           collectModuleInitData: collectModuleInitData,
@@ -536,7 +536,7 @@ makeSuiteCleanRoom('Events', function () {
     });
 
     it('Collecting from a mirror should emit correct events', async function () {
-      const secondProfileId = FIRST_PROFILE_ID + 1;
+      const secondH_ProfileId = FIRST_PROFILE_ID + 1;
       await createProfile();
 
       await waitForTx(
@@ -553,7 +553,7 @@ makeSuiteCleanRoom('Events', function () {
       );
       await waitForTx(
         healthHub.post({
-          profileId: FIRST_PROFILE_ID,
+          H_profileId: FIRST_PROFILE_ID,
           contentURI: MOCK_URI,
           collectModule: feeCollectModule.address,
           collectModuleInitData: collectModuleInitData,
@@ -577,8 +577,8 @@ makeSuiteCleanRoom('Events', function () {
 
       await waitForTx(
         healthHub.connect(userTwo).mirror({
-          profileId: secondProfileId,
-          profileIdPointed: FIRST_PROFILE_ID,
+          H_profileId: secondH_ProfileId,
+          H_profileIdPointed: FIRST_PROFILE_ID,
           pubIdPointed: 1,
           referenceModuleData: [],
           referenceModule: ZERO_ADDRESS,
@@ -592,7 +592,7 @@ makeSuiteCleanRoom('Events', function () {
       ).to.not.be.reverted;
       const collectData = abiCoder.encode(['address', 'uint256'], [currency.address, collectPrice]);
 
-      receipt = await waitForTx(healthHub.connect(userTwo).collect(secondProfileId, 1, collectData));
+      receipt = await waitForTx(healthHub.connect(userTwo).collect(secondH_ProfileId, 1, collectData));
       const collectNFT = await healthHub.getCollectNFT(FIRST_PROFILE_ID, 1);
       const expectedName = MOCK_PROFILE_HANDLE + '-Collect-' + '1';
       const expectedSymbol = getAbbreviation(MOCK_PROFILE_HANDLE) + '-Cl-' + '1';
@@ -606,7 +606,7 @@ makeSuiteCleanRoom('Events', function () {
       ]);
       matchEvent(receipt, 'Collected', [
         userTwoAddress,
-        secondProfileId,
+        secondH_ProfileId,
         1,
         FIRST_PROFILE_ID,
         1,

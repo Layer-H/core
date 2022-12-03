@@ -258,7 +258,7 @@ makeSuiteCleanRoom('Profile URI Functionality', function () {
 
         await expect(
           healthHub.setProfileImageURIWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             imageURI: MOCK_URI,
             sig: {
               v,
@@ -281,7 +281,7 @@ makeSuiteCleanRoom('Profile URI Functionality', function () {
 
         await expect(
           healthHub.setProfileImageURIWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             imageURI: MOCK_URI,
             sig: {
               v,
@@ -304,7 +304,7 @@ makeSuiteCleanRoom('Profile URI Functionality', function () {
 
         await expect(
           healthHub.setProfileImageURIWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             imageURI: MOCK_URI,
             sig: {
               v,
@@ -329,7 +329,7 @@ makeSuiteCleanRoom('Profile URI Functionality', function () {
 
         await expect(
           healthHub.setProfileImageURIWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             imageURI: MOCK_URI,
             sig: {
               v,
@@ -352,7 +352,7 @@ makeSuiteCleanRoom('Profile URI Functionality', function () {
 
         await expect(
           healthHub.setFollowNFTURIWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             followNFTURI: MOCK_URI,
             sig: {
               v,
@@ -375,7 +375,7 @@ makeSuiteCleanRoom('Profile URI Functionality', function () {
 
         await expect(
           healthHub.setFollowNFTURIWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             followNFTURI: MOCK_URI,
             sig: {
               v,
@@ -398,7 +398,7 @@ makeSuiteCleanRoom('Profile URI Functionality', function () {
 
         await expect(
           healthHub.setFollowNFTURIWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             followNFTURI: MOCK_URI,
             sig: {
               v,
@@ -423,7 +423,7 @@ makeSuiteCleanRoom('Profile URI Functionality', function () {
 
         await expect(
           healthHub.setFollowNFTURIWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             followNFTURI: MOCK_URI,
             sig: {
               v,
@@ -465,7 +465,7 @@ makeSuiteCleanRoom('Profile URI Functionality', function () {
 
         await expect(
           healthHub.setProfileImageURIWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             imageURI: MOCK_URI,
             sig: {
               v,
@@ -509,7 +509,7 @@ makeSuiteCleanRoom('Profile URI Functionality', function () {
 
         await expect(
           healthHub.setFollowNFTURIWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             followNFTURI: MOCK_URI,
             sig: {
               v,

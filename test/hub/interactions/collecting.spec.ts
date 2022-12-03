@@ -45,7 +45,7 @@ makeSuiteCleanRoom('Collecting', function () {
     ).to.not.be.reverted;
     await expect(
       healthHub.post({
-        profileId: FIRST_PROFILE_ID,
+        H_profileId: FIRST_PROFILE_ID,
         contentURI: MOCK_URI,
         collectModule: freeCollectModule.address,
         collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -80,11 +80,11 @@ makeSuiteCleanRoom('Collecting', function () {
     });
 
     context('Scenarios', function () {
-      it('Collecting should work if the collector is the publication owner even when he is not following himself and follow NFT was not deployed', async function () {
+      it('Collecting should work if the collector is the prescription owner even when he is not following himself and follow NFT was not deployed', async function () {
         await expect(healthHub.collect(FIRST_PROFILE_ID, 1, [])).to.not.be.reverted;
       });
 
-      it('Collecting should work if the collector is the publication owner even when he is not following himself and follow NFT was deployed', async function () {
+      it('Collecting should work if the collector is the prescription owner even when he is not following himself and follow NFT was deployed', async function () {
         await expect(healthHub.follow([FIRST_PROFILE_ID], [[]])).to.not.be.reverted;
         const followNFT = FollowNFT__factory.connect(
           await healthHub.getFollowNFT(FIRST_PROFILE_ID),
@@ -96,7 +96,7 @@ makeSuiteCleanRoom('Collecting', function () {
         await expect(healthHub.collect(FIRST_PROFILE_ID, 1, [])).to.not.be.reverted;
       });
 
-      it('Should return the expected token IDs when collecting publications', async function () {
+      it('Should return the expected token IDs when collecting prescriptions', async function () {
         await expect(healthHub.connect(userTwo).follow([FIRST_PROFILE_ID], [[]])).to.not.be.reverted;
         await expect(
           healthHub.connect(testWallet).follow([FIRST_PROFILE_ID], [[]])
@@ -105,7 +105,7 @@ makeSuiteCleanRoom('Collecting', function () {
         expect(
           await collectReturningTokenIds({
             vars: {
-              profileId: FIRST_PROFILE_ID,
+              H_profileId: FIRST_PROFILE_ID,
               pubId: 1,
               data: [],
             },
@@ -116,7 +116,7 @@ makeSuiteCleanRoom('Collecting', function () {
           await collectReturningTokenIds({
             sender: userTwo,
             vars: {
-              profileId: FIRST_PROFILE_ID,
+              H_profileId: FIRST_PROFILE_ID,
               pubId: 1,
               data: [],
             },
@@ -135,7 +135,7 @@ makeSuiteCleanRoom('Collecting', function () {
           await collectReturningTokenIds({
             vars: {
               collector: testWallet.address,
-              profileId: FIRST_PROFILE_ID,
+              H_profileId: FIRST_PROFILE_ID,
               pubId: '1',
               data: [],
               sig: {
@@ -151,7 +151,7 @@ makeSuiteCleanRoom('Collecting', function () {
         expect(
           await collectReturningTokenIds({
             vars: {
-              profileId: FIRST_PROFILE_ID,
+              H_profileId: FIRST_PROFILE_ID,
               pubId: 1,
               data: [],
             },
@@ -205,8 +205,8 @@ makeSuiteCleanRoom('Collecting', function () {
 
         await expect(
           healthHub.connect(userTwo).mirror({
-            profileId: secondProfileId,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileId: secondProfileId,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             referenceModuleData: [],
             referenceModule: ZERO_ADDRESS,
@@ -249,8 +249,8 @@ makeSuiteCleanRoom('Collecting', function () {
 
         await expect(
           healthHub.connect(userTwo).mirror({
-            profileId: secondProfileId,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileId: secondProfileId,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             referenceModuleData: [],
             referenceModule: ZERO_ADDRESS,
@@ -260,8 +260,8 @@ makeSuiteCleanRoom('Collecting', function () {
 
         await expect(
           healthHub.connect(userTwo).mirror({
-            profileId: secondProfileId,
-            profileIdPointed: secondProfileId,
+            H_profileId: secondProfileId,
+            H_profileIdPointed: secondProfileId,
             pubIdPointed: 1,
             referenceModuleData: [],
             referenceModule: ZERO_ADDRESS,
@@ -300,7 +300,7 @@ makeSuiteCleanRoom('Collecting', function () {
         await expect(
           healthHub.collectWithSig({
             collector: testWallet.address,
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             pubId: '1',
             data: [],
             sig: {
@@ -321,7 +321,7 @@ makeSuiteCleanRoom('Collecting', function () {
         await expect(
           healthHub.collectWithSig({
             collector: testWallet.address,
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             pubId: '1',
             data: [],
             sig: {
@@ -348,7 +348,7 @@ makeSuiteCleanRoom('Collecting', function () {
         await expect(
           healthHub.collectWithSig({
             collector: testWallet.address,
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             pubId: '1',
             data: [],
             sig: {
@@ -375,7 +375,7 @@ makeSuiteCleanRoom('Collecting', function () {
         await expect(
           healthHub.collectWithSig({
             collector: testWallet.address,
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             pubId: '1',
             data: [],
             sig: {
@@ -408,7 +408,7 @@ makeSuiteCleanRoom('Collecting', function () {
         await expect(
           healthHub.collectWithSig({
             collector: testWallet.address,
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             pubId: '1',
             data: [],
             sig: {
@@ -441,7 +441,7 @@ makeSuiteCleanRoom('Collecting', function () {
         await expect(
           healthHub.collectWithSig({
             collector: testWallet.address,
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             pubId: '1',
             data: [],
             sig: {
@@ -488,8 +488,8 @@ makeSuiteCleanRoom('Collecting', function () {
 
         await expect(
           healthHub.connect(testWallet).mirror({
-            profileId: secondProfileId,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileId: secondProfileId,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             referenceModuleData: [],
             referenceModule: ZERO_ADDRESS,
@@ -510,7 +510,7 @@ makeSuiteCleanRoom('Collecting', function () {
         await expect(
           healthHub.collectWithSig({
             collector: testWallet.address,
-            profileId: secondProfileId,
+            H_profileId: secondProfileId,
             pubId: '1',
             data: [],
             sig: {

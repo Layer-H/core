@@ -147,7 +147,7 @@ makeSuiteCleanRoom('Profile Creation', function () {
         let timestamp: any;
         let owner: string;
         let totalSupply: BigNumber;
-        let profileId: BigNumber;
+        let H_profileId: BigNumber;
         let mintTimestamp: BigNumber;
         let tokenData: TokenDataStructOutput;
 
@@ -167,17 +167,17 @@ makeSuiteCleanRoom('Profile Creation', function () {
         timestamp = await getTimestamp();
         owner = await healthHub.ownerOf(FIRST_PROFILE_ID);
         totalSupply = await healthHub.totalSupply();
-        profileId = await healthHub.getProfileIdByHandle(MOCK_PROFILE_HANDLE);
+        H_profileId = await healthHub.getH_ProfileIdByHandle(MOCK_PROFILE_HANDLE);
         mintTimestamp = await healthHub.mintTimestampOf(FIRST_PROFILE_ID);
         tokenData = await healthHub.tokenDataOf(FIRST_PROFILE_ID);
         expect(owner).to.eq(userAddress);
         expect(totalSupply).to.eq(FIRST_PROFILE_ID);
-        expect(profileId).to.eq(FIRST_PROFILE_ID);
+        expect(H_profileId).to.eq(FIRST_PROFILE_ID);
         expect(mintTimestamp).to.eq(timestamp);
         expect(tokenData.owner).to.eq(userAddress);
         expect(tokenData.mintTimestamp).to.eq(timestamp);
 
-        const secondProfileId = FIRST_PROFILE_ID + 1;
+        const secondH_ProfileId = FIRST_PROFILE_ID + 1;
         const secondProfileHandle = '2nd_profile';
         expect(
           await createProfileReturningTokenId({
@@ -191,17 +191,17 @@ makeSuiteCleanRoom('Profile Creation', function () {
               followNFTURI: MOCK_FOLLOW_NFT_URI,
             },
           })
-        ).to.eq(secondProfileId);
+        ).to.eq(secondH_ProfileId);
 
         timestamp = await getTimestamp();
-        owner = await healthHub.ownerOf(secondProfileId);
+        owner = await healthHub.ownerOf(secondH_ProfileId);
         totalSupply = await healthHub.totalSupply();
-        profileId = await healthHub.getProfileIdByHandle(secondProfileHandle);
-        mintTimestamp = await healthHub.mintTimestampOf(secondProfileId);
-        tokenData = await healthHub.tokenDataOf(secondProfileId);
+        H_profileId = await healthHub.getH_ProfileIdByHandle(secondProfileHandle);
+        mintTimestamp = await healthHub.mintTimestampOf(secondH_ProfileId);
+        tokenData = await healthHub.tokenDataOf(secondH_ProfileId);
         expect(owner).to.eq(userTwoAddress);
-        expect(totalSupply).to.eq(secondProfileId);
-        expect(profileId).to.eq(secondProfileId);
+        expect(totalSupply).to.eq(secondH_ProfileId);
+        expect(H_profileId).to.eq(secondH_ProfileId);
         expect(mintTimestamp).to.eq(timestamp);
         expect(tokenData.owner).to.eq(userTwoAddress);
         expect(tokenData.mintTimestamp).to.eq(timestamp);
@@ -221,7 +221,7 @@ makeSuiteCleanRoom('Profile Creation', function () {
           })
         ).to.eq(FIRST_PROFILE_ID);
 
-        const secondProfileId = FIRST_PROFILE_ID + 1;
+        const secondH_ProfileId = FIRST_PROFILE_ID + 1;
         expect(
           await createProfileReturningTokenId({
             sender: userTwo,
@@ -234,9 +234,9 @@ makeSuiteCleanRoom('Profile Creation', function () {
               followNFTURI: MOCK_FOLLOW_NFT_URI,
             },
           })
-        ).to.eq(secondProfileId);
+        ).to.eq(secondH_ProfileId);
 
-        const thirdProfileId = secondProfileId + 1;
+        const thirdH_ProfileId = secondH_ProfileId + 1;
         expect(
           await createProfileReturningTokenId({
             vars: {
@@ -248,7 +248,7 @@ makeSuiteCleanRoom('Profile Creation', function () {
               followNFTURI: MOCK_FOLLOW_NFT_URI,
             },
           })
-        ).to.eq(thirdProfileId);
+        ).to.eq(thirdH_ProfileId);
       });
 
       it('User should be able to create a profile with a handle including "-" and "_" characters', async function () {

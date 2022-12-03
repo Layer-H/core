@@ -18,7 +18,7 @@ contract RevertCollectModule is ICollectModule {
      * @dev There is nothing needed at initialization.
      */
     function initializePublicationCollectModule(
-        uint256 profileId,
+        uint256 H_profileId,
         uint256 pubId,
         bytes calldata data
     ) external pure override returns (bytes memory) {
@@ -30,9 +30,9 @@ contract RevertCollectModule is ICollectModule {
      *  1. Always reverting
      */
     function processCollect(
-        uint256 referrerProfileId,
+        uint256 referrerH_ProfileId,
         address collector,
-        uint256 profileId,
+        uint256 H_profileId,
         uint256 pubId,
         bytes calldata data
     ) external pure override {

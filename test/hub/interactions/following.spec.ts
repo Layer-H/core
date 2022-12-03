@@ -118,7 +118,7 @@ makeSuiteCleanRoom('Following', function () {
         expectEqualArrays(
           await followReturningTokenIds({
             vars: {
-              profileIds: [FIRST_PROFILE_ID, FIRST_PROFILE_ID],
+              H_profileIds: [FIRST_PROFILE_ID, FIRST_PROFILE_ID],
               datas: [[], []],
             },
           }),
@@ -136,7 +136,7 @@ makeSuiteCleanRoom('Following', function () {
           await followReturningTokenIds({
             vars: {
               follower: testWallet.address,
-              profileIds: [FIRST_PROFILE_ID],
+              H_profileIds: [FIRST_PROFILE_ID],
               datas: [[]],
               sig: {
                 v,
@@ -153,7 +153,7 @@ makeSuiteCleanRoom('Following', function () {
           await followReturningTokenIds({
             sender: userTwo,
             vars: {
-              profileIds: [FIRST_PROFILE_ID],
+              H_profileIds: [FIRST_PROFILE_ID],
               datas: [[]],
             },
           }),
@@ -163,7 +163,7 @@ makeSuiteCleanRoom('Following', function () {
         expectEqualArrays(
           await followReturningTokenIds({
             vars: {
-              profileIds: [FIRST_PROFILE_ID],
+              H_profileIds: [FIRST_PROFILE_ID],
               datas: [[]],
             },
           }),
@@ -182,7 +182,7 @@ makeSuiteCleanRoom('Following', function () {
         await expect(
           healthHub.followWithSig({
             follower: testWallet.address,
-            profileIds: [FIRST_PROFILE_ID],
+            H_profileIds: [FIRST_PROFILE_ID],
             datas: [[]],
             sig: {
               v,
@@ -201,7 +201,7 @@ makeSuiteCleanRoom('Following', function () {
         await expect(
           healthHub.followWithSig({
             follower: testWallet.address,
-            profileIds: [FIRST_PROFILE_ID],
+            H_profileIds: [FIRST_PROFILE_ID],
             datas: [[]],
             sig: {
               v,
@@ -225,7 +225,7 @@ makeSuiteCleanRoom('Following', function () {
         await expect(
           healthHub.followWithSig({
             follower: testWallet.address,
-            profileIds: [FIRST_PROFILE_ID],
+            H_profileIds: [FIRST_PROFILE_ID],
             datas: [[]],
             sig: {
               v,
@@ -249,7 +249,7 @@ makeSuiteCleanRoom('Following', function () {
         await expect(
           healthHub.followWithSig({
             follower: testWallet.address,
-            profileIds: [FIRST_PROFILE_ID + 1],
+            H_profileIds: [FIRST_PROFILE_ID + 1],
             datas: [[]],
             sig: {
               v,
@@ -276,7 +276,7 @@ makeSuiteCleanRoom('Following', function () {
         await expect(
           healthHub.followWithSig({
             follower: testWallet.address,
-            profileIds: [FIRST_PROFILE_ID],
+            H_profileIds: [FIRST_PROFILE_ID],
             datas: [[]],
             sig: {
               v,
@@ -303,7 +303,7 @@ makeSuiteCleanRoom('Following', function () {
         await expect(
           healthHub.followWithSig({
             follower: testWallet.address,
-            profileIds: [FIRST_PROFILE_ID],
+            H_profileIds: [FIRST_PROFILE_ID],
             datas: [[]],
             sig: {
               v,
@@ -337,7 +337,7 @@ makeSuiteCleanRoom('Following', function () {
         await expect(
           healthHub.followWithSig({
             follower: testWallet.address,
-            profileIds: [FIRST_PROFILE_ID, FIRST_PROFILE_ID],
+            H_profileIds: [FIRST_PROFILE_ID, FIRST_PROFILE_ID],
             datas: [[], []],
             sig: {
               v,

@@ -42,7 +42,7 @@ contract FeeFollowModule is FeeModuleBase, FollowValidatorFollowModuleBase {
     /**
      * @notice This follow module levies a fee on follows.
      *
-     * @param profileId The profile ID of the profile to initialize this module for.
+     * @param H_profileId The profile ID of the profile to initialize this module for.
      * @param data The arbitrary data parameter, decoded into:
      *      address currency: The currency address, must be internally whitelisted.
      *      uint256 amount: The currency total amount to levy.
@@ -50,7 +50,7 @@ contract FeeFollowModule is FeeModuleBase, FollowValidatorFollowModuleBase {
      *
      * @return bytes An abi encoded bytes parameter, which is the same as the passed data parameter.
      */
-    function initializeFollowModule(uint256 profileId, bytes calldata data)
+    function initializeFollowModule(uint256 H_profileId, bytes calldata data)
         external
         override
         onlyHub
@@ -63,9 +63,9 @@ contract FeeFollowModule is FeeModuleBase, FollowValidatorFollowModuleBase {
         if (!_currencyWhitelisted(currency) || recipient == address(0) || amount == 0)
             revert Errors.InitParamsInvalid();
 
-        _dataByProfile[profileId].amount = amount;
-        _dataByProfile[profileId].currency = currency;
-        _dataByProfile[profileId].recipient = recipient;
+        _dataByProfile[H_profileId].amount = amount;
+        _dataByProfile[H_profileId].currency = currency;
+        _dataByProfile[H_profileId].recipient = recipient;
         return data;
     }
 
@@ -75,15 +75,15 @@ contract FeeFollowModule is FeeModuleBase, FollowValidatorFollowModuleBase {
      */
     function processFollow(
         address follower,
-        uint256 profileId,
+        uint256 H_profileId,
         bytes calldata data
     ) external override onlyHub {
-        uint256 amount = _dataByProfile[profileId].amount;
-        address currency = _dataByProfile[profileId].currency;
+        uint256 amount = _dataByProfile[H_profileId].amount;
+        address currency = _dataByProfile[H_profileId].currency;
         _validateDataIsExpected(data, currency, amount);
 
         (address treasury, uint16 treasuryFee) = _treasuryData();
-        address recipient = _dataByProfile[profileId].recipient;
+        address recipient = _dataByProfile[H_profileId].recipient;
         uint256 treasuryAmount = (amount * treasuryFee) / BPS_MAX;
         uint256 adjustedAmount = amount - treasuryAmount;
 
@@ -96,7 +96,7 @@ contract FeeFollowModule is FeeModuleBase, FollowValidatorFollowModuleBase {
      * @dev We don't need to execute any additional logic on transfers in this follow module.
      */
     function followModuleTransferHook(
-        uint256 profileId,
+        uint256 H_profileId,
         address from,
         address to,
         uint256 followNFTTokenId
@@ -106,11 +106,11 @@ contract FeeFollowModule is FeeModuleBase, FollowValidatorFollowModuleBase {
      * @notice Returns the profile data for a given profile, or an empty struct if that profile was not initialized
      * with this module.
      *
-     * @param profileId The token ID of the profile to query.
+     * @param H_profileId The token ID of the profile to query.
      *
      * @return ProfileData The ProfileData struct mapped to that profile.
      */
-    function getProfileData(uint256 profileId) external view returns (ProfileData memory) {
-        return _dataByProfile[profileId];
+    function getProfileData(uint256 H_profileId) external view returns (ProfileData memory) {
+        return _dataByProfile[H_profileId];
     }
 }

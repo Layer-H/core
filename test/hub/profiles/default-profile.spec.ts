@@ -110,7 +110,7 @@ makeSuiteCleanRoom('Default profile Functionality', function () {
 
         await expect(
           healthHub.setDefaultProfileWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             wallet: testWallet.address,
             sig: {
               v,
@@ -133,7 +133,7 @@ makeSuiteCleanRoom('Default profile Functionality', function () {
 
         await expect(
           healthHub.setDefaultProfileWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             wallet: testWallet.address,
             sig: {
               v,
@@ -156,7 +156,7 @@ makeSuiteCleanRoom('Default profile Functionality', function () {
 
         await expect(
           healthHub.setDefaultProfileWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             wallet: testWallet.address,
             sig: {
               v,
@@ -181,7 +181,7 @@ makeSuiteCleanRoom('Default profile Functionality', function () {
 
         await expect(
           healthHub.setDefaultProfileWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             wallet: testWallet.address,
             sig: {
               v,
@@ -208,7 +208,7 @@ makeSuiteCleanRoom('Default profile Functionality', function () {
 
         await expect(
           healthHub.setDefaultProfileWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             wallet: testWallet.address,
             sig: {
               v,
@@ -239,7 +239,7 @@ makeSuiteCleanRoom('Default profile Functionality', function () {
         await expect(
           healthHub.setDefaultProfileWithSig({
             wallet: testWallet.address,
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             sig: {
               v,
               r,
@@ -267,7 +267,7 @@ makeSuiteCleanRoom('Default profile Functionality', function () {
         await expect(
           healthHub.setDefaultProfileWithSig({
             wallet: testWallet.address,
-            profileId: 0,
+            H_profileId: 0,
             sig: {
               v: signature2.v,
               r: signature2.r,
@@ -296,7 +296,7 @@ makeSuiteCleanRoom('Default profile Functionality', function () {
 
         await expect(
           healthHub.setDefaultProfileWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             wallet: testWallet.address,
             sig: {
               v,
@@ -335,7 +335,7 @@ makeSuiteCleanRoom('Default profile Functionality', function () {
 
         await expect(
           healthHub.setDefaultProfileWithSig({
-            profileId: 2,
+            H_profileId: 2,
             wallet: testWallet.address,
             sig: {
               v: signature2.v,

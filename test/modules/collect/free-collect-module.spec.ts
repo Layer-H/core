@@ -42,7 +42,7 @@ makeSuiteCleanRoom('Free Collect Module', function () {
       it('UserTwo should fail to collect without following without any follow module set', async function () {
         await expect(
           healthHub.post({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: freeCollectModule.address,
             collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -58,7 +58,7 @@ makeSuiteCleanRoom('Free Collect Module', function () {
       it('UserTwo should mirror the original post, fail to collect from their mirror without following the original profile', async function () {
         await expect(
           healthHub.post({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: freeCollectModule.address,
             collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -66,7 +66,7 @@ makeSuiteCleanRoom('Free Collect Module', function () {
             referenceModuleInitData: [],
           })
         ).to.not.be.reverted;
-        const secondProfileId = FIRST_PROFILE_ID + 1;
+        const secondH_ProfileId = FIRST_PROFILE_ID + 1;
         await expect(
           healthHub.connect(userTwo).createProfile({
             to: userTwoAddress,
@@ -79,8 +79,8 @@ makeSuiteCleanRoom('Free Collect Module', function () {
         ).to.not.be.reverted;
         await expect(
           healthHub.connect(userTwo).mirror({
-            profileId: secondProfileId,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileId: secondH_ProfileId,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             referenceModuleData: [],
             referenceModule: ZERO_ADDRESS,
@@ -88,7 +88,7 @@ makeSuiteCleanRoom('Free Collect Module', function () {
           })
         ).to.not.be.reverted;
 
-        await expect(healthHub.connect(userTwo).collect(secondProfileId, 1, [])).to.be.revertedWith(
+        await expect(healthHub.connect(userTwo).collect(secondH_ProfileId, 1, [])).to.be.revertedWith(
           ERRORS.FOLLOW_INVALID
         );
       });
@@ -99,7 +99,7 @@ makeSuiteCleanRoom('Free Collect Module', function () {
     it('User should post with the free collect module as the collect module and data, allowing non-followers to collect, user two collects without following', async function () {
       await expect(
         healthHub.post({
-          profileId: FIRST_PROFILE_ID,
+          H_profileId: FIRST_PROFILE_ID,
           contentURI: MOCK_URI,
           collectModule: freeCollectModule.address,
           collectModuleInitData: abiCoder.encode(['bool'], [false]),
@@ -113,7 +113,7 @@ makeSuiteCleanRoom('Free Collect Module', function () {
     it('UserTwo should collect with success when following if the configuration only allows followers', async function () {
       await expect(
         healthHub.post({
-          profileId: FIRST_PROFILE_ID,
+          H_profileId: FIRST_PROFILE_ID,
           contentURI: MOCK_URI,
           collectModule: freeCollectModule.address,
           collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -128,7 +128,7 @@ makeSuiteCleanRoom('Free Collect Module', function () {
     it('UserTwo should collect with success when following according the follow module set', async function () {
       await expect(
         healthHub.post({
-          profileId: FIRST_PROFILE_ID,
+          H_profileId: FIRST_PROFILE_ID,
           contentURI: MOCK_URI,
           collectModule: freeCollectModule.address,
           collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -152,7 +152,7 @@ makeSuiteCleanRoom('Free Collect Module', function () {
     it('UserTwo should mirror the original post, collect with success from their mirror when following the original profile which has no follow module set', async function () {
       await expect(
         healthHub.post({
-          profileId: FIRST_PROFILE_ID,
+          H_profileId: FIRST_PROFILE_ID,
           contentURI: MOCK_URI,
           collectModule: freeCollectModule.address,
           collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -160,7 +160,7 @@ makeSuiteCleanRoom('Free Collect Module', function () {
           referenceModuleInitData: [],
         })
       ).to.not.be.reverted;
-      const secondProfileId = FIRST_PROFILE_ID + 1;
+      const secondH_ProfileId = FIRST_PROFILE_ID + 1;
       await expect(healthHub.connect(userTwo).follow([FIRST_PROFILE_ID], [[]])).to.not.be.reverted;
       await expect(
         healthHub.connect(userTwo).createProfile({
@@ -174,8 +174,8 @@ makeSuiteCleanRoom('Free Collect Module', function () {
       ).to.not.be.reverted;
       await expect(
         healthHub.connect(userTwo).mirror({
-          profileId: secondProfileId,
-          profileIdPointed: FIRST_PROFILE_ID,
+          H_profileId: secondH_ProfileId,
+          H_profileIdPointed: FIRST_PROFILE_ID,
           pubIdPointed: 1,
           referenceModuleData: [],
           referenceModule: ZERO_ADDRESS,
@@ -183,7 +183,7 @@ makeSuiteCleanRoom('Free Collect Module', function () {
         })
       ).to.not.be.reverted;
 
-      await expect(healthHub.connect(userTwo).collect(secondProfileId, 1, [])).to.not.be.reverted;
+      await expect(healthHub.connect(userTwo).collect(secondH_ProfileId, 1, [])).to.not.be.reverted;
     });
   });
 });

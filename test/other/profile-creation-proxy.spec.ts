@@ -103,7 +103,7 @@ makeSuiteCleanRoom('Profile Creation Proxy', function () {
       let timestamp: any;
       let owner: string;
       let totalSupply: BigNumber;
-      let profileId: BigNumber;
+      let H_profileId: BigNumber;
       let mintTimestamp: BigNumber;
       let tokenData: TokenDataStructOutput;
       const validHandleBeforeSuffix = 'v_al-id';
@@ -123,12 +123,12 @@ makeSuiteCleanRoom('Profile Creation Proxy', function () {
       timestamp = await getTimestamp();
       owner = await healthHub.ownerOf(FIRST_PROFILE_ID);
       totalSupply = await healthHub.totalSupply();
-      profileId = await healthHub.getProfileIdByHandle(expectedHandle);
+      H_profileId = await healthHub.getH_ProfileIdByHandle(expectedHandle);
       mintTimestamp = await healthHub.mintTimestampOf(FIRST_PROFILE_ID);
       tokenData = await healthHub.tokenDataOf(FIRST_PROFILE_ID);
       expect(owner).to.eq(userAddress);
       expect(totalSupply).to.eq(FIRST_PROFILE_ID);
-      expect(profileId).to.eq(FIRST_PROFILE_ID);
+      expect(H_profileId).to.eq(FIRST_PROFILE_ID);
       expect(mintTimestamp).to.eq(timestamp);
       expect(tokenData.owner).to.eq(userAddress);
       expect(tokenData.mintTimestamp).to.eq(timestamp);

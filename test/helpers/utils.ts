@@ -314,14 +314,14 @@ const buildDelegateBySigParams = (
 });
 
 export async function getSetFollowModuleWithSigParts(
-  profileId: BigNumberish,
+  H_profileId: BigNumberish,
   followModule: string,
   followModuleInitData: Bytes | string,
   nonce: number,
   deadline: string
 ): Promise<{ v: number; r: string; s: string }> {
   const msgParams = buildSetFollowModuleWithSigParams(
-    profileId,
+    H_profileId,
     followModule,
     followModuleInitData,
     nonce,
@@ -331,47 +331,47 @@ export async function getSetFollowModuleWithSigParts(
 }
 
 export async function getSetDispatcherWithSigParts(
-  profileId: BigNumberish,
+  H_profileId: BigNumberish,
   dispatcher: string,
   nonce: number,
   deadline: string
 ): Promise<{ v: number; r: string; s: string }> {
-  const msgParams = buildSetDispatcherWithSigParams(profileId, dispatcher, nonce, deadline);
+  const msgParams = buildSetDispatcherWithSigParams(H_profileId, dispatcher, nonce, deadline);
   return await getSig(msgParams);
 }
 
 export async function getSetProfileImageURIWithSigParts(
-  profileId: BigNumberish,
+  H_profileId: BigNumberish,
   imageURI: string,
   nonce: number,
   deadline: string
 ): Promise<{ v: number; r: string; s: string }> {
-  const msgParams = buildSetProfileImageURIWithSigParams(profileId, imageURI, nonce, deadline);
+  const msgParams = buildSetProfileImageURIWithSigParams(H_profileId, imageURI, nonce, deadline);
   return await getSig(msgParams);
 }
 
 export async function getSetDefaultProfileWithSigParts(
   wallet: string,
-  profileId: BigNumberish,
+  H_profileId: BigNumberish,
   nonce: number,
   deadline: string
 ): Promise<{ v: number; r: string; s: string }> {
-  const msgParams = buildSetDefaultProfileWithSigParams(profileId, wallet, nonce, deadline);
+  const msgParams = buildSetDefaultProfileWithSigParams(H_profileId, wallet, nonce, deadline);
   return await getSig(msgParams);
 }
 
 export async function getSetFollowNFTURIWithSigParts(
-  profileId: BigNumberish,
+  H_profileId: BigNumberish,
   followNFTURI: string,
   nonce: number,
   deadline: string
 ): Promise<{ v: number; r: string; s: string }> {
-  const msgParams = buildSetFollowNFTURIWithSigParams(profileId, followNFTURI, nonce, deadline);
+  const msgParams = buildSetFollowNFTURIWithSigParams(H_profileId, followNFTURI, nonce, deadline);
   return await getSig(msgParams);
 }
 
 export async function getPostWithSigParts(
-  profileId: BigNumberish,
+  H_profileId: BigNumberish,
   contentURI: string,
   collectModule: string,
   collectModuleInitData: Bytes | string,
@@ -381,7 +381,7 @@ export async function getPostWithSigParts(
   deadline: string
 ): Promise<{ v: number; r: string; s: string }> {
   const msgParams = buildPostWithSigParams(
-    profileId,
+    H_profileId,
     contentURI,
     collectModule,
     collectModuleInitData,
@@ -394,9 +394,9 @@ export async function getPostWithSigParts(
 }
 
 export async function getCommentWithSigParts(
-  profileId: BigNumberish,
+  H_profileId: BigNumberish,
   contentURI: string,
-  profileIdPointed: BigNumberish,
+  H_profileIdPointed: BigNumberish,
   pubIdPointed: string,
   referenceModuleData: Bytes | string,
   collectModule: string,
@@ -407,9 +407,9 @@ export async function getCommentWithSigParts(
   deadline: string
 ): Promise<{ v: number; r: string; s: string }> {
   const msgParams = buildCommentWithSigParams(
-    profileId,
+    H_profileId,
     contentURI,
-    profileIdPointed,
+    H_profileIdPointed,
     pubIdPointed,
     referenceModuleData,
     collectModule,
@@ -423,8 +423,8 @@ export async function getCommentWithSigParts(
 }
 
 export async function getMirrorWithSigParts(
-  profileId: BigNumberish,
-  profileIdPointed: BigNumberish,
+  H_profileId: BigNumberish,
+  H_profileIdPointed: BigNumberish,
   pubIdPointed: string,
   referenceModuleData: Bytes | string,
   referenceModule: string,
@@ -433,8 +433,8 @@ export async function getMirrorWithSigParts(
   deadline: string
 ): Promise<{ v: number; r: string; s: string }> {
   const msgParams = buildMirrorWithSigParams(
-    profileId,
-    profileIdPointed,
+    H_profileId,
+    H_profileIdPointed,
     pubIdPointed,
     referenceModuleData,
     referenceModule,
@@ -446,43 +446,43 @@ export async function getMirrorWithSigParts(
 }
 
 export async function getFollowWithSigParts(
-  profileIds: string[] | number[],
+  H_profileIds: string[] | number[],
   datas: Bytes[] | string[],
   nonce: number,
   deadline: string
 ): Promise<{ v: number; r: string; s: string }> {
-  const msgParams = buildFollowWithSigParams(profileIds, datas, nonce, deadline);
+  const msgParams = buildFollowWithSigParams(H_profileIds, datas, nonce, deadline);
   return await getSig(msgParams);
 }
 
 export async function getToggleFollowWithSigParts(
-  profileIds: string[] | number[],
+  H_profileIds: string[] | number[],
   enables: boolean[],
   nonce: number,
   deadline: string
 ): Promise<{ v: number; r: string; s: string }> {
-  const msgParams = buildToggleFollowWithSigParams(profileIds, enables, nonce, deadline);
+  const msgParams = buildToggleFollowWithSigParams(H_profileIds, enables, nonce, deadline);
   return await getSig(msgParams);
 }
 
 export async function getSetProfileMetadataURIWithSigParts(
-  profileId: string | number,
+  H_profileId: string | number,
   metadata: string,
   nonce: number,
   deadline: string
 ): Promise<{ v: number; r: string; s: string }> {
-  const msgParams = buildSetProfileMetadataURIWithSigParams(profileId, metadata, nonce, deadline);
+  const msgParams = buildSetProfileMetadataURIWithSigParams(H_profileId, metadata, nonce, deadline);
   return await getSig(msgParams);
 }
 
 export async function getCollectWithSigParts(
-  profileId: BigNumberish,
+  H_profileId: BigNumberish,
   pubId: string,
   data: Bytes | string,
   nonce: number,
   deadline: string
 ): Promise<{ v: number; r: string; s: string }> {
-  const msgParams = buildCollectWithSigParams(profileId, pubId, data, nonce, deadline);
+  const msgParams = buildCollectWithSigParams(H_profileId, pubId, data, nonce, deadline);
   return await getSig(msgParams);
 }
 
@@ -518,7 +518,7 @@ export async function createProfileReturningTokenId({
 }
 
 export interface FollowDataStruct {
-  profileIds: BigNumberish[];
+  H_profileIds: BigNumberish[];
   datas: BytesLike[];
 }
 
@@ -536,14 +536,14 @@ export async function followReturningTokenIds({
     tokenIds = await healthHub.connect(sender).callStatic.followWithSig(vars);
     await expect(healthHub.connect(sender).followWithSig(vars)).to.not.be.reverted;
   } else {
-    tokenIds = await healthHub.connect(sender).callStatic.follow(vars.profileIds, vars.datas);
-    await expect(healthHub.connect(sender).follow(vars.profileIds, vars.datas)).to.not.be.reverted;
+    tokenIds = await healthHub.connect(sender).callStatic.follow(vars.H_profileIds, vars.datas);
+    await expect(healthHub.connect(sender).follow(vars.H_profileIds, vars.datas)).to.not.be.reverted;
   }
   return tokenIds;
 }
 
 export interface CollectDataStruct {
-  profileId: BigNumberish;
+  H_profileId: BigNumberish;
   pubId: BigNumberish;
   data: BytesLike;
 }
@@ -564,8 +564,8 @@ export async function collectReturningTokenIds({
   } else {
     tokenId = await healthHub
       .connect(sender)
-      .callStatic.collect(vars.profileId, vars.pubId, vars.data);
-    await expect(healthHub.connect(sender).collect(vars.profileId, vars.pubId, vars.data)).to.not.be
+      .callStatic.collect(vars.H_profileId, vars.pubId, vars.data);
+    await expect(healthHub.connect(sender).collect(vars.H_profileId, vars.pubId, vars.data)).to.not.be
       .reverted;
   }
   return tokenId;
@@ -762,7 +762,7 @@ const buildBurnWithSigParams = (
 });
 
 const buildSetFollowModuleWithSigParams = (
-  profileId: BigNumberish,
+  H_profileId: BigNumberish,
   followModule: string,
   followModuleInitData: Bytes | string,
   nonce: number,
@@ -770,7 +770,7 @@ const buildSetFollowModuleWithSigParams = (
 ) => ({
   types: {
     SetFollowModuleWithSig: [
-      { name: 'profileId', type: 'uint256' },
+      { name: 'H_profileId', type: 'uint256' },
       { name: 'followModule', type: 'address' },
       { name: 'followModuleInitData', type: 'bytes' },
       { name: 'nonce', type: 'uint256' },
@@ -779,7 +779,7 @@ const buildSetFollowModuleWithSigParams = (
   },
   domain: domain(),
   value: {
-    profileId: profileId,
+    H_profileId: H_profileId,
     followModule: followModule,
     followModuleInitData: followModuleInitData,
     nonce: nonce,
@@ -788,14 +788,14 @@ const buildSetFollowModuleWithSigParams = (
 });
 
 const buildSetDispatcherWithSigParams = (
-  profileId: BigNumberish,
+  H_profileId: BigNumberish,
   dispatcher: string,
   nonce: number,
   deadline: string
 ) => ({
   types: {
     SetDispatcherWithSig: [
-      { name: 'profileId', type: 'uint256' },
+      { name: 'H_profileId', type: 'uint256' },
       { name: 'dispatcher', type: 'address' },
       { name: 'nonce', type: 'uint256' },
       { name: 'deadline', type: 'uint256' },
@@ -803,7 +803,7 @@ const buildSetDispatcherWithSigParams = (
   },
   domain: domain(),
   value: {
-    profileId: profileId,
+    H_profileId: H_profileId,
     dispatcher: dispatcher,
     nonce: nonce,
     deadline: deadline,
@@ -811,14 +811,14 @@ const buildSetDispatcherWithSigParams = (
 });
 
 const buildSetProfileImageURIWithSigParams = (
-  profileId: BigNumberish,
+  H_profileId: BigNumberish,
   imageURI: string,
   nonce: number,
   deadline: string
 ) => ({
   types: {
     SetProfileImageURIWithSig: [
-      { name: 'profileId', type: 'uint256' },
+      { name: 'H_profileId', type: 'uint256' },
       { name: 'imageURI', type: 'string' },
       { name: 'nonce', type: 'uint256' },
       { name: 'deadline', type: 'uint256' },
@@ -826,7 +826,7 @@ const buildSetProfileImageURIWithSigParams = (
   },
   domain: domain(),
   value: {
-    profileId: profileId,
+    H_profileId: H_profileId,
     imageURI: imageURI,
     nonce: nonce,
     deadline: deadline,
@@ -834,7 +834,7 @@ const buildSetProfileImageURIWithSigParams = (
 });
 
 const buildSetDefaultProfileWithSigParams = (
-  profileId: BigNumberish,
+  H_profileId: BigNumberish,
   wallet: string,
   nonce: number,
   deadline: string
@@ -842,7 +842,7 @@ const buildSetDefaultProfileWithSigParams = (
   types: {
     SetDefaultProfileWithSig: [
       { name: 'wallet', type: 'address' },
-      { name: 'profileId', type: 'uint256' },
+      { name: 'H_profileId', type: 'uint256' },
       { name: 'nonce', type: 'uint256' },
       { name: 'deadline', type: 'uint256' },
     ],
@@ -850,21 +850,21 @@ const buildSetDefaultProfileWithSigParams = (
   domain: domain(),
   value: {
     wallet: wallet,
-    profileId: profileId,
+    H_profileId: H_profileId,
     nonce: nonce,
     deadline: deadline,
   },
 });
 
 const buildSetFollowNFTURIWithSigParams = (
-  profileId: BigNumberish,
+  H_profileId: BigNumberish,
   followNFTURI: string,
   nonce: number,
   deadline: string
 ) => ({
   types: {
     SetFollowNFTURIWithSig: [
-      { name: 'profileId', type: 'uint256' },
+      { name: 'H_profileId', type: 'uint256' },
       { name: 'followNFTURI', type: 'string' },
       { name: 'nonce', type: 'uint256' },
       { name: 'deadline', type: 'uint256' },
@@ -872,7 +872,7 @@ const buildSetFollowNFTURIWithSigParams = (
   },
   domain: domain(),
   value: {
-    profileId: profileId,
+    H_profileId: H_profileId,
     followNFTURI: followNFTURI,
     nonce: nonce,
     deadline: deadline,
@@ -880,7 +880,7 @@ const buildSetFollowNFTURIWithSigParams = (
 });
 
 const buildPostWithSigParams = (
-  profileId: BigNumberish,
+  H_profileId: BigNumberish,
   contentURI: string,
   collectModule: string,
   collectModuleInitData: Bytes | string,
@@ -891,7 +891,7 @@ const buildPostWithSigParams = (
 ) => ({
   types: {
     PostWithSig: [
-      { name: 'profileId', type: 'uint256' },
+      { name: 'H_profileId', type: 'uint256' },
       { name: 'contentURI', type: 'string' },
       { name: 'collectModule', type: 'address' },
       { name: 'collectModuleInitData', type: 'bytes' },
@@ -903,7 +903,7 @@ const buildPostWithSigParams = (
   },
   domain: domain(),
   value: {
-    profileId: profileId,
+    H_profileId: H_profileId,
     contentURI: contentURI,
     collectModule: collectModule,
     collectModuleInitData: collectModuleInitData,
@@ -915,9 +915,9 @@ const buildPostWithSigParams = (
 });
 
 const buildCommentWithSigParams = (
-  profileId: BigNumberish,
+  H_profileId: BigNumberish,
   contentURI: string,
-  profileIdPointed: BigNumberish,
+  H_profileIdPointed: BigNumberish,
   pubIdPointed: string,
   referenceModuleData: Bytes | string,
   collectModule: string,
@@ -929,9 +929,9 @@ const buildCommentWithSigParams = (
 ) => ({
   types: {
     CommentWithSig: [
-      { name: 'profileId', type: 'uint256' },
+      { name: 'H_profileId', type: 'uint256' },
       { name: 'contentURI', type: 'string' },
-      { name: 'profileIdPointed', type: 'uint256' },
+      { name: 'H_profileIdPointed', type: 'uint256' },
       { name: 'pubIdPointed', type: 'uint256' },
       { name: 'referenceModuleData', type: 'bytes' },
       { name: 'collectModule', type: 'address' },
@@ -944,9 +944,9 @@ const buildCommentWithSigParams = (
   },
   domain: domain(),
   value: {
-    profileId: profileId,
+    H_profileId: H_profileId,
     contentURI: contentURI,
-    profileIdPointed: profileIdPointed,
+    H_profileIdPointed: H_profileIdPointed,
     pubIdPointed: pubIdPointed,
     referenceModuleData: referenceModuleData,
     collectModule: collectModule,
@@ -959,8 +959,8 @@ const buildCommentWithSigParams = (
 });
 
 const buildMirrorWithSigParams = (
-  profileId: BigNumberish,
-  profileIdPointed: BigNumberish,
+  H_profileId: BigNumberish,
+  H_profileIdPointed: BigNumberish,
   pubIdPointed: string,
   referenceModuleData: Bytes | string,
   referenceModule: string,
@@ -970,8 +970,8 @@ const buildMirrorWithSigParams = (
 ) => ({
   types: {
     MirrorWithSig: [
-      { name: 'profileId', type: 'uint256' },
-      { name: 'profileIdPointed', type: 'uint256' },
+      { name: 'H_profileId', type: 'uint256' },
+      { name: 'H_profileIdPointed', type: 'uint256' },
       { name: 'pubIdPointed', type: 'uint256' },
       { name: 'referenceModuleData', type: 'bytes' },
       { name: 'referenceModule', type: 'address' },
@@ -982,8 +982,8 @@ const buildMirrorWithSigParams = (
   },
   domain: domain(),
   value: {
-    profileId: profileId,
-    profileIdPointed: profileIdPointed,
+    H_profileId: H_profileId,
+    H_profileIdPointed: H_profileIdPointed,
     pubIdPointed: pubIdPointed,
     referenceModuleData: referenceModuleData,
     referenceModule: referenceModule,
@@ -994,14 +994,14 @@ const buildMirrorWithSigParams = (
 });
 
 const buildFollowWithSigParams = (
-  profileIds: string[] | number[],
+  H_profileIds: string[] | number[],
   datas: Bytes[] | string[],
   nonce: number,
   deadline: string
 ) => ({
   types: {
     FollowWithSig: [
-      { name: 'profileIds', type: 'uint256[]' },
+      { name: 'H_profileIds', type: 'uint256[]' },
       { name: 'datas', type: 'bytes[]' },
       { name: 'nonce', type: 'uint256' },
       { name: 'deadline', type: 'uint256' },
@@ -1009,7 +1009,7 @@ const buildFollowWithSigParams = (
   },
   domain: domain(),
   value: {
-    profileIds: profileIds,
+    H_profileIds: H_profileIds,
     datas: datas,
     nonce: nonce,
     deadline: deadline,
@@ -1017,14 +1017,14 @@ const buildFollowWithSigParams = (
 });
 
 const buildToggleFollowWithSigParams = (
-  profileIds: string[] | number[],
+  H_profileIds: string[] | number[],
   enables: boolean[],
   nonce: number,
   deadline: string
 ) => ({
   types: {
     ToggleFollowWithSig: [
-      { name: 'profileIds', type: 'uint256[]' },
+      { name: 'H_profileIds', type: 'uint256[]' },
       { name: 'enables', type: 'bool[]' },
       { name: 'nonce', type: 'uint256' },
       { name: 'deadline', type: 'uint256' },
@@ -1037,7 +1037,7 @@ const buildToggleFollowWithSigParams = (
     verifyingContract: healthPeriphery.address,
   },
   value: {
-    profileIds: profileIds,
+    H_profileIds: H_profileIds,
     enables: enables,
     nonce: nonce,
     deadline: deadline,
@@ -1045,14 +1045,14 @@ const buildToggleFollowWithSigParams = (
 });
 
 const buildSetProfileMetadataURIWithSigParams = (
-  profileId: string | number,
+  H_profileId: string | number,
   metadata: string,
   nonce: number,
   deadline: string
 ) => ({
   types: {
     SetProfileMetadataURIWithSig: [
-      { name: 'profileId', type: 'uint256' },
+      { name: 'H_profileId', type: 'uint256' },
       { name: 'metadata', type: 'string' },
       { name: 'nonce', type: 'uint256' },
       { name: 'deadline', type: 'uint256' },
@@ -1065,7 +1065,7 @@ const buildSetProfileMetadataURIWithSigParams = (
     verifyingContract: healthPeriphery.address,
   },
   value: {
-    profileId: profileId,
+    H_profileId: H_profileId,
     metadata: metadata,
     nonce: nonce,
     deadline: deadline,
@@ -1073,7 +1073,7 @@ const buildSetProfileMetadataURIWithSigParams = (
 });
 
 const buildCollectWithSigParams = (
-  profileId: BigNumberish,
+  H_profileId: BigNumberish,
   pubId: string,
   data: Bytes | string,
   nonce: number,
@@ -1081,7 +1081,7 @@ const buildCollectWithSigParams = (
 ) => ({
   types: {
     CollectWithSig: [
-      { name: 'profileId', type: 'uint256' },
+      { name: 'H_profileId', type: 'uint256' },
       { name: 'pubId', type: 'uint256' },
       { name: 'data', type: 'bytes' },
       { name: 'nonce', type: 'uint256' },
@@ -1090,7 +1090,7 @@ const buildCollectWithSigParams = (
   },
   domain: domain(),
   value: {
-    profileId: profileId,
+    H_profileId: H_profileId,
     pubId: pubId,
     data: data,
     nonce: nonce,

@@ -61,7 +61,7 @@ makeSuiteCleanRoom('Fee Collect Module', function () {
         );
         await expect(
           healthHub.post({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: feeCollectModule.address,
             collectModuleInitData: collectModuleInitData,
@@ -78,7 +78,7 @@ makeSuiteCleanRoom('Fee Collect Module', function () {
         );
         await expect(
           healthHub.post({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: feeCollectModule.address,
             collectModuleInitData: collectModuleInitData,
@@ -95,7 +95,7 @@ makeSuiteCleanRoom('Fee Collect Module', function () {
         );
         await expect(
           healthHub.post({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: feeCollectModule.address,
             collectModuleInitData: collectModuleInitData,
@@ -112,7 +112,7 @@ makeSuiteCleanRoom('Fee Collect Module', function () {
         );
         await expect(
           healthHub.post({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: feeCollectModule.address,
             collectModuleInitData: collectModuleInitData,
@@ -131,7 +131,7 @@ makeSuiteCleanRoom('Fee Collect Module', function () {
         );
         await expect(
           healthHub.post({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: feeCollectModule.address,
             collectModuleInitData: collectModuleInitData,
@@ -182,7 +182,7 @@ makeSuiteCleanRoom('Fee Collect Module', function () {
       });
 
       it('UserTwo should mirror the original post, governance should set the treasury fee BPS to zero, userTwo collecting their mirror should not emit a transfer event to the treasury', async function () {
-        const secondProfileId = FIRST_PROFILE_ID + 1;
+        const secondH_ProfileId = FIRST_PROFILE_ID + 1;
         await expect(
           healthHub.connect(userTwo).createProfile({
             to: userTwoAddress,
@@ -195,8 +195,8 @@ makeSuiteCleanRoom('Fee Collect Module', function () {
         ).to.not.be.reverted;
         await expect(
           healthHub.connect(userTwo).mirror({
-            profileId: secondProfileId,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileId: secondH_ProfileId,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             referenceModuleData: [],
             referenceModule: ZERO_ADDRESS,
@@ -216,7 +216,7 @@ makeSuiteCleanRoom('Fee Collect Module', function () {
           currency.connect(userTwo).approve(feeCollectModule.address, MAX_UINT256)
         ).to.not.be.reverted;
 
-        const tx = healthHub.connect(userTwo).collect(secondProfileId, 1, data);
+        const tx = healthHub.connect(userTwo).collect(secondH_ProfileId, 1, data);
         const receipt = await waitForTx(tx);
 
         let currencyEventCount = 0;
@@ -295,7 +295,7 @@ makeSuiteCleanRoom('Fee Collect Module', function () {
       });
 
       it('UserTwo should mirror the original post, fail to collect from their mirror without following the original profile', async function () {
-        const secondProfileId = FIRST_PROFILE_ID + 1;
+        const secondH_ProfileId = FIRST_PROFILE_ID + 1;
         await expect(
           healthHub.connect(userTwo).createProfile({
             to: userTwoAddress,
@@ -308,8 +308,8 @@ makeSuiteCleanRoom('Fee Collect Module', function () {
         ).to.not.be.reverted;
         await expect(
           healthHub.connect(userTwo).mirror({
-            profileId: secondProfileId,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileId: secondH_ProfileId,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             referenceModuleData: [],
             referenceModule: ZERO_ADDRESS,
@@ -318,13 +318,13 @@ makeSuiteCleanRoom('Fee Collect Module', function () {
         ).to.not.be.reverted;
 
         const data = abiCoder.encode(['uint256'], [DEFAULT_COLLECT_PRICE]);
-        await expect(healthHub.connect(userTwo).collect(secondProfileId, 1, data)).to.be.revertedWith(
+        await expect(healthHub.connect(userTwo).collect(secondH_ProfileId, 1, data)).to.be.revertedWith(
           ERRORS.FOLLOW_INVALID
         );
       });
 
       it('UserTwo should mirror the original post, fail to collect from their mirror passing a different expected price in data', async function () {
-        const secondProfileId = FIRST_PROFILE_ID + 1;
+        const secondH_ProfileId = FIRST_PROFILE_ID + 1;
         await expect(
           healthHub.connect(userTwo).createProfile({
             to: userTwoAddress,
@@ -337,8 +337,8 @@ makeSuiteCleanRoom('Fee Collect Module', function () {
         ).to.not.be.reverted;
         await expect(
           healthHub.connect(userTwo).mirror({
-            profileId: secondProfileId,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileId: secondH_ProfileId,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             referenceModuleData: [],
             referenceModule: ZERO_ADDRESS,
@@ -352,13 +352,13 @@ makeSuiteCleanRoom('Fee Collect Module', function () {
           ['address', 'uint256'],
           [currency.address, DEFAULT_COLLECT_PRICE.div(2)]
         );
-        await expect(healthHub.connect(userTwo).collect(secondProfileId, 1, data)).to.be.revertedWith(
+        await expect(healthHub.connect(userTwo).collect(secondH_ProfileId, 1, data)).to.be.revertedWith(
           ERRORS.MODULE_DATA_MISMATCH
         );
       });
 
       it('UserTwo should mirror the original post, fail to collect from their mirror passing a different expected currency in data', async function () {
-        const secondProfileId = FIRST_PROFILE_ID + 1;
+        const secondH_ProfileId = FIRST_PROFILE_ID + 1;
         await expect(
           healthHub.connect(userTwo).createProfile({
             to: userTwoAddress,
@@ -371,8 +371,8 @@ makeSuiteCleanRoom('Fee Collect Module', function () {
         ).to.not.be.reverted;
         await expect(
           healthHub.connect(userTwo).mirror({
-            profileId: secondProfileId,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileId: secondH_ProfileId,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             referenceModuleData: [],
             referenceModule: ZERO_ADDRESS,
@@ -383,7 +383,7 @@ makeSuiteCleanRoom('Fee Collect Module', function () {
         await expect(healthHub.connect(userTwo).follow([FIRST_PROFILE_ID], [[]])).to.not.be.reverted;
 
         const data = abiCoder.encode(['address', 'uint256'], [userAddress, DEFAULT_COLLECT_PRICE]);
-        await expect(healthHub.connect(userTwo).collect(secondProfileId, 1, data)).to.be.revertedWith(
+        await expect(healthHub.connect(userTwo).collect(secondH_ProfileId, 1, data)).to.be.revertedWith(
           ERRORS.MODULE_DATA_MISMATCH
         );
       });
@@ -397,7 +397,7 @@ makeSuiteCleanRoom('Fee Collect Module', function () {
         [DEFAULT_COLLECT_PRICE, currency.address, userAddress, REFERRAL_FEE_BPS, true]
       );
       const tx = healthHub.post({
-        profileId: FIRST_PROFILE_ID,
+        H_profileId: FIRST_PROFILE_ID,
         contentURI: MOCK_URI,
         collectModule: feeCollectModule.address,
         collectModuleInitData: collectModuleInitData,
@@ -420,14 +420,14 @@ makeSuiteCleanRoom('Fee Collect Module', function () {
       ]);
     });
 
-    it('User should post with the fee collect module as the collect module and data, fetched publication data should be accurate', async function () {
+    it('User should post with the fee collect module as the collect module and data, fetched prescription data should be accurate', async function () {
       const collectModuleInitData = abiCoder.encode(
         ['uint256', 'address', 'address', 'uint16', 'bool'],
         [DEFAULT_COLLECT_PRICE, currency.address, userAddress, REFERRAL_FEE_BPS, true]
       );
       await expect(
         healthHub.post({
-          profileId: FIRST_PROFILE_ID,
+          H_profileId: FIRST_PROFILE_ID,
           contentURI: MOCK_URI,
           collectModule: feeCollectModule.address,
           collectModuleInitData: collectModuleInitData,
@@ -452,7 +452,7 @@ makeSuiteCleanRoom('Fee Collect Module', function () {
       );
       await expect(
         healthHub.post({
-          profileId: FIRST_PROFILE_ID,
+          H_profileId: FIRST_PROFILE_ID,
           contentURI: MOCK_URI,
           collectModule: feeCollectModule.address,
           collectModuleInitData: collectModuleInitData,
@@ -491,7 +491,7 @@ makeSuiteCleanRoom('Fee Collect Module', function () {
       );
       await expect(
         healthHub.post({
-          profileId: FIRST_PROFILE_ID,
+          H_profileId: FIRST_PROFILE_ID,
           contentURI: MOCK_URI,
           collectModule: feeCollectModule.address,
           collectModuleInitData: collectModuleInitData,
@@ -531,7 +531,7 @@ makeSuiteCleanRoom('Fee Collect Module', function () {
       );
       await expect(
         healthHub.post({
-          profileId: FIRST_PROFILE_ID,
+          H_profileId: FIRST_PROFILE_ID,
           contentURI: MOCK_URI,
           collectModule: feeCollectModule.address,
           collectModuleInitData: collectModuleInitData,
@@ -566,7 +566,7 @@ makeSuiteCleanRoom('Fee Collect Module', function () {
     });
 
     it('User should post with the fee collect module as the collect module and data, user two mirrors, follows, then collects from their mirror and pays fee, fee distribution is valid', async function () {
-      const secondProfileId = FIRST_PROFILE_ID + 1;
+      const secondH_ProfileId = FIRST_PROFILE_ID + 1;
       const collectModuleInitData = abiCoder.encode(
         ['uint256', 'address', 'address', 'uint16', 'bool'],
         [DEFAULT_COLLECT_PRICE, currency.address, userAddress, REFERRAL_FEE_BPS, true]
@@ -574,7 +574,7 @@ makeSuiteCleanRoom('Fee Collect Module', function () {
 
       await expect(
         healthHub.post({
-          profileId: FIRST_PROFILE_ID,
+          H_profileId: FIRST_PROFILE_ID,
           contentURI: MOCK_URI,
           collectModule: feeCollectModule.address,
           collectModuleInitData: collectModuleInitData,
@@ -595,8 +595,8 @@ makeSuiteCleanRoom('Fee Collect Module', function () {
       ).to.not.be.reverted;
       await expect(
         healthHub.connect(userTwo).mirror({
-          profileId: secondProfileId,
-          profileIdPointed: FIRST_PROFILE_ID,
+          H_profileId: secondH_ProfileId,
+          H_profileIdPointed: FIRST_PROFILE_ID,
           pubIdPointed: 1,
           referenceModuleData: [],
           referenceModule: ZERO_ADDRESS,
@@ -613,7 +613,7 @@ makeSuiteCleanRoom('Fee Collect Module', function () {
         ['address', 'uint256'],
         [currency.address, DEFAULT_COLLECT_PRICE]
       );
-      await expect(healthHub.connect(userTwo).collect(secondProfileId, 1, data)).to.not.be.reverted;
+      await expect(healthHub.connect(userTwo).collect(secondH_ProfileId, 1, data)).to.not.be.reverted;
 
       const expectedTreasuryAmount = BigNumber.from(DEFAULT_COLLECT_PRICE)
         .mul(TREASURY_FEE_BPS)
@@ -635,7 +635,7 @@ makeSuiteCleanRoom('Fee Collect Module', function () {
     });
 
     it('User should post with the fee collect module as the collect module and data, with no referral fee, user two mirrors, follows, then collects from their mirror and pays fee, fee distribution is valid', async function () {
-      const secondProfileId = FIRST_PROFILE_ID + 1;
+      const secondH_ProfileId = FIRST_PROFILE_ID + 1;
       const collectModuleInitData = abiCoder.encode(
         ['uint256', 'address', 'address', 'uint16', 'bool'],
         [DEFAULT_COLLECT_PRICE, currency.address, userAddress, 0, true]
@@ -643,7 +643,7 @@ makeSuiteCleanRoom('Fee Collect Module', function () {
 
       await expect(
         healthHub.post({
-          profileId: FIRST_PROFILE_ID,
+          H_profileId: FIRST_PROFILE_ID,
           contentURI: MOCK_URI,
           collectModule: feeCollectModule.address,
           collectModuleInitData: collectModuleInitData,
@@ -664,8 +664,8 @@ makeSuiteCleanRoom('Fee Collect Module', function () {
       ).to.not.be.reverted;
       await expect(
         healthHub.connect(userTwo).mirror({
-          profileId: secondProfileId,
-          profileIdPointed: FIRST_PROFILE_ID,
+          H_profileId: secondH_ProfileId,
+          H_profileIdPointed: FIRST_PROFILE_ID,
           pubIdPointed: 1,
           referenceModuleData: [],
           referenceModule: ZERO_ADDRESS,
@@ -682,7 +682,7 @@ makeSuiteCleanRoom('Fee Collect Module', function () {
         ['address', 'uint256'],
         [currency.address, DEFAULT_COLLECT_PRICE]
       );
-      await expect(healthHub.connect(userTwo).collect(secondProfileId, 1, data)).to.not.be.reverted;
+      await expect(healthHub.connect(userTwo).collect(secondH_ProfileId, 1, data)).to.not.be.reverted;
 
       const expectedTreasuryAmount = BigNumber.from(DEFAULT_COLLECT_PRICE)
         .mul(TREASURY_FEE_BPS)

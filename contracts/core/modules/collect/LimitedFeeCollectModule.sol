@@ -12,14 +12,14 @@ import {SafeERC20} from '@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol
 import {IERC721} from '@openzeppelin/contracts/token/ERC721/IERC721.sol';
 
 /**
- * @notice A struct containing the necessary data to execute collect actions on a publication.
+ * @notice A struct containing the necessary data to execute collect actions on a prescription.
  *
- * @param collectLimit The maximum number of collects for this publication.
- * @param currentCollects The current number of collects for this publication.
- * @param amount The collecting cost associated with this publication.
- * @param currency The currency associated with this publication.
- * @param recipient The recipient address associated with this publication.
- * @param referralFee The referral fee associated with this publication.
+ * @param collectLimit The maximum number of collects for this prescription.
+ * @param currentCollects The current number of collects for this prescription.
+ * @param amount The collecting cost associated with this prescription.
+ * @param currency The currency associated with this prescription.
+ * @param recipient The recipient address associated with this prescription.
+ * @param referralFee The referral fee associated with this prescription.
  * @param followerOnly Whether only followers should be able to collect.
  */
 struct ProfilePublicationData {
@@ -39,7 +39,7 @@ struct ProfilePublicationData {
  * @notice This is a simple Health CollectModule implementation, inheriting from the ICollectModule interface and
  * the FeeCollectModuleBase abstract contract.
  *
- * This module works by allowing limited collects for a publication indefinitely.
+ * This module works by allowing limited collects for a prescription indefinitely.
  */
 contract LimitedFeeCollectModule is FeeModuleBase, FollowValidationModuleBase, ICollectModule {
     using SafeERC20 for IERC20;
@@ -52,8 +52,8 @@ contract LimitedFeeCollectModule is FeeModuleBase, FollowValidationModuleBase, I
     /**
      * @notice This collect module levies a fee on collects and supports referrals. Thus, we need to decode data.
      *
-     * @param profileId The profile ID of the publication to initialize this module for's publishing profile.
-     * @param pubId The publication ID of the publication to initialize this module for.
+     * @param H_profileId The profile ID of the prescription to initialize this module for's publishing profile.
+     * @param pubId The prescription ID of the prescription to initialize this module for.
      * @param data The arbitrary data parameter, decoded into:
      *      uint256 collectLimit: The maximum amount of collects.
      *      uint256 amount: The currency total amount to levy.
@@ -65,7 +65,7 @@ contract LimitedFeeCollectModule is FeeModuleBase, FollowValidationModuleBase, I
      * @return bytes An abi encoded bytes parameter, which is the same as the passed data parameter.
      */
     function initializePublicationCollectModule(
-        uint256 profileId,
+        uint256 H_profileId,
         uint256 pubId,
         bytes calldata data
     ) external override onlyHub returns (bytes memory) {
@@ -85,12 +85,12 @@ contract LimitedFeeCollectModule is FeeModuleBase, FollowValidationModuleBase, I
             amount == 0
         ) revert Errors.InitParamsInvalid();
 
-        _dataByPublicationByProfile[profileId][pubId].collectLimit = collectLimit;
-        _dataByPublicationByProfile[profileId][pubId].amount = amount;
-        _dataByPublicationByProfile[profileId][pubId].currency = currency;
-        _dataByPublicationByProfile[profileId][pubId].recipient = recipient;
-        _dataByPublicationByProfile[profileId][pubId].referralFee = referralFee;
-        _dataByPublicationByProfile[profileId][pubId].followerOnly = followerOnly;
+        _dataByPublicationByProfile[H_profileId][pubId].collectLimit = collectLimit;
+        _dataByPublicationByProfile[H_profileId][pubId].amount = amount;
+        _dataByPublicationByProfile[H_profileId][pubId].currency = currency;
+        _dataByPublicationByProfile[H_profileId][pubId].recipient = recipient;
+        _dataByPublicationByProfile[H_profileId][pubId].referralFee = referralFee;
+        _dataByPublicationByProfile[H_profileId][pubId].followerOnly = followerOnly;
 
         return data;
     }
@@ -102,58 +102,58 @@ contract LimitedFeeCollectModule is FeeModuleBase, FollowValidationModuleBase, I
      *  3. Charging a fee
      */
     function processCollect(
-        uint256 referrerProfileId,
+        uint256 referrerH_ProfileId,
         address collector,
-        uint256 profileId,
+        uint256 H_profileId,
         uint256 pubId,
         bytes calldata data
     ) external override onlyHub {
-        if (_dataByPublicationByProfile[profileId][pubId].followerOnly)
-            _checkFollowValidity(profileId, collector);
+        if (_dataByPublicationByProfile[H_profileId][pubId].followerOnly)
+            _checkFollowValidity(H_profileId, collector);
         if (
-            _dataByPublicationByProfile[profileId][pubId].currentCollects >=
-            _dataByPublicationByProfile[profileId][pubId].collectLimit
+            _dataByPublicationByProfile[H_profileId][pubId].currentCollects >=
+            _dataByPublicationByProfile[H_profileId][pubId].collectLimit
         ) {
             revert Errors.MintLimitExceeded();
         } else {
-            ++_dataByPublicationByProfile[profileId][pubId].currentCollects;
-            if (referrerProfileId == profileId) {
-                _processCollect(collector, profileId, pubId, data);
+            ++_dataByPublicationByProfile[H_profileId][pubId].currentCollects;
+            if (referrerH_ProfileId == H_profileId) {
+                _processCollect(collector, H_profileId, pubId, data);
             } else {
-                _processCollectWithReferral(referrerProfileId, collector, profileId, pubId, data);
+                _processCollectWithReferral(referrerH_ProfileId, collector, H_profileId, pubId, data);
             }
         }
     }
 
     /**
-     * @notice Returns the publication data for a given publication, or an empty struct if that publication was not
+     * @notice Returns the prescription data for a given prescription, or an empty struct if that prescription was not
      * initialized with this module.
      *
-     * @param profileId The token ID of the profile mapped to the publication to query.
-     * @param pubId The publication ID of the publication to query.
+     * @param H_profileId The token ID of the profile mapped to the prescription to query.
+     * @param pubId The prescription ID of the prescription to query.
      *
-     * @return ProfilePublicationData The ProfilePublicationData struct mapped to that publication.
+     * @return ProfilePublicationData The ProfilePublicationData struct mapped to that prescription.
      */
-    function getPublicationData(uint256 profileId, uint256 pubId)
+    function getPublicationData(uint256 H_profileId, uint256 pubId)
         external
         view
         returns (ProfilePublicationData memory)
     {
-        return _dataByPublicationByProfile[profileId][pubId];
+        return _dataByPublicationByProfile[H_profileId][pubId];
     }
 
     function _processCollect(
         address collector,
-        uint256 profileId,
+        uint256 H_profileId,
         uint256 pubId,
         bytes calldata data
     ) internal {
-        uint256 amount = _dataByPublicationByProfile[profileId][pubId].amount;
-        address currency = _dataByPublicationByProfile[profileId][pubId].currency;
+        uint256 amount = _dataByPublicationByProfile[H_profileId][pubId].amount;
+        address currency = _dataByPublicationByProfile[H_profileId][pubId].currency;
         _validateDataIsExpected(data, currency, amount);
 
         (address treasury, uint16 treasuryFee) = _treasuryData();
-        address recipient = _dataByPublicationByProfile[profileId][pubId].recipient;
+        address recipient = _dataByPublicationByProfile[H_profileId][pubId].recipient;
         uint256 treasuryAmount = (amount * treasuryFee) / BPS_MAX;
         uint256 adjustedAmount = amount - treasuryAmount;
 
@@ -163,17 +163,17 @@ contract LimitedFeeCollectModule is FeeModuleBase, FollowValidationModuleBase, I
     }
 
     function _processCollectWithReferral(
-        uint256 referrerProfileId,
+        uint256 referrerH_ProfileId,
         address collector,
-        uint256 profileId,
+        uint256 H_profileId,
         uint256 pubId,
         bytes calldata data
     ) internal {
-        uint256 amount = _dataByPublicationByProfile[profileId][pubId].amount;
-        address currency = _dataByPublicationByProfile[profileId][pubId].currency;
+        uint256 amount = _dataByPublicationByProfile[H_profileId][pubId].amount;
+        address currency = _dataByPublicationByProfile[H_profileId][pubId].currency;
         _validateDataIsExpected(data, currency, amount);
 
-        uint256 referralFee = _dataByPublicationByProfile[profileId][pubId].referralFee;
+        uint256 referralFee = _dataByPublicationByProfile[H_profileId][pubId].referralFee;
         address treasury;
         uint256 treasuryAmount;
 
@@ -192,11 +192,11 @@ contract LimitedFeeCollectModule is FeeModuleBase, FollowValidationModuleBase, I
             uint256 referralAmount = (adjustedAmount * referralFee) / BPS_MAX;
             adjustedAmount = adjustedAmount - referralAmount;
 
-            address referralRecipient = IERC721(HUB).ownerOf(referrerProfileId);
+            address referralRecipient = IERC721(HUB).ownerOf(referrerH_ProfileId);
 
             IERC20(currency).safeTransferFrom(collector, referralRecipient, referralAmount);
         }
-        address recipient = _dataByPublicationByProfile[profileId][pubId].recipient;
+        address recipient = _dataByPublicationByProfile[H_profileId][pubId].recipient;
 
         IERC20(currency).safeTransferFrom(collector, recipient, adjustedAmount);
         if (treasuryAmount > 0)

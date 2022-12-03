@@ -57,7 +57,7 @@ makeSuiteCleanRoom('Follower Only Reference Module', function () {
     ).to.not.be.reverted;
     await expect(
       healthHub.post({
-        profileId: FIRST_PROFILE_ID,
+        H_profileId: FIRST_PROFILE_ID,
         contentURI: MOCK_URI,
         collectModule: freeCollectModule.address,
         collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -73,9 +73,9 @@ makeSuiteCleanRoom('Follower Only Reference Module', function () {
       it('Commenting should fail if commenter is not a follower and follow NFT not yet deployed', async function () {
         await expect(
           healthHub.connect(userTwo).comment({
-            profileId: SECOND_PROFILE_ID,
+            H_profileId: SECOND_PROFILE_ID,
             contentURI: MOCK_URI,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             collectModule: freeCollectModule.address,
             collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -99,9 +99,9 @@ makeSuiteCleanRoom('Follower Only Reference Module', function () {
 
         await expect(
           healthHub.connect(userTwo).comment({
-            profileId: SECOND_PROFILE_ID,
+            H_profileId: SECOND_PROFILE_ID,
             contentURI: MOCK_URI,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             collectModule: freeCollectModule.address,
             collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -117,8 +117,8 @@ makeSuiteCleanRoom('Follower Only Reference Module', function () {
       it('Mirroring should fail if mirrorer is not a follower and follow NFT not yet deployed', async function () {
         await expect(
           healthHub.connect(userTwo).mirror({
-            profileId: SECOND_PROFILE_ID,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileId: SECOND_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             referenceModuleData: [],
             referenceModule: ZERO_ADDRESS,
@@ -140,8 +140,8 @@ makeSuiteCleanRoom('Follower Only Reference Module', function () {
 
         await expect(
           healthHub.connect(userTwo).mirror({
-            profileId: SECOND_PROFILE_ID,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileId: SECOND_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             referenceModuleData: [],
             referenceModule: ZERO_ADDRESS,
@@ -156,7 +156,7 @@ makeSuiteCleanRoom('Follower Only Reference Module', function () {
     context('Publishing', function () {
       it('Posting with follower only reference module as reference module should emit expected events', async function () {
         const tx = healthHub.post({
-          profileId: FIRST_PROFILE_ID,
+          H_profileId: FIRST_PROFILE_ID,
           contentURI: MOCK_URI,
           collectModule: freeCollectModule.address,
           collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -189,9 +189,9 @@ makeSuiteCleanRoom('Follower Only Reference Module', function () {
 
         await expect(
           healthHub.connect(userTwo).comment({
-            profileId: SECOND_PROFILE_ID,
+            H_profileId: SECOND_PROFILE_ID,
             contentURI: MOCK_URI,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             collectModule: freeCollectModule.address,
             collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -202,7 +202,7 @@ makeSuiteCleanRoom('Follower Only Reference Module', function () {
         ).to.not.be.reverted;
       });
 
-      it('Commenting should work if the commenter is the publication owner and he is following himself', async function () {
+      it('Commenting should work if the commenter is the prescription owner and he is following himself', async function () {
         await expect(healthHub.follow([FIRST_PROFILE_ID], [[]])).to.not.be.reverted;
         const followNFT = FollowNFT__factory.connect(
           await healthHub.getFollowNFT(FIRST_PROFILE_ID),
@@ -211,9 +211,9 @@ makeSuiteCleanRoom('Follower Only Reference Module', function () {
 
         await expect(
           healthHub.comment({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             referenceModuleData: [],
             collectModule: freeCollectModule.address,
@@ -224,12 +224,12 @@ makeSuiteCleanRoom('Follower Only Reference Module', function () {
         ).to.not.be.reverted;
       });
 
-      it('Commenting should work if the commenter is the publication owner even when he is not following himself and follow NFT was not deployed', async function () {
+      it('Commenting should work if the commenter is the prescription owner even when he is not following himself and follow NFT was not deployed', async function () {
         await expect(
           healthHub.comment({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             referenceModuleData: [],
             collectModule: freeCollectModule.address,
@@ -240,7 +240,7 @@ makeSuiteCleanRoom('Follower Only Reference Module', function () {
         ).to.not.be.reverted;
       });
 
-      it('Commenting should work if the commenter is the publication owner even when he is not following himself and follow NFT was deployed', async function () {
+      it('Commenting should work if the commenter is the prescription owner even when he is not following himself and follow NFT was deployed', async function () {
         await expect(healthHub.follow([FIRST_PROFILE_ID], [[]])).to.not.be.reverted;
         const followNFT = FollowNFT__factory.connect(
           await healthHub.getFollowNFT(FIRST_PROFILE_ID),
@@ -251,9 +251,9 @@ makeSuiteCleanRoom('Follower Only Reference Module', function () {
 
         await expect(
           healthHub.comment({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             referenceModuleData: [],
             collectModule: freeCollectModule.address,
@@ -279,9 +279,9 @@ makeSuiteCleanRoom('Follower Only Reference Module', function () {
 
         await expect(
           healthHub.connect(userTwo).comment({
-            profileId: SECOND_PROFILE_ID,
+            H_profileId: SECOND_PROFILE_ID,
             contentURI: MOCK_URI,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             collectModule: freeCollectModule.address,
             collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -303,8 +303,8 @@ makeSuiteCleanRoom('Follower Only Reference Module', function () {
 
         await expect(
           healthHub.connect(userTwo).mirror({
-            profileId: SECOND_PROFILE_ID,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileId: SECOND_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             referenceModuleData: [],
             referenceModule: ZERO_ADDRESS,
@@ -328,8 +328,8 @@ makeSuiteCleanRoom('Follower Only Reference Module', function () {
 
         await expect(
           healthHub.connect(userTwo).mirror({
-            profileId: SECOND_PROFILE_ID,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileId: SECOND_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             referenceModuleData: [],
             referenceModule: ZERO_ADDRESS,
@@ -338,7 +338,7 @@ makeSuiteCleanRoom('Follower Only Reference Module', function () {
         ).to.not.be.reverted;
       });
 
-      it('Mirroring should work if the mirrorer is the publication owner and he is following himself', async function () {
+      it('Mirroring should work if the mirrorer is the prescription owner and he is following himself', async function () {
         await expect(healthHub.follow([FIRST_PROFILE_ID], [[]])).to.not.be.reverted;
         const followNFT = FollowNFT__factory.connect(
           await healthHub.getFollowNFT(FIRST_PROFILE_ID),
@@ -347,8 +347,8 @@ makeSuiteCleanRoom('Follower Only Reference Module', function () {
 
         await expect(
           healthHub.mirror({
-            profileId: FIRST_PROFILE_ID,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             referenceModuleData: [],
             referenceModule: ZERO_ADDRESS,
@@ -357,11 +357,11 @@ makeSuiteCleanRoom('Follower Only Reference Module', function () {
         ).to.not.be.reverted;
       });
 
-      it('Mirroring should work if the mirrorer is the publication owner even when he is not following himself and follow NFT was not deployed', async function () {
+      it('Mirroring should work if the mirrorer is the prescription owner even when he is not following himself and follow NFT was not deployed', async function () {
         await expect(
           healthHub.mirror({
-            profileId: FIRST_PROFILE_ID,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             referenceModuleData: [],
             referenceModule: ZERO_ADDRESS,
@@ -370,7 +370,7 @@ makeSuiteCleanRoom('Follower Only Reference Module', function () {
         ).to.not.be.reverted;
       });
 
-      it('Mirroring should work if the mirrorer is the publication owner even when he is not following himself and follow NFT was deployed', async function () {
+      it('Mirroring should work if the mirrorer is the prescription owner even when he is not following himself and follow NFT was deployed', async function () {
         await expect(healthHub.follow([FIRST_PROFILE_ID], [[]])).to.not.be.reverted;
         const followNFT = FollowNFT__factory.connect(
           await healthHub.getFollowNFT(FIRST_PROFILE_ID),
@@ -381,8 +381,8 @@ makeSuiteCleanRoom('Follower Only Reference Module', function () {
 
         await expect(
           healthHub.mirror({
-            profileId: FIRST_PROFILE_ID,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             referenceModuleData: [],
             referenceModule: ZERO_ADDRESS,

@@ -109,7 +109,7 @@ makeSuiteCleanRoom('Setting Follow Module', function () {
 
         await expect(
           healthHub.setFollowModuleWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             followModule: mockFollowModule.address,
             followModuleInitData: followModuleInitData,
             sig: {
@@ -140,7 +140,7 @@ makeSuiteCleanRoom('Setting Follow Module', function () {
 
         await expect(
           healthHub.setFollowModuleWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             followModule: mockFollowModule.address,
             followModuleInitData: followModuleInitData,
             sig: {
@@ -171,7 +171,7 @@ makeSuiteCleanRoom('Setting Follow Module', function () {
 
         await expect(
           healthHub.setFollowModuleWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             followModule: mockFollowModule.address,
             followModuleInitData: followModuleInitData,
             sig: {
@@ -198,7 +198,7 @@ makeSuiteCleanRoom('Setting Follow Module', function () {
 
         await expect(
           healthHub.setFollowModuleWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             followModule: mockFollowModule.address,
             followModuleInitData: followModuleInitData,
             sig: {
@@ -230,7 +230,7 @@ makeSuiteCleanRoom('Setting Follow Module', function () {
 
         await expect(
           healthHub.setFollowModuleWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             followModule: mockFollowModule.address,
             followModuleInitData: mockModuleData,
             sig: {
@@ -262,7 +262,7 @@ makeSuiteCleanRoom('Setting Follow Module', function () {
 
         await expect(
           healthHub.setFollowModuleWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             followModule: mockFollowModule.address,
             followModuleInitData: mockModuleData,
             sig: {

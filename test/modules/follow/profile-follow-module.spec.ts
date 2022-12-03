@@ -76,7 +76,7 @@ makeSuiteCleanRoom('Profile Follow Module', function () {
       });
 
       it('Follow should fail when the passed follower profile does not exist because has been burned', async function () {
-        const secondProfileId = FIRST_PROFILE_ID + 1;
+        const secondH_ProfileId = FIRST_PROFILE_ID + 1;
         await expect(
           healthHub.createProfile({
             to: userTwoAddress,
@@ -87,9 +87,9 @@ makeSuiteCleanRoom('Profile Follow Module', function () {
             followNFTURI: MOCK_FOLLOW_NFT_URI,
           })
         ).to.not.be.reverted;
-        await expect(healthHub.connect(userTwo).burn(secondProfileId)).to.not.be.reverted;
+        await expect(healthHub.connect(userTwo).burn(secondH_ProfileId)).to.not.be.reverted;
 
-        const data = abiCoder.encode(['uint256'], [secondProfileId]);
+        const data = abiCoder.encode(['uint256'], [secondH_ProfileId]);
         await expect(
           healthHub.connect(userTwo).follow([FIRST_PROFILE_ID], [data])
         ).to.be.revertedWith(ERRORS.ERC721_QUERY_FOR_NONEXISTENT_TOKEN);
@@ -126,9 +126,9 @@ makeSuiteCleanRoom('Profile Follow Module', function () {
         await expect(
           healthHub.connect(userTwo).follow([FIRST_PROFILE_ID], [DEFAULT_FOLLOW_DATA])
         ).to.not.be.reverted;
-        const followerProfileId = FIRST_PROFILE_ID + 1;
+        const followerH_ProfileId = FIRST_PROFILE_ID + 1;
         expect(
-          await profileFollowModule.isProfileFollowing(followerProfileId, FIRST_PROFILE_ID)
+          await profileFollowModule.isProfileFollowing(followerH_ProfileId, FIRST_PROFILE_ID)
         ).to.be.true;
         await expect(
           healthHub.connect(userTwo).follow([FIRST_PROFILE_ID], [DEFAULT_FOLLOW_DATA])
@@ -149,16 +149,16 @@ makeSuiteCleanRoom('Profile Follow Module', function () {
         await expect(
           healthHub.connect(userTwo).follow([FIRST_PROFILE_ID], [DEFAULT_FOLLOW_DATA])
         ).to.not.be.reverted;
-        const followerProfileId = FIRST_PROFILE_ID + 1;
+        const followerH_ProfileId = FIRST_PROFILE_ID + 1;
         expect(
-          await profileFollowModule.isProfileFollowing(followerProfileId, FIRST_PROFILE_ID)
+          await profileFollowModule.isProfileFollowing(followerH_ProfileId, FIRST_PROFILE_ID)
         ).to.be.true;
 
         await expect(
           healthHub.transferFrom(userAddress, userThreeAddress, FIRST_PROFILE_ID)
         ).to.not.be.reverted;
         expect(
-          await profileFollowModule.isProfileFollowing(followerProfileId, FIRST_PROFILE_ID)
+          await profileFollowModule.isProfileFollowing(followerH_ProfileId, FIRST_PROFILE_ID)
         ).to.be.true;
 
         await expect(
@@ -260,9 +260,9 @@ makeSuiteCleanRoom('Profile Follow Module', function () {
             followNFTURI: MOCK_FOLLOW_NFT_URI,
           })
         ).to.not.be.reverted;
-        const followerProfileId = FIRST_PROFILE_ID + 1;
+        const followerH_ProfileId = FIRST_PROFILE_ID + 1;
         expect(
-          await profileFollowModule.isProfileFollowing(followerProfileId, FIRST_PROFILE_ID)
+          await profileFollowModule.isProfileFollowing(followerH_ProfileId, FIRST_PROFILE_ID)
         ).to.be.false;
         await expect(
           healthHub.connect(userTwo).follow([FIRST_PROFILE_ID], [DEFAULT_FOLLOW_DATA])

@@ -12,12 +12,12 @@ interface IFollowModule {
     /**
      * @notice Initializes a follow module for a given Health profile. This can only be called by the hub contract.
      *
-     * @param profileId The token ID of the profile to initialize this follow module for.
+     * @param H_profileId The token ID of the profile to initialize this follow module for.
      * @param data Arbitrary data passed by the profile creator.
      *
      * @return bytes The encoded data to emit in the hub.
      */
-    function initializeFollowModule(uint256 profileId, bytes calldata data)
+    function initializeFollowModule(uint256 H_profileId, bytes calldata data)
         external
         returns (bytes memory);
 
@@ -25,12 +25,12 @@ interface IFollowModule {
      * @notice Processes a given follow, this can only be called from the HealthHub contract.
      *
      * @param follower The follower address.
-     * @param profileId The token ID of the profile being followed.
+     * @param H_profileId The token ID of the profile being followed.
      * @param data Arbitrary data passed by the follower.
      */
     function processFollow(
         address follower,
-        uint256 profileId,
+        uint256 H_profileId,
         bytes calldata data
     ) external;
 
@@ -42,13 +42,13 @@ interface IFollowModule {
      * was initialized if the profile's follow module was previously different. This transfer hook should take this
      * into consideration, especially when the module holds state associated with individual follow NFTs.
      *
-     * @param profileId The token ID of the profile associated with the follow NFT being transferred.
+     * @param H_profileId The token ID of the profile associated with the follow NFT being transferred.
      * @param from The address sending the follow NFT.
      * @param to The address receiving the follow NFT.
      * @param followNFTTokenId The token ID of the follow NFT being transferred.
      */
     function followModuleTransferHook(
-        uint256 profileId,
+        uint256 H_profileId,
         address from,
         address to,
         uint256 followNFTTokenId
@@ -70,14 +70,14 @@ interface IFollowModule {
      *      2. The follow module:
      *          - Validates the subscription status for that given NFT, reverting on an invalid subscription.
      *
-     * @param profileId The token ID of the profile to validate the follow for.
+     * @param H_profileId The token ID of the profile to validate the follow for.
      * @param follower The follower address to validate the follow for.
      * @param followNFTTokenId The followNFT token ID to validate the follow for.
      *
      * @return true if the given address is following the given profile ID, false otherwise.
      */
     function isFollowing(
-        uint256 profileId,
+        uint256 H_profileId,
         address follower,
         uint256 followNFTTokenId
     ) external view returns (bool);

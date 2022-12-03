@@ -146,7 +146,7 @@ makeSuiteCleanRoom('Misc', function () {
       expect(await healthHub.getFollowModule(FIRST_PROFILE_ID)).to.eq(mockFollowModule.address);
     });
 
-    it('Profile publication count getter should return zero, then the correct amount after some publications', async function () {
+    it('Profile prescription count getter should return zero, then the correct amount after some prescriptions', async function () {
       expect(await healthHub.getPubCount(FIRST_PROFILE_ID)).to.eq(0);
 
       await expect(
@@ -157,7 +157,7 @@ makeSuiteCleanRoom('Misc', function () {
       for (let i = 0; i < expectedCount; i++) {
         await expect(
           healthHub.post({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: freeCollectModule.address,
             collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -207,7 +207,7 @@ makeSuiteCleanRoom('Misc', function () {
 
       await expect(
         healthHub.post({
-          profileId: FIRST_PROFILE_ID,
+          H_profileId: FIRST_PROFILE_ID,
           contentURI: MOCK_URI,
           collectModule: freeCollectModule.address,
           collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -219,7 +219,7 @@ makeSuiteCleanRoom('Misc', function () {
 
       await expect(
         healthHub.post({
-          profileId: FIRST_PROFILE_ID,
+          H_profileId: FIRST_PROFILE_ID,
           contentURI: MOCK_URI,
           collectModule: freeCollectModule.address,
           collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -239,7 +239,7 @@ makeSuiteCleanRoom('Misc', function () {
 
       await expect(
         healthHub.post({
-          profileId: FIRST_PROFILE_ID,
+          H_profileId: FIRST_PROFILE_ID,
           contentURI: MOCK_URI,
           collectModule: freeCollectModule.address,
           collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -260,7 +260,7 @@ makeSuiteCleanRoom('Misc', function () {
 
       await expect(
         healthHub.post({
-          profileId: FIRST_PROFILE_ID,
+          H_profileId: FIRST_PROFILE_ID,
           contentURI: MOCK_URI,
           collectModule: freeCollectModule.address,
           collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -271,9 +271,9 @@ makeSuiteCleanRoom('Misc', function () {
 
       await expect(
         healthHub.comment({
-          profileId: FIRST_PROFILE_ID,
+          H_profileId: FIRST_PROFILE_ID,
           contentURI: MOCK_URI,
-          profileIdPointed: FIRST_PROFILE_ID,
+          H_profileIdPointed: FIRST_PROFILE_ID,
           pubIdPointed: 1,
           referenceModuleData: [],
           collectModule: freeCollectModule.address,
@@ -295,7 +295,7 @@ makeSuiteCleanRoom('Misc', function () {
 
       await expect(
         healthHub.post({
-          profileId: FIRST_PROFILE_ID,
+          H_profileId: FIRST_PROFILE_ID,
           contentURI: MOCK_URI,
           collectModule: freeCollectModule.address,
           collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -306,8 +306,8 @@ makeSuiteCleanRoom('Misc', function () {
 
       await expect(
         healthHub.mirror({
-          profileId: FIRST_PROFILE_ID,
-          profileIdPointed: FIRST_PROFILE_ID,
+          H_profileId: FIRST_PROFILE_ID,
+          H_profileIdPointed: FIRST_PROFILE_ID,
           pubIdPointed: 1,
           referenceModuleData: [],
           referenceModule: ZERO_ADDRESS,
@@ -327,7 +327,7 @@ makeSuiteCleanRoom('Misc', function () {
 
       await expect(
         healthHub.post({
-          profileId: FIRST_PROFILE_ID,
+          H_profileId: FIRST_PROFILE_ID,
           contentURI: MOCK_URI,
           collectModule: freeCollectModule.address,
           collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -346,7 +346,7 @@ makeSuiteCleanRoom('Misc', function () {
 
       await expect(
         healthHub.post({
-          profileId: FIRST_PROFILE_ID,
+          H_profileId: FIRST_PROFILE_ID,
           contentURI: MOCK_URI,
           collectModule: freeCollectModule.address,
           collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -357,9 +357,9 @@ makeSuiteCleanRoom('Misc', function () {
 
       await expect(
         healthHub.comment({
-          profileId: FIRST_PROFILE_ID,
+          H_profileId: FIRST_PROFILE_ID,
           contentURI: OTHER_MOCK_URI,
-          profileIdPointed: FIRST_PROFILE_ID,
+          H_profileIdPointed: FIRST_PROFILE_ID,
           pubIdPointed: 1,
           referenceModuleData: [],
           collectModule: freeCollectModule.address,
@@ -379,7 +379,7 @@ makeSuiteCleanRoom('Misc', function () {
 
       await expect(
         healthHub.post({
-          profileId: FIRST_PROFILE_ID,
+          H_profileId: FIRST_PROFILE_ID,
           contentURI: MOCK_URI,
           collectModule: freeCollectModule.address,
           collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -390,8 +390,8 @@ makeSuiteCleanRoom('Misc', function () {
 
       await expect(
         healthHub.mirror({
-          profileId: FIRST_PROFILE_ID,
-          profileIdPointed: FIRST_PROFILE_ID,
+          H_profileId: FIRST_PROFILE_ID,
+          H_profileIdPointed: FIRST_PROFILE_ID,
           pubIdPointed: 1,
           referenceModuleData: [],
           referenceModule: ZERO_ADDRESS,
@@ -408,7 +408,7 @@ makeSuiteCleanRoom('Misc', function () {
 
       await expect(
         healthHub.post({
-          profileId: FIRST_PROFILE_ID,
+          H_profileId: FIRST_PROFILE_ID,
           contentURI: MOCK_URI,
           collectModule: freeCollectModule.address,
           collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -427,7 +427,7 @@ makeSuiteCleanRoom('Misc', function () {
 
       await expect(
         healthHub.post({
-          profileId: FIRST_PROFILE_ID,
+          H_profileId: FIRST_PROFILE_ID,
           contentURI: MOCK_URI,
           collectModule: freeCollectModule.address,
           collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -438,8 +438,8 @@ makeSuiteCleanRoom('Misc', function () {
 
       await expect(
         healthHub.mirror({
-          profileId: FIRST_PROFILE_ID,
-          profileIdPointed: FIRST_PROFILE_ID,
+          H_profileId: FIRST_PROFILE_ID,
+          H_profileIdPointed: FIRST_PROFILE_ID,
           pubIdPointed: 1,
           referenceModuleData: [],
           referenceModule: ZERO_ADDRESS,
@@ -449,9 +449,9 @@ makeSuiteCleanRoom('Misc', function () {
 
       await expect(
         healthHub.comment({
-          profileId: FIRST_PROFILE_ID,
+          H_profileId: FIRST_PROFILE_ID,
           contentURI: OTHER_MOCK_URI,
-          profileIdPointed: FIRST_PROFILE_ID,
+          H_profileIdPointed: FIRST_PROFILE_ID,
           pubIdPointed: 2,
           referenceModuleData: [],
           collectModule: freeCollectModule.address,
@@ -471,7 +471,7 @@ makeSuiteCleanRoom('Misc', function () {
 
       await expect(
         healthHub.post({
-          profileId: FIRST_PROFILE_ID,
+          H_profileId: FIRST_PROFILE_ID,
           contentURI: MOCK_URI,
           collectModule: freeCollectModule.address,
           collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -482,8 +482,8 @@ makeSuiteCleanRoom('Misc', function () {
 
       await expect(
         healthHub.mirror({
-          profileId: FIRST_PROFILE_ID,
-          profileIdPointed: FIRST_PROFILE_ID,
+          H_profileId: FIRST_PROFILE_ID,
+          H_profileIdPointed: FIRST_PROFILE_ID,
           pubIdPointed: 1,
           referenceModuleData: [],
           referenceModule: ZERO_ADDRESS,
@@ -494,14 +494,14 @@ makeSuiteCleanRoom('Misc', function () {
       expect(await healthHub.getCollectModule(FIRST_PROFILE_ID, 2)).to.eq(ZERO_ADDRESS);
     });
 
-    it('Publication type getter should return the correct publication type for all publication types, or nonexistent', async function () {
+    it('Publication type getter should return the correct prescription type for all prescription types, or nonexistent', async function () {
       await expect(
         healthHub.connect(governance).whitelistCollectModule(freeCollectModule.address, true)
       ).to.not.be.reverted;
 
       await expect(
         healthHub.post({
-          profileId: FIRST_PROFILE_ID,
+          H_profileId: FIRST_PROFILE_ID,
           contentURI: MOCK_URI,
           collectModule: freeCollectModule.address,
           collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -512,9 +512,9 @@ makeSuiteCleanRoom('Misc', function () {
 
       await expect(
         healthHub.comment({
-          profileId: FIRST_PROFILE_ID,
+          H_profileId: FIRST_PROFILE_ID,
           contentURI: OTHER_MOCK_URI,
-          profileIdPointed: FIRST_PROFILE_ID,
+          H_profileIdPointed: FIRST_PROFILE_ID,
           pubIdPointed: 1,
           referenceModuleData: [],
           collectModule: freeCollectModule.address,
@@ -526,8 +526,8 @@ makeSuiteCleanRoom('Misc', function () {
 
       await expect(
         healthHub.mirror({
-          profileId: FIRST_PROFILE_ID,
-          profileIdPointed: FIRST_PROFILE_ID,
+          H_profileId: FIRST_PROFILE_ID,
+          H_profileIdPointed: FIRST_PROFILE_ID,
           pubIdPointed: 1,
           referenceModuleData: [],
           referenceModule: ZERO_ADDRESS,
@@ -707,11 +707,11 @@ makeSuiteCleanRoom('Misc', function () {
       ).to.not.be.reverted;
 
       // Then, publish twice
-      const firstURI = 'first publication';
-      const secondURI = 'second publication';
+      const firstURI = 'first prescription';
+      const secondURI = 'second prescription';
       await expect(
         healthHub.post({
-          profileId: FIRST_PROFILE_ID,
+          H_profileId: FIRST_PROFILE_ID,
           contentURI: firstURI,
           collectModule: freeCollectModule.address,
           collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -722,7 +722,7 @@ makeSuiteCleanRoom('Misc', function () {
 
       await expect(
         healthHub.post({
-          profileId: FIRST_PROFILE_ID,
+          H_profileId: FIRST_PROFILE_ID,
           contentURI: secondURI,
           collectModule: freeCollectModule.address,
           collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -735,27 +735,27 @@ makeSuiteCleanRoom('Misc', function () {
       const healthPeriphery = await new UIDataProvider__factory(deployer).deploy(healthHub.address);
 
       // `getLatestDataByProfile`, validate the result from the data provider
-      const resultByProfileId = await healthPeriphery.getLatestDataByProfile(FIRST_PROFILE_ID);
-      const pubByProfileIdStruct = resultByProfileId.publicationStruct;
-      const profileByProfileIdStruct = resultByProfileId.profileStruct;
+      const resultByH_ProfileId = await healthPeriphery.getLatestDataByProfile(FIRST_PROFILE_ID);
+      const pubByH_ProfileIdStruct = resultByH_ProfileId.prescriptionStruct;
+      const profileByH_ProfileIdStruct = resultByH_ProfileId.profileStruct;
 
-      expect(profileByProfileIdStruct.pubCount).to.eq(2);
-      expect(profileByProfileIdStruct.followModule).to.eq(ZERO_ADDRESS);
-      expect(profileByProfileIdStruct.followNFT).to.eq(ZERO_ADDRESS);
-      expect(profileByProfileIdStruct.handle).to.eq(MOCK_PROFILE_HANDLE);
-      expect(profileByProfileIdStruct.imageURI).to.eq(MOCK_PROFILE_URI);
-      expect(profileByProfileIdStruct.followNFTURI).to.eq(MOCK_FOLLOW_NFT_URI);
+      expect(profileByH_ProfileIdStruct.pubCount).to.eq(2);
+      expect(profileByH_ProfileIdStruct.followModule).to.eq(ZERO_ADDRESS);
+      expect(profileByH_ProfileIdStruct.followNFT).to.eq(ZERO_ADDRESS);
+      expect(profileByH_ProfileIdStruct.handle).to.eq(MOCK_PROFILE_HANDLE);
+      expect(profileByH_ProfileIdStruct.imageURI).to.eq(MOCK_PROFILE_URI);
+      expect(profileByH_ProfileIdStruct.followNFTURI).to.eq(MOCK_FOLLOW_NFT_URI);
 
-      expect(pubByProfileIdStruct.profileIdPointed).to.eq(0);
-      expect(pubByProfileIdStruct.pubIdPointed).to.eq(0);
-      expect(pubByProfileIdStruct.contentURI).to.eq(secondURI);
-      expect(pubByProfileIdStruct.referenceModule).to.eq(ZERO_ADDRESS);
-      expect(pubByProfileIdStruct.collectModule).to.eq(freeCollectModule.address);
-      expect(pubByProfileIdStruct.collectNFT).to.eq(ZERO_ADDRESS);
+      expect(pubByH_ProfileIdStruct.H_profileIdPointed).to.eq(0);
+      expect(pubByH_ProfileIdStruct.pubIdPointed).to.eq(0);
+      expect(pubByH_ProfileIdStruct.contentURI).to.eq(secondURI);
+      expect(pubByH_ProfileIdStruct.referenceModule).to.eq(ZERO_ADDRESS);
+      expect(pubByH_ProfileIdStruct.collectModule).to.eq(freeCollectModule.address);
+      expect(pubByH_ProfileIdStruct.collectNFT).to.eq(ZERO_ADDRESS);
 
       // `getLatestDataByHandle`, validate the result from the data provider
       const resultByHandle = await healthPeriphery.getLatestDataByHandle(MOCK_PROFILE_HANDLE);
-      const pubByHandleStruct = resultByHandle.publicationStruct;
+      const pubByHandleStruct = resultByHandle.prescriptionStruct;
       const profileByHandleStruct = resultByHandle.profileStruct;
 
       expect(profileByHandleStruct.pubCount).to.eq(2);
@@ -765,7 +765,7 @@ makeSuiteCleanRoom('Misc', function () {
       expect(profileByHandleStruct.imageURI).to.eq(MOCK_PROFILE_URI);
       expect(profileByHandleStruct.followNFTURI).to.eq(MOCK_FOLLOW_NFT_URI);
 
-      expect(pubByHandleStruct.profileIdPointed).to.eq(0);
+      expect(pubByHandleStruct.H_profileIdPointed).to.eq(0);
       expect(pubByHandleStruct.pubIdPointed).to.eq(0);
       expect(pubByHandleStruct.contentURI).to.eq(secondURI);
       expect(pubByHandleStruct.referenceModule).to.eq(ZERO_ADDRESS);
@@ -798,7 +798,7 @@ makeSuiteCleanRoom('Misc', function () {
 
       context('Generic', function () {
         context('Negatives', function () {
-          it('UserTwo should fail to toggle follow with an incorrect profileId', async function () {
+          it('UserTwo should fail to toggle follow with an incorrect H_profileId', async function () {
             await expect(
               healthPeriphery.connect(userTwo).toggleFollow([FIRST_PROFILE_ID + 1], [true])
             ).to.be.revertedWith(ERRORS.FOLLOW_INVALID);
@@ -906,7 +906,7 @@ makeSuiteCleanRoom('Misc', function () {
             await expect(
               healthPeriphery.toggleFollowWithSig({
                 follower: testWallet.address,
-                profileIds: [FIRST_PROFILE_ID],
+                H_profileIds: [FIRST_PROFILE_ID],
                 enables: [true],
                 sig: {
                   v,
@@ -930,7 +930,7 @@ makeSuiteCleanRoom('Misc', function () {
             await expect(
               healthPeriphery.toggleFollowWithSig({
                 follower: testWallet.address,
-                profileIds: [FIRST_PROFILE_ID],
+                H_profileIds: [FIRST_PROFILE_ID],
                 enables: [true],
                 sig: {
                   v,
@@ -955,7 +955,7 @@ makeSuiteCleanRoom('Misc', function () {
             await expect(
               healthPeriphery.toggleFollowWithSig({
                 follower: testWallet.address,
-                profileIds: [FIRST_PROFILE_ID],
+                H_profileIds: [FIRST_PROFILE_ID],
                 enables: [true],
                 sig: {
                   v,
@@ -979,7 +979,7 @@ makeSuiteCleanRoom('Misc', function () {
             await expect(
               healthPeriphery.toggleFollowWithSig({
                 follower: testWallet.address,
-                profileIds: [INVALID_PROFILE],
+                H_profileIds: [INVALID_PROFILE],
                 enables: [true],
                 sig: {
                   v,
@@ -1005,7 +1005,7 @@ makeSuiteCleanRoom('Misc', function () {
 
             const tx = healthPeriphery.toggleFollowWithSig({
               follower: testWallet.address,
-              profileIds: [FIRST_PROFILE_ID],
+              H_profileIds: [FIRST_PROFILE_ID],
               enables: [true],
               sig: {
                 v,
@@ -1039,7 +1039,7 @@ makeSuiteCleanRoom('Misc', function () {
 
             const tx = healthPeriphery.toggleFollowWithSig({
               follower: testWallet.address,
-              profileIds: [FIRST_PROFILE_ID],
+              H_profileIds: [FIRST_PROFILE_ID],
               enables: [enabled],
               sig: {
                 v,
@@ -1157,7 +1157,7 @@ makeSuiteCleanRoom('Misc', function () {
             );
             await expect(
               healthPeriphery.setProfileMetadataURIWithSig({
-                profileId: FIRST_PROFILE_ID,
+                H_profileId: FIRST_PROFILE_ID,
                 metadata: MOCK_DATA,
                 sig: {
                   v,
@@ -1180,7 +1180,7 @@ makeSuiteCleanRoom('Misc', function () {
             );
             await expect(
               healthPeriphery.setProfileMetadataURIWithSig({
-                profileId: FIRST_PROFILE_ID,
+                H_profileId: FIRST_PROFILE_ID,
                 metadata: MOCK_DATA,
                 sig: {
                   v,
@@ -1203,7 +1203,7 @@ makeSuiteCleanRoom('Misc', function () {
             );
             await expect(
               healthPeriphery.setProfileMetadataURIWithSig({
-                profileId: FIRST_PROFILE_ID,
+                H_profileId: FIRST_PROFILE_ID,
                 metadata: MOCK_DATA,
                 sig: {
                   v,
@@ -1228,7 +1228,7 @@ makeSuiteCleanRoom('Misc', function () {
             );
             const tx = await waitForTx(
               healthPeriphery.setProfileMetadataURIWithSig({
-                profileId: FIRST_PROFILE_ID,
+                H_profileId: FIRST_PROFILE_ID,
                 metadata: MOCK_DATA,
                 sig: {
                   v,

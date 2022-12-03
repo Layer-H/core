@@ -26,19 +26,19 @@ abstract contract FollowValidationModuleBase is ModuleBase {
      *
      * @dev It will revert if the user is not following the profile except the case when the user is the profile owner.
      *
-     * @param profileId The ID of the profile that should be followed by the given user.
+     * @param H_profileId The ID of the profile that should be followed by the given user.
      * @param user The address of the user that should be following the given profile.
      */
-    function _checkFollowValidity(uint256 profileId, address user) internal view {
-        address followModule = IHealthHub(HUB).getFollowModule(profileId);
+    function _checkFollowValidity(uint256 H_profileId, address user) internal view {
+        address followModule = IHealthHub(HUB).getFollowModule(H_profileId);
         bool isFollowing;
         if (followModule != address(0)) {
-            isFollowing = IFollowModule(followModule).isFollowing(profileId, user, 0);
+            isFollowing = IFollowModule(followModule).isFollowing(H_profileId, user, 0);
         } else {
-            address followNFT = IHealthHub(HUB).getFollowNFT(profileId);
+            address followNFT = IHealthHub(HUB).getFollowNFT(H_profileId);
             isFollowing = followNFT != address(0) && IERC721(followNFT).balanceOf(user) != 0;
         }
-        if (!isFollowing && IERC721(HUB).ownerOf(profileId) != user) {
+        if (!isFollowing && IERC721(HUB).ownerOf(H_profileId) != user) {
             revert Errors.FollowInvalid();
         }
     }

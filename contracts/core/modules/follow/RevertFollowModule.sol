@@ -18,12 +18,12 @@ contract RevertFollowModule is FollowValidatorFollowModuleBase {
     /**
      * @notice This follow module works on custom profile owner approvals.
      *
-     * @param profileId The profile ID of the profile to initialize this module for.
+     * @param H_profileId The profile ID of the profile to initialize this module for.
      * @param data The arbitrary data parameter, which in this particular module initialization will be just ignored.
      *
      * @return bytes Empty bytes.
      */
-    function initializeFollowModule(uint256 profileId, bytes calldata data)
+    function initializeFollowModule(uint256 H_profileId, bytes calldata data)
         external
         view
         override
@@ -38,7 +38,7 @@ contract RevertFollowModule is FollowValidatorFollowModuleBase {
      */
     function processFollow(
         address follower,
-        uint256 profileId,
+        uint256 H_profileId,
         bytes calldata data
     ) external view override onlyHub {
         revert Errors.FollowInvalid();
@@ -48,7 +48,7 @@ contract RevertFollowModule is FollowValidatorFollowModuleBase {
      * @dev We don't need to execute any additional logic on transfers in this follow module.
      */
     function followModuleTransferHook(
-        uint256 profileId,
+        uint256 H_profileId,
         address from,
         address to,
         uint256 followNFTTokenId

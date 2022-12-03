@@ -48,7 +48,7 @@ makeSuiteCleanRoom('Dispatcher Functionality', function () {
       it('UserTwo should fail to publish on profile owned by user 1 without being a dispatcher', async function () {
         await expect(
           healthHub.connect(userTwo).post({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: freeCollectModule.address,
             collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -72,7 +72,7 @@ makeSuiteCleanRoom('Dispatcher Functionality', function () {
 
         await expect(
           healthHub.connect(userTwo).post({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: freeCollectModule.address,
             collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -83,9 +83,9 @@ makeSuiteCleanRoom('Dispatcher Functionality', function () {
 
         await expect(
           healthHub.connect(userTwo).comment({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             collectModule: freeCollectModule.address,
             collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -97,8 +97,8 @@ makeSuiteCleanRoom('Dispatcher Functionality', function () {
 
         await expect(
           healthHub.connect(userTwo).mirror({
-            profileId: FIRST_PROFILE_ID,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             referenceModuleData: [],
             referenceModule: ZERO_ADDRESS,
@@ -138,7 +138,7 @@ makeSuiteCleanRoom('Dispatcher Functionality', function () {
 
         await expect(
           healthHub.setDispatcherWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             dispatcher: userTwoAddress,
             sig: {
               v,
@@ -161,7 +161,7 @@ makeSuiteCleanRoom('Dispatcher Functionality', function () {
 
         await expect(
           healthHub.setDispatcherWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             dispatcher: userTwoAddress,
             sig: {
               v,
@@ -184,7 +184,7 @@ makeSuiteCleanRoom('Dispatcher Functionality', function () {
 
         await expect(
           healthHub.setDispatcherWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             dispatcher: userTwoAddress,
             sig: {
               v,
@@ -209,7 +209,7 @@ makeSuiteCleanRoom('Dispatcher Functionality', function () {
 
         await expect(
           healthHub.setDispatcherWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             dispatcher: userTwoAddress,
             sig: {
               v,
@@ -234,7 +234,7 @@ makeSuiteCleanRoom('Dispatcher Functionality', function () {
 
         await expect(
           healthHub.setDispatcherWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             dispatcher: userTwoAddress,
             sig: {
               v,
@@ -247,7 +247,7 @@ makeSuiteCleanRoom('Dispatcher Functionality', function () {
 
         await expect(
           healthHub.connect(userTwo).post({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: freeCollectModule.address,
             collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -258,9 +258,9 @@ makeSuiteCleanRoom('Dispatcher Functionality', function () {
 
         await expect(
           healthHub.connect(userTwo).comment({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             collectModule: freeCollectModule.address,
             collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -272,8 +272,8 @@ makeSuiteCleanRoom('Dispatcher Functionality', function () {
 
         await expect(
           healthHub.connect(userTwo).mirror({
-            profileId: FIRST_PROFILE_ID,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             referenceModuleData: [],
             referenceModule: ZERO_ADDRESS,

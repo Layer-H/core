@@ -149,22 +149,22 @@ contract HealthHub is HealthNFTBase, VersionedInitializable, HealthMultiState, H
     {
         if (!_profileCreatorWhitelisted[msg.sender]) revert Errors.ProfileCreatorNotWhitelisted();
         unchecked {
-            uint256 profileId = ++_profileCounter;
-            _mint(vars.to, profileId);
+            uint256 H_profileId = ++_profileCounter;
+            _mint(vars.to, H_profileId);
             PublishingLogic.createProfile(
                 vars,
-                profileId,
-                _profileIdByHandleHash,
+                H_profileId,
+                _H_profileIdByHandleHash,
                 _profileById,
                 _followModuleWhitelisted
             );
-            return profileId;
+            return H_profileId;
         }
     }
 
     /// @inheritdoc IHealthHub
-    function setDefaultProfile(uint256 profileId) external override whenNotPaused {
-        _setDefaultProfile(msg.sender, profileId);
+    function setDefaultProfile(uint256 H_profileId) external override whenNotPaused {
+        _setDefaultProfile(msg.sender, H_profileId);
     }
 
     /// @inheritdoc IHealthHub
@@ -180,7 +180,7 @@ contract HealthHub is HealthNFTBase, VersionedInitializable, HealthMultiState, H
                         abi.encode(
                             SET_DEFAULT_PROFILE_WITH_SIG_TYPEHASH,
                             vars.wallet,
-                            vars.profileId,
+                            vars.H_profileId,
                             sigNonces[vars.wallet]++,
                             vars.sig.deadline
                         )
@@ -189,22 +189,22 @@ contract HealthHub is HealthNFTBase, VersionedInitializable, HealthMultiState, H
                 vars.wallet,
                 vars.sig
             );
-            _setDefaultProfile(vars.wallet, vars.profileId);
+            _setDefaultProfile(vars.wallet, vars.H_profileId);
         }
     }
 
     /// @inheritdoc IHealthHub
     function setFollowModule(
-        uint256 profileId,
+        uint256 H_profileId,
         address followModule,
         bytes calldata followModuleInitData
     ) external override whenNotPaused {
-        _validateCallerIsProfileOwner(profileId);
+        _validateCallerIsProfileOwner(H_profileId);
         PublishingLogic.setFollowModule(
-            profileId,
+            H_profileId,
             followModule,
             followModuleInitData,
-            _profileById[profileId],
+            _profileById[H_profileId],
             _followModuleWhitelisted
         );
     }
@@ -215,14 +215,14 @@ contract HealthHub is HealthNFTBase, VersionedInitializable, HealthMultiState, H
         override
         whenNotPaused
     {
-        address owner = ownerOf(vars.profileId);
+        address owner = ownerOf(vars.H_profileId);
         unchecked {
             _validateRecoveredAddress(
                 _calculateDigest(
                     keccak256(
                         abi.encode(
                             SET_FOLLOW_MODULE_WITH_SIG_TYPEHASH,
-                            vars.profileId,
+                            vars.H_profileId,
                             vars.followModule,
                             keccak256(vars.followModuleInitData),
                             sigNonces[owner]++,
@@ -235,18 +235,18 @@ contract HealthHub is HealthNFTBase, VersionedInitializable, HealthMultiState, H
             );
         }
         PublishingLogic.setFollowModule(
-            vars.profileId,
+            vars.H_profileId,
             vars.followModule,
             vars.followModuleInitData,
-            _profileById[vars.profileId],
+            _profileById[vars.H_profileId],
             _followModuleWhitelisted
         );
     }
 
     /// @inheritdoc IHealthHub
-    function setDispatcher(uint256 profileId, address dispatcher) external override whenNotPaused {
-        _validateCallerIsProfileOwner(profileId);
-        _setDispatcher(profileId, dispatcher);
+    function setDispatcher(uint256 H_profileId, address dispatcher) external override whenNotPaused {
+        _validateCallerIsProfileOwner(H_profileId);
+        _setDispatcher(H_profileId, dispatcher);
     }
 
     /// @inheritdoc IHealthHub
@@ -255,14 +255,14 @@ contract HealthHub is HealthNFTBase, VersionedInitializable, HealthMultiState, H
         override
         whenNotPaused
     {
-        address owner = ownerOf(vars.profileId);
+        address owner = ownerOf(vars.H_profileId);
         unchecked {
             _validateRecoveredAddress(
                 _calculateDigest(
                     keccak256(
                         abi.encode(
                             SET_DISPATCHER_WITH_SIG_TYPEHASH,
-                            vars.profileId,
+                            vars.H_profileId,
                             vars.dispatcher,
                             sigNonces[owner]++,
                             vars.sig.deadline
@@ -273,17 +273,17 @@ contract HealthHub is HealthNFTBase, VersionedInitializable, HealthMultiState, H
                 vars.sig
             );
         }
-        _setDispatcher(vars.profileId, vars.dispatcher);
+        _setDispatcher(vars.H_profileId, vars.dispatcher);
     }
 
     /// @inheritdoc IHealthHub
-    function setProfileImageURI(uint256 profileId, string calldata imageURI)
+    function setProfileImageURI(uint256 H_profileId, string calldata imageURI)
         external
         override
         whenNotPaused
     {
-        _validateCallerIsProfileOwnerOrDispatcher(profileId);
-        _setProfileImageURI(profileId, imageURI);
+        _validateCallerIsProfileOwnerOrDispatcher(H_profileId);
+        _setProfileImageURI(H_profileId, imageURI);
     }
 
     /// @inheritdoc IHealthHub
@@ -292,14 +292,14 @@ contract HealthHub is HealthNFTBase, VersionedInitializable, HealthMultiState, H
         override
         whenNotPaused
     {
-        address owner = ownerOf(vars.profileId);
+        address owner = ownerOf(vars.H_profileId);
         unchecked {
             _validateRecoveredAddress(
                 _calculateDigest(
                     keccak256(
                         abi.encode(
                             SET_PROFILE_IMAGE_URI_WITH_SIG_TYPEHASH,
-                            vars.profileId,
+                            vars.H_profileId,
                             keccak256(bytes(vars.imageURI)),
                             sigNonces[owner]++,
                             vars.sig.deadline
@@ -310,17 +310,17 @@ contract HealthHub is HealthNFTBase, VersionedInitializable, HealthMultiState, H
                 vars.sig
             );
         }
-        _setProfileImageURI(vars.profileId, vars.imageURI);
+        _setProfileImageURI(vars.H_profileId, vars.imageURI);
     }
 
     /// @inheritdoc IHealthHub
-    function setFollowNFTURI(uint256 profileId, string calldata followNFTURI)
+    function setFollowNFTURI(uint256 H_profileId, string calldata followNFTURI)
         external
         override
         whenNotPaused
     {
-        _validateCallerIsProfileOwnerOrDispatcher(profileId);
-        _setFollowNFTURI(profileId, followNFTURI);
+        _validateCallerIsProfileOwnerOrDispatcher(H_profileId);
+        _setFollowNFTURI(H_profileId, followNFTURI);
     }
 
     /// @inheritdoc IHealthHub
@@ -329,14 +329,14 @@ contract HealthHub is HealthNFTBase, VersionedInitializable, HealthMultiState, H
         override
         whenNotPaused
     {
-        address owner = ownerOf(vars.profileId);
+        address owner = ownerOf(vars.H_profileId);
         unchecked {
             _validateRecoveredAddress(
                 _calculateDigest(
                     keccak256(
                         abi.encode(
                             SET_FOLLOW_NFT_URI_WITH_SIG_TYPEHASH,
-                            vars.profileId,
+                            vars.H_profileId,
                             keccak256(bytes(vars.followNFTURI)),
                             sigNonces[owner]++,
                             vars.sig.deadline
@@ -347,7 +347,7 @@ contract HealthHub is HealthNFTBase, VersionedInitializable, HealthMultiState, H
                 vars.sig
             );
         }
-        _setFollowNFTURI(vars.profileId, vars.followNFTURI);
+        _setFollowNFTURI(vars.H_profileId, vars.followNFTURI);
     }
 
     /// @inheritdoc IHealthHub
@@ -357,10 +357,10 @@ contract HealthHub is HealthNFTBase, VersionedInitializable, HealthMultiState, H
         whenPublishingEnabled
         returns (uint256)
     {
-        _validateCallerIsProfileOwnerOrDispatcher(vars.profileId);
+        _validateCallerIsProfileOwnerOrDispatcher(vars.H_profileId);
         return
             _createPost(
-                vars.profileId,
+                vars.H_profileId,
                 vars.contentURI,
                 vars.collectModule,
                 vars.collectModuleInitData,
@@ -376,14 +376,14 @@ contract HealthHub is HealthNFTBase, VersionedInitializable, HealthMultiState, H
         whenPublishingEnabled
         returns (uint256)
     {
-        address owner = ownerOf(vars.profileId);
+        address owner = ownerOf(vars.H_profileId);
         unchecked {
             _validateRecoveredAddress(
                 _calculateDigest(
                     keccak256(
                         abi.encode(
                             POST_WITH_SIG_TYPEHASH,
-                            vars.profileId,
+                            vars.H_profileId,
                             keccak256(bytes(vars.contentURI)),
                             vars.collectModule,
                             keccak256(vars.collectModuleInitData),
@@ -400,7 +400,7 @@ contract HealthHub is HealthNFTBase, VersionedInitializable, HealthMultiState, H
         }
         return
             _createPost(
-                vars.profileId,
+                vars.H_profileId,
                 vars.contentURI,
                 vars.collectModule,
                 vars.collectModuleInitData,
@@ -416,7 +416,7 @@ contract HealthHub is HealthNFTBase, VersionedInitializable, HealthMultiState, H
         whenPublishingEnabled
         returns (uint256)
     {
-        _validateCallerIsProfileOwnerOrDispatcher(vars.profileId);
+        _validateCallerIsProfileOwnerOrDispatcher(vars.H_profileId);
         return _createComment(vars);
     }
 
@@ -427,16 +427,16 @@ contract HealthHub is HealthNFTBase, VersionedInitializable, HealthMultiState, H
         whenPublishingEnabled
         returns (uint256)
     {
-        address owner = ownerOf(vars.profileId);
+        address owner = ownerOf(vars.H_profileId);
         unchecked {
             _validateRecoveredAddress(
                 _calculateDigest(
                     keccak256(
                         abi.encode(
                             COMMENT_WITH_SIG_TYPEHASH,
-                            vars.profileId,
+                            vars.H_profileId,
                             keccak256(bytes(vars.contentURI)),
-                            vars.profileIdPointed,
+                            vars.H_profileIdPointed,
                             vars.pubIdPointed,
                             keccak256(vars.referenceModuleData),
                             vars.collectModule,
@@ -455,9 +455,9 @@ contract HealthHub is HealthNFTBase, VersionedInitializable, HealthMultiState, H
         return
             _createComment(
                 DataTypes.CommentData(
-                    vars.profileId,
+                    vars.H_profileId,
                     vars.contentURI,
-                    vars.profileIdPointed,
+                    vars.H_profileIdPointed,
                     vars.pubIdPointed,
                     vars.referenceModuleData,
                     vars.collectModule,
@@ -475,7 +475,7 @@ contract HealthHub is HealthNFTBase, VersionedInitializable, HealthMultiState, H
         whenPublishingEnabled
         returns (uint256)
     {
-        _validateCallerIsProfileOwnerOrDispatcher(vars.profileId);
+        _validateCallerIsProfileOwnerOrDispatcher(vars.H_profileId);
         return _createMirror(vars);
     }
 
@@ -486,15 +486,15 @@ contract HealthHub is HealthNFTBase, VersionedInitializable, HealthMultiState, H
         whenPublishingEnabled
         returns (uint256)
     {
-        address owner = ownerOf(vars.profileId);
+        address owner = ownerOf(vars.H_profileId);
         unchecked {
             _validateRecoveredAddress(
                 _calculateDigest(
                     keccak256(
                         abi.encode(
                             MIRROR_WITH_SIG_TYPEHASH,
-                            vars.profileId,
-                            vars.profileIdPointed,
+                            vars.H_profileId,
+                            vars.H_profileIdPointed,
                             vars.pubIdPointed,
                             keccak256(vars.referenceModuleData),
                             vars.referenceModule,
@@ -511,8 +511,8 @@ contract HealthHub is HealthNFTBase, VersionedInitializable, HealthMultiState, H
         return
             _createMirror(
                 DataTypes.MirrorData(
-                    vars.profileId,
-                    vars.profileIdPointed,
+                    vars.H_profileId,
+                    vars.H_profileIdPointed,
                     vars.pubIdPointed,
                     vars.referenceModuleData,
                     vars.referenceModule,
@@ -554,7 +554,7 @@ contract HealthHub is HealthNFTBase, VersionedInitializable, HealthMultiState, H
     /// ***************************************
 
     /// @inheritdoc IHealthHub
-    function follow(uint256[] calldata profileIds, bytes[] calldata datas)
+    function follow(uint256[] calldata H_profileIds, bytes[] calldata datas)
         external
         override
         whenNotPaused
@@ -563,10 +563,10 @@ contract HealthHub is HealthNFTBase, VersionedInitializable, HealthMultiState, H
         return
             InteractionLogic.follow(
                 msg.sender,
-                profileIds,
+                H_profileIds,
                 datas,
                 _profileById,
-                _profileIdByHandleHash
+                _H_profileIdByHandleHash
             );
     }
 
@@ -591,7 +591,7 @@ contract HealthHub is HealthNFTBase, VersionedInitializable, HealthMultiState, H
                     keccak256(
                         abi.encode(
                             FOLLOW_WITH_SIG_TYPEHASH,
-                            keccak256(abi.encodePacked(vars.profileIds)),
+                            keccak256(abi.encodePacked(vars.H_profileIds)),
                             keccak256(abi.encodePacked(dataHashes)),
                             sigNonces[vars.follower]++,
                             vars.sig.deadline
@@ -605,23 +605,23 @@ contract HealthHub is HealthNFTBase, VersionedInitializable, HealthMultiState, H
         return
             InteractionLogic.follow(
                 vars.follower,
-                vars.profileIds,
+                vars.H_profileIds,
                 vars.datas,
                 _profileById,
-                _profileIdByHandleHash
+                _H_profileIdByHandleHash
             );
     }
 
     /// @inheritdoc IHealthHub
     function collect(
-        uint256 profileId,
+        uint256 H_profileId,
         uint256 pubId,
         bytes calldata data
     ) external override whenNotPaused returns (uint256) {
         return
             InteractionLogic.collect(
                 msg.sender,
-                profileId,
+                H_profileId,
                 pubId,
                 data,
                 COLLECT_NFT_IMPL,
@@ -643,7 +643,7 @@ contract HealthHub is HealthNFTBase, VersionedInitializable, HealthMultiState, H
                     keccak256(
                         abi.encode(
                             COLLECT_WITH_SIG_TYPEHASH,
-                            vars.profileId,
+                            vars.H_profileId,
                             vars.pubId,
                             keccak256(vars.data),
                             sigNonces[vars.collector]++,
@@ -658,7 +658,7 @@ contract HealthHub is HealthNFTBase, VersionedInitializable, HealthMultiState, H
         return
             InteractionLogic.collect(
                 vars.collector,
-                vars.profileId,
+                vars.H_profileId,
                 vars.pubId,
                 vars.data,
                 COLLECT_NFT_IMPL,
@@ -669,28 +669,28 @@ contract HealthHub is HealthNFTBase, VersionedInitializable, HealthMultiState, H
 
     /// @inheritdoc IHealthHub
     function emitFollowNFTTransferEvent(
-        uint256 profileId,
+        uint256 H_profileId,
         uint256 followNFTId,
         address from,
         address to
     ) external override {
-        address expectedFollowNFT = _profileById[profileId].followNFT;
+        address expectedFollowNFT = _profileById[H_profileId].followNFT;
         if (msg.sender != expectedFollowNFT) revert Errors.CallerNotFollowNFT();
-        emit Events.FollowNFTTransferred(profileId, followNFTId, from, to, block.timestamp);
+        emit Events.FollowNFTTransferred(H_profileId, followNFTId, from, to, block.timestamp);
     }
 
     /// @inheritdoc IHealthHub
     function emitCollectNFTTransferEvent(
-        uint256 profileId,
+        uint256 H_profileId,
         uint256 pubId,
         uint256 collectNFTId,
         address from,
         address to
     ) external override {
-        address expectedCollectNFT = _pubByIdByProfile[profileId][pubId].collectNFT;
+        address expectedCollectNFT = _pubByIdByProfile[H_profileId][pubId].collectNFT;
         if (msg.sender != expectedCollectNFT) revert Errors.CallerNotCollectNFT();
         emit Events.CollectNFTTransferred(
-            profileId,
+            H_profileId,
             pubId,
             collectNFTId,
             from,
@@ -749,130 +749,130 @@ contract HealthHub is HealthNFTBase, VersionedInitializable, HealthMultiState, H
     }
 
     /// @inheritdoc IHealthHub
-    function getDispatcher(uint256 profileId) external view override returns (address) {
-        return _dispatcherByProfile[profileId];
+    function getDispatcher(uint256 H_profileId) external view override returns (address) {
+        return _dispatcherByProfile[H_profileId];
     }
 
     /// @inheritdoc IHealthHub
-    function getPubCount(uint256 profileId) external view override returns (uint256) {
-        return _profileById[profileId].pubCount;
+    function getPubCount(uint256 H_profileId) external view override returns (uint256) {
+        return _profileById[H_profileId].pubCount;
     }
 
     /// @inheritdoc IHealthHub
-    function getFollowNFT(uint256 profileId) external view override returns (address) {
-        return _profileById[profileId].followNFT;
+    function getFollowNFT(uint256 H_profileId) external view override returns (address) {
+        return _profileById[H_profileId].followNFT;
     }
 
     /// @inheritdoc IHealthHub
-    function getFollowNFTURI(uint256 profileId) external view override returns (string memory) {
-        return _profileById[profileId].followNFTURI;
+    function getFollowNFTURI(uint256 H_profileId) external view override returns (string memory) {
+        return _profileById[H_profileId].followNFTURI;
     }
 
     /// @inheritdoc IHealthHub
-    function getCollectNFT(uint256 profileId, uint256 pubId)
+    function getCollectNFT(uint256 H_profileId, uint256 pubId)
         external
         view
         override
         returns (address)
     {
-        return _pubByIdByProfile[profileId][pubId].collectNFT;
+        return _pubByIdByProfile[H_profileId][pubId].collectNFT;
     }
 
     /// @inheritdoc IHealthHub
-    function getFollowModule(uint256 profileId) external view override returns (address) {
-        return _profileById[profileId].followModule;
+    function getFollowModule(uint256 H_profileId) external view override returns (address) {
+        return _profileById[H_profileId].followModule;
     }
 
     /// @inheritdoc IHealthHub
-    function getCollectModule(uint256 profileId, uint256 pubId)
+    function getCollectModule(uint256 H_profileId, uint256 pubId)
         external
         view
         override
         returns (address)
     {
-        return _pubByIdByProfile[profileId][pubId].collectModule;
+        return _pubByIdByProfile[H_profileId][pubId].collectModule;
     }
 
     /// @inheritdoc IHealthHub
-    function getReferenceModule(uint256 profileId, uint256 pubId)
+    function getReferenceModule(uint256 H_profileId, uint256 pubId)
         external
         view
         override
         returns (address)
     {
-        return _pubByIdByProfile[profileId][pubId].referenceModule;
+        return _pubByIdByProfile[H_profileId][pubId].referenceModule;
     }
 
     /// @inheritdoc IHealthHub
-    function getHandle(uint256 profileId) external view override returns (string memory) {
-        return _profileById[profileId].handle;
+    function getHandle(uint256 H_profileId) external view override returns (string memory) {
+        return _profileById[H_profileId].handle;
     }
 
     /// @inheritdoc IHealthHub
-    function getPubPointer(uint256 profileId, uint256 pubId)
+    function getPubPointer(uint256 H_profileId, uint256 pubId)
         external
         view
         override
         returns (uint256, uint256)
     {
-        uint256 profileIdPointed = _pubByIdByProfile[profileId][pubId].profileIdPointed;
-        uint256 pubIdPointed = _pubByIdByProfile[profileId][pubId].pubIdPointed;
-        return (profileIdPointed, pubIdPointed);
+        uint256 H_profileIdPointed = _pubByIdByProfile[H_profileId][pubId].H_profileIdPointed;
+        uint256 pubIdPointed = _pubByIdByProfile[H_profileId][pubId].pubIdPointed;
+        return (H_profileIdPointed, pubIdPointed);
     }
 
     /// @inheritdoc IHealthHub
-    function getContentURI(uint256 profileId, uint256 pubId)
+    function getContentURI(uint256 H_profileId, uint256 pubId)
         external
         view
         override
         returns (string memory)
     {
-        (uint256 rootProfileId, uint256 rootPubId, ) = Helpers.getPointedIfMirror(
-            profileId,
+        (uint256 rootH_ProfileId, uint256 rootPubId, ) = Helpers.getPointedIfMirror(
+            H_profileId,
             pubId,
             _pubByIdByProfile
         );
-        return _pubByIdByProfile[rootProfileId][rootPubId].contentURI;
+        return _pubByIdByProfile[rootH_ProfileId][rootPubId].contentURI;
     }
 
     /// @inheritdoc IHealthHub
-    function getProfileIdByHandle(string calldata handle) external view override returns (uint256) {
+    function getH_ProfileIdByHandle(string calldata handle) external view override returns (uint256) {
         bytes32 handleHash = keccak256(bytes(handle));
-        return _profileIdByHandleHash[handleHash];
+        return _H_profileIdByHandleHash[handleHash];
     }
 
     /// @inheritdoc IHealthHub
-    function getProfile(uint256 profileId)
+    function getProfile(uint256 H_profileId)
         external
         view
         override
         returns (DataTypes.ProfileStruct memory)
     {
-        return _profileById[profileId];
+        return _profileById[H_profileId];
     }
 
     /// @inheritdoc IHealthHub
-    function getPub(uint256 profileId, uint256 pubId)
+    function getPub(uint256 H_profileId, uint256 pubId)
         external
         view
         override
         returns (DataTypes.PublicationStruct memory)
     {
-        return _pubByIdByProfile[profileId][pubId];
+        return _pubByIdByProfile[H_profileId][pubId];
     }
 
     /// @inheritdoc IHealthHub
-    function getPubType(uint256 profileId, uint256 pubId)
+    function getPubType(uint256 H_profileId, uint256 pubId)
         external
         view
         override
         returns (DataTypes.PubType)
     {
-        if (pubId == 0 || _profileById[profileId].pubCount < pubId) {
+        if (pubId == 0 || _profileById[H_profileId].pubCount < pubId) {
             return DataTypes.PubType.Nonexistent;
-        } else if (_pubByIdByProfile[profileId][pubId].collectModule == address(0)) {
+        } else if (_pubByIdByProfile[H_profileId][pubId].collectModule == address(0)) {
             return DataTypes.PubType.Mirror;
-        } else if (_pubByIdByProfile[profileId][pubId].profileIdPointed == 0) {
+        } else if (_pubByIdByProfile[H_profileId][pubId].H_profileIdPointed == 0) {
             return DataTypes.PubType.Post;
         } else {
             return DataTypes.PubType.Comment;
@@ -915,7 +915,7 @@ contract HealthHub is HealthNFTBase, VersionedInitializable, HealthMultiState, H
     }
 
     function _createPost(
-        uint256 profileId,
+        uint256 H_profileId,
         string memory contentURI,
         address collectModule,
         bytes memory collectModuleData,
@@ -923,9 +923,9 @@ contract HealthHub is HealthNFTBase, VersionedInitializable, HealthMultiState, H
         bytes memory referenceModuleData
     ) internal returns (uint256) {
         unchecked {
-            uint256 pubId = ++_profileById[profileId].pubCount;
+            uint256 pubId = ++_profileById[H_profileId].pubCount;
             PublishingLogic.createPost(
-                profileId,
+                H_profileId,
                 contentURI,
                 collectModule,
                 collectModuleData,
@@ -945,17 +945,17 @@ contract HealthHub is HealthNFTBase, VersionedInitializable, HealthMultiState, H
      * Note that the wallet address should either be the message sender or validated via a signature
      * prior to this function call.
      */
-    function _setDefaultProfile(address wallet, uint256 profileId) internal {
-        if (profileId > 0 && wallet != ownerOf(profileId)) revert Errors.NotProfileOwner();
+    function _setDefaultProfile(address wallet, uint256 H_profileId) internal {
+        if (H_profileId > 0 && wallet != ownerOf(H_profileId)) revert Errors.NotProfileOwner();
 
-        _defaultProfileByAddress[wallet] = profileId;
+        _defaultProfileByAddress[wallet] = H_profileId;
 
-        emit Events.DefaultProfileSet(wallet, profileId, block.timestamp);
+        emit Events.DefaultProfileSet(wallet, H_profileId, block.timestamp);
     }
 
     function _createComment(DataTypes.CommentData memory vars) internal returns (uint256) {
         unchecked {
-            uint256 pubId = ++_profileById[vars.profileId].pubCount;
+            uint256 pubId = ++_profileById[vars.H_profileId].pubCount;
             PublishingLogic.createComment(
                 vars,
                 pubId,
@@ -970,7 +970,7 @@ contract HealthHub is HealthNFTBase, VersionedInitializable, HealthMultiState, H
 
     function _createMirror(DataTypes.MirrorData memory vars) internal returns (uint256) {
         unchecked {
-            uint256 pubId = ++_profileById[vars.profileId].pubCount;
+            uint256 pubId = ++_profileById[vars.H_profileId].pubCount;
             PublishingLogic.createMirror(
                 vars,
                 pubId,
@@ -981,26 +981,26 @@ contract HealthHub is HealthNFTBase, VersionedInitializable, HealthMultiState, H
         }
     }
 
-    function _setDispatcher(uint256 profileId, address dispatcher) internal {
-        _dispatcherByProfile[profileId] = dispatcher;
-        emit Events.DispatcherSet(profileId, dispatcher, block.timestamp);
+    function _setDispatcher(uint256 H_profileId, address dispatcher) internal {
+        _dispatcherByProfile[H_profileId] = dispatcher;
+        emit Events.DispatcherSet(H_profileId, dispatcher, block.timestamp);
     }
 
-    function _setProfileImageURI(uint256 profileId, string calldata imageURI) internal {
+    function _setProfileImageURI(uint256 H_profileId, string calldata imageURI) internal {
         if (bytes(imageURI).length > Constants.MAX_PROFILE_IMAGE_URI_LENGTH)
             revert Errors.ProfileImageURILengthInvalid();
-        _profileById[profileId].imageURI = imageURI;
-        emit Events.ProfileImageURISet(profileId, imageURI, block.timestamp);
+        _profileById[H_profileId].imageURI = imageURI;
+        emit Events.ProfileImageURISet(H_profileId, imageURI, block.timestamp);
     }
 
-    function _setFollowNFTURI(uint256 profileId, string calldata followNFTURI) internal {
-        _profileById[profileId].followNFTURI = followNFTURI;
-        emit Events.FollowNFTURISet(profileId, followNFTURI, block.timestamp);
+    function _setFollowNFTURI(uint256 H_profileId, string calldata followNFTURI) internal {
+        _profileById[H_profileId].followNFTURI = followNFTURI;
+        emit Events.FollowNFTURISet(H_profileId, followNFTURI, block.timestamp);
     }
 
-    function _clearHandleHash(uint256 profileId) internal {
-        bytes32 handleHash = keccak256(bytes(_profileById[profileId].handle));
-        _profileIdByHandleHash[handleHash] = 0;
+    function _clearHandleHash(uint256 H_profileId) internal {
+        bytes32 handleHash = keccak256(bytes(_profileById[H_profileId].handle));
+        _H_profileIdByHandleHash[handleHash] = 0;
     }
 
     function _beforeTokenTransfer(
@@ -1019,15 +1019,15 @@ contract HealthHub is HealthNFTBase, VersionedInitializable, HealthMultiState, H
         super._beforeTokenTransfer(from, to, tokenId);
     }
 
-    function _validateCallerIsProfileOwnerOrDispatcher(uint256 profileId) internal view {
-        if (msg.sender == ownerOf(profileId) || msg.sender == _dispatcherByProfile[profileId]) {
+    function _validateCallerIsProfileOwnerOrDispatcher(uint256 H_profileId) internal view {
+        if (msg.sender == ownerOf(H_profileId) || msg.sender == _dispatcherByProfile[H_profileId]) {
             return;
         }
         revert Errors.NotProfileOwnerOrDispatcher();
     }
 
-    function _validateCallerIsProfileOwner(uint256 profileId) internal view {
-        if (msg.sender != ownerOf(profileId)) revert Errors.NotProfileOwner();
+    function _validateCallerIsProfileOwner(uint256 H_profileId) internal view {
+        if (msg.sender != ownerOf(H_profileId)) revert Errors.NotProfileOwner();
     }
 
     function _validateCallerIsGovernance() internal view {

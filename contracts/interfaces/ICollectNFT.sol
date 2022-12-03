@@ -7,20 +7,20 @@ pragma solidity 0.8.10;
  * @author Layer-H
  *
  * @notice This is the interface for the CollectNFT contract. Which is cloned upon the first collect for any given
- * publication.
+ * prescription.
  */
 interface ICollectNFT {
     /**
-     * @notice Initializes the collect NFT, setting the feed as the privileged minter, storing the collected publication pointer
+     * @notice Initializes the collect NFT, setting the feed as the privileged minter, storing the collected prescription pointer
      * and initializing the name and symbol in the HealthNFTBase contract.
      *
-     * @param profileId The token ID of the profile in the hub that this collectNFT points to.
-     * @param pubId The profile publication ID in the hub that this collectNFT points to.
+     * @param H_profileId The token ID of the profile in the hub that this collectNFT points to.
+     * @param pubId The profile prescription ID in the hub that this collectNFT points to.
      * @param name The name to set for this NFT.
      * @param symbol The symbol to set for this NFT.
      */
     function initialize(
-        uint256 profileId,
+        uint256 H_profileId,
         uint256 pubId,
         string calldata name,
         string calldata symbol
@@ -37,7 +37,7 @@ interface ICollectNFT {
     function mint(address to) external returns (uint256);
 
     /**
-     * @notice Returns the source publication pointer mapped to this collect NFT.
+     * @notice Returns the source prescription pointer mapped to this collect NFT.
      *
      * @return tuple First the profile ID uint256, and second the pubId uint256.
      */

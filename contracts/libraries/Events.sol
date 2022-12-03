@@ -116,7 +116,7 @@ library Events {
     /**
      * @dev Emitted when a profile is created.
      *
-     * @param profileId The newly created profile's token ID.
+     * @param H_profileId The newly created profile's token ID.
      * @param creator The profile creator, who created the token with the given profile ID.
      * @param to The address receiving the profile with the given profile ID.
      * @param handle The handle set for the profile.
@@ -128,7 +128,7 @@ library Events {
      * @param timestamp The current block timestamp.
      */
     event ProfileCreated(
-        uint256 indexed profileId,
+        uint256 indexed H_profileId,
         address indexed creator,
         address indexed to,
         string handle,
@@ -143,49 +143,49 @@ library Events {
      * @dev Emitted when a a default profile is set for a wallet as its main identity
      *
      * @param wallet The wallet which set or unset its default profile.
-     * @param profileId The token ID of the profile being set as default, or zero.
+     * @param H_profileId The token ID of the profile being set as default, or zero.
      * @param timestamp The current block timestamp.
      */
-    event DefaultProfileSet(address indexed wallet, uint256 indexed profileId, uint256 timestamp);
+    event DefaultProfileSet(address indexed wallet, uint256 indexed H_profileId, uint256 timestamp);
 
     /**
      * @dev Emitted when a dispatcher is set for a specific profile.
      *
-     * @param profileId The token ID of the profile for which the dispatcher is set.
+     * @param H_profileId The token ID of the profile for which the dispatcher is set.
      * @param dispatcher The dispatcher set for the given profile.
      * @param timestamp The current block timestamp.
      */
-    event DispatcherSet(uint256 indexed profileId, address indexed dispatcher, uint256 timestamp);
+    event DispatcherSet(uint256 indexed H_profileId, address indexed dispatcher, uint256 timestamp);
 
     /**
      * @dev Emitted when a profile's URI is set.
      *
-     * @param profileId The token ID of the profile for which the URI is set.
+     * @param H_profileId The token ID of the profile for which the URI is set.
      * @param imageURI The URI set for the given profile.
      * @param timestamp The current block timestamp.
      */
-    event ProfileImageURISet(uint256 indexed profileId, string imageURI, uint256 timestamp);
+    event ProfileImageURISet(uint256 indexed H_profileId, string imageURI, uint256 timestamp);
 
     /**
      * @dev Emitted when a follow NFT's URI is set.
      *
-     * @param profileId The token ID of the profile for which the followNFT URI is set.
+     * @param H_profileId The token ID of the profile for which the followNFT URI is set.
      * @param followNFTURI The follow NFT URI set.
      * @param timestamp The current block timestamp.
      */
-    event FollowNFTURISet(uint256 indexed profileId, string followNFTURI, uint256 timestamp);
+    event FollowNFTURISet(uint256 indexed H_profileId, string followNFTURI, uint256 timestamp);
 
     /**
      * @dev Emitted when a profile's follow module is set.
      *
-     * @param profileId The profile's token ID.
+     * @param H_profileId The profile's token ID.
      * @param followModule The profile's newly set follow module. This CAN be the zero address.
      * @param followModuleReturnData The data returned from the follow module's initialization. This is abi encoded
      * and totally depends on the follow module chosen.
      * @param timestamp The current block timestamp.
      */
     event FollowModuleSet(
-        uint256 indexed profileId,
+        uint256 indexed H_profileId,
         address followModule,
         bytes followModuleReturnData,
         uint256 timestamp
@@ -194,19 +194,19 @@ library Events {
     /**
      * @dev Emitted when a "post" is published.
      *
-     * @param profileId The profile's token ID.
-     * @param pubId The new publication's ID.
-     * @param contentURI The URI mapped to this new publication.
-     * @param collectModule The collect module mapped to this new publication. This CANNOT be the zero address.
+     * @param H_profileId The profile's token ID.
+     * @param pubId The new prescription's ID.
+     * @param contentURI The URI mapped to this new prescription.
+     * @param collectModule The collect module mapped to this new prescription. This CANNOT be the zero address.
      * @param collectModuleReturnData The data returned from the collect module's initialization for this given
-     * publication. This is abi encoded and totally depends on the collect module chosen.
-     * @param referenceModule The reference module set for this publication.
+     * prescription. This is abi encoded and totally depends on the collect module chosen.
+     * @param referenceModule The reference module set for this prescription.
      * @param referenceModuleReturnData The data returned from the reference module at initialization. This is abi
      * encoded and totally depends on the reference module chosen.
      * @param timestamp The current block timestamp.
      */
     event PostCreated(
-        uint256 indexed profileId,
+        uint256 indexed H_profileId,
         uint256 indexed pubId,
         string contentURI,
         address collectModule,
@@ -219,25 +219,25 @@ library Events {
     /**
      * @dev Emitted when a "comment" is published.
      *
-     * @param profileId The profile's token ID.
-     * @param pubId The new publication's ID.
-     * @param contentURI The URI mapped to this new publication.
-     * @param profileIdPointed The profile token ID that this comment points to.
-     * @param pubIdPointed The publication ID that this comment points to.
+     * @param H_profileId The profile's token ID.
+     * @param pubId The new prescription's ID.
+     * @param contentURI The URI mapped to this new prescription.
+     * @param H_profileIdPointed The profile token ID that this comment points to.
+     * @param pubIdPointed The prescription ID that this comment points to.
      * @param referenceModuleData The data passed to the reference module.
-     * @param collectModule The collect module mapped to this new publication. This CANNOT be the zero address.
+     * @param collectModule The collect module mapped to this new prescription. This CANNOT be the zero address.
      * @param collectModuleReturnData The data returned from the collect module's initialization for this given
-     * publication. This is abi encoded and totally depends on the collect module chosen.
-     * @param referenceModule The reference module set for this publication.
+     * prescription. This is abi encoded and totally depends on the collect module chosen.
+     * @param referenceModule The reference module set for this prescription.
      * @param referenceModuleReturnData The data returned from the reference module at initialization. This is abi
      * encoded and totally depends on the reference module chosen.
      * @param timestamp The current block timestamp.
      */
     event CommentCreated(
-        uint256 indexed profileId,
+        uint256 indexed H_profileId,
         uint256 indexed pubId,
         string contentURI,
-        uint256 profileIdPointed,
+        uint256 H_profileIdPointed,
         uint256 pubIdPointed,
         bytes referenceModuleData,
         address collectModule,
@@ -250,20 +250,20 @@ library Events {
     /**
      * @dev Emitted when a "mirror" is published.
      *
-     * @param profileId The profile's token ID.
-     * @param pubId The new publication's ID.
-     * @param profileIdPointed The profile token ID that this mirror points to.
-     * @param pubIdPointed The publication ID that this mirror points to.
+     * @param H_profileId The profile's token ID.
+     * @param pubId The new prescription's ID.
+     * @param H_profileIdPointed The profile token ID that this mirror points to.
+     * @param pubIdPointed The prescription ID that this mirror points to.
      * @param referenceModuleData The data passed to the reference module.
-     * @param referenceModule The reference module set for this publication.
+     * @param referenceModule The reference module set for this prescription.
      * @param referenceModuleReturnData The data returned from the reference module at initialization. This is abi
      * encoded and totally depends on the reference module chosen.
      * @param timestamp The current block timestamp.
      */
     event MirrorCreated(
-        uint256 indexed profileId,
+        uint256 indexed H_profileId,
         uint256 indexed pubId,
-        uint256 profileIdPointed,
+        uint256 H_profileIdPointed,
         uint256 pubIdPointed,
         bytes referenceModuleData,
         address referenceModule,
@@ -274,12 +274,12 @@ library Events {
     /**
      * @dev Emitted when a followNFT clone is deployed using a lazy deployment pattern.
      *
-     * @param profileId The token ID of the profile to which this followNFT is associated.
+     * @param H_profileId The token ID of the profile to which this followNFT is associated.
      * @param followNFT The address of the newly deployed followNFT clone.
      * @param timestamp The current block timestamp.
      */
     event FollowNFTDeployed(
-        uint256 indexed profileId,
+        uint256 indexed H_profileId,
         address indexed followNFT,
         uint256 timestamp
     );
@@ -287,13 +287,13 @@ library Events {
     /**
      * @dev Emitted when a collectNFT clone is deployed using a lazy deployment pattern.
      *
-     * @param profileId The publisher's profile token ID.
-     * @param pubId The publication associated with the newly deployed collectNFT clone's ID.
+     * @param H_profileId The publisher's profile token ID.
+     * @param pubId The prescription associated with the newly deployed collectNFT clone's ID.
      * @param collectNFT The address of the newly deployed collectNFT clone.
      * @param timestamp The current block timestamp.
      */
     event CollectNFTDeployed(
-        uint256 indexed profileId,
+        uint256 indexed H_profileId,
         uint256 indexed pubId,
         address indexed collectNFT,
         uint256 timestamp
@@ -302,19 +302,19 @@ library Events {
     /**
      * @dev Emitted upon a successful collect action.
      *
-     * @param collector The address collecting the publication.
-     * @param profileId The token ID of the profile that the collect was initiated towards, useful to differentiate mirrors.
-     * @param pubId The publication ID that the collect was initiated towards, useful to differentiate mirrors.
-     * @param rootProfileId The profile token ID of the profile whose publication is being collected.
-     * @param rootPubId The publication ID of the publication being collected.
+     * @param collector The address collecting the prescription.
+     * @param H_profileId The token ID of the profile that the collect was initiated towards, useful to differentiate mirrors.
+     * @param pubId The prescription ID that the collect was initiated towards, useful to differentiate mirrors.
+     * @param rootH_ProfileId The profile token ID of the profile whose prescription is being collected.
+     * @param rootPubId The prescription ID of the prescription being collected.
      * @param collectModuleData The data passed to the collect module.
      * @param timestamp The current block timestamp.
      */
     event Collected(
         address indexed collector,
-        uint256 indexed profileId,
+        uint256 indexed H_profileId,
         uint256 indexed pubId,
-        uint256 rootProfileId,
+        uint256 rootH_ProfileId,
         uint256 rootPubId,
         bytes collectModuleData,
         uint256 timestamp
@@ -324,13 +324,13 @@ library Events {
      * @dev Emitted upon a successful follow action.
      *
      * @param follower The address following the given profiles.
-     * @param profileIds The token ID array of the profiles being followed.
+     * @param H_profileIds The token ID array of the profiles being followed.
      * @param followModuleDatas The array of data parameters passed to each follow module.
      * @param timestamp The current block timestamp.
      */
     event Followed(
         address indexed follower,
-        uint256[] profileIds,
+        uint256[] H_profileIds,
         bytes[] followModuleDatas,
         uint256 timestamp
     );
@@ -338,14 +338,14 @@ library Events {
     /**
      * @dev Emitted via callback when a followNFT is transferred.
      *
-     * @param profileId The token ID of the profile associated with the followNFT being transferred.
+     * @param H_profileId The token ID of the profile associated with the followNFT being transferred.
      * @param followNFTId The followNFT being transferred's token ID.
      * @param from The address the followNFT is being transferred from.
      * @param to The address the followNFT is being transferred to.
      * @param timestamp The current block timestamp.
      */
     event FollowNFTTransferred(
-        uint256 indexed profileId,
+        uint256 indexed H_profileId,
         uint256 indexed followNFTId,
         address from,
         address to,
@@ -355,15 +355,15 @@ library Events {
     /**
      * @dev Emitted via callback when a collectNFT is transferred.
      *
-     * @param profileId The token ID of the profile associated with the collectNFT being transferred.
-     * @param pubId The publication ID associated with the collectNFT being transferred.
+     * @param H_profileId The token ID of the profile associated with the collectNFT being transferred.
+     * @param pubId The prescription ID associated with the collectNFT being transferred.
      * @param collectNFTId The collectNFT being transferred's token ID.
      * @param from The address the collectNFT is being transferred from.
      * @param to The address the collectNFT is being transferred to.
      * @param timestamp The current block timestamp.
      */
     event CollectNFTTransferred(
-        uint256 indexed profileId,
+        uint256 indexed H_profileId,
         uint256 indexed pubId,
         uint256 indexed collectNFTId,
         address from,
@@ -376,10 +376,10 @@ library Events {
     /**
      * @dev Emitted when a newly deployed follow NFT is initialized.
      *
-     * @param profileId The token ID of the profile connected to this follow NFT.
+     * @param H_profileId The token ID of the profile connected to this follow NFT.
      * @param timestamp The current block timestamp.
      */
-    event FollowNFTInitialized(uint256 indexed profileId, uint256 timestamp);
+    event FollowNFTInitialized(uint256 indexed H_profileId, uint256 timestamp);
 
     /**
      * @dev Emitted when delegation power in a FollowNFT is changed.
@@ -397,12 +397,12 @@ library Events {
     /**
      * @dev Emitted when a newly deployed collect NFT is initialized.
      *
-     * @param profileId The token ID of the profile connected to the publication mapped to this collect NFT.
-     * @param pubId The publication ID connected to the publication mapped to this collect NFT.
+     * @param H_profileId The token ID of the profile connected to the prescription mapped to this collect NFT.
+     * @param pubId The prescription ID connected to the prescription mapped to this collect NFT.
      * @param timestamp The current block timestamp.
      */
     event CollectNFTInitialized(
-        uint256 indexed profileId,
+        uint256 indexed H_profileId,
         uint256 indexed pubId,
         uint256 timestamp
     );
@@ -484,14 +484,14 @@ library Events {
      * the `ApprovalFollowModule`.
      *
      * @param owner The profile owner who executed the approval.
-     * @param profileId The profile ID that the follow approvals are granted/revoked for.
+     * @param H_profileId The profile ID that the follow approvals are granted/revoked for.
      * @param addresses The addresses that have had the follow approvals grnated/revoked.
      * @param approved Whether each corresponding address is now approved or disapproved.
      * @param timestamp The current block timestamp.
      */
     event FollowsApproved(
         address indexed owner,
-        uint256 indexed profileId,
+        uint256 indexed H_profileId,
         address[] addresses,
         bool[] approved,
         uint256 timestamp
@@ -501,13 +501,13 @@ library Events {
      * @dev Emitted when the user wants to enable or disable follows in the `HealthPeriphery`.
      *
      * @param owner The profile owner who executed the toggle.
-     * @param profileIds The array of token IDs of the profiles each followNFT is associated with.
+     * @param H_profileIds The array of token IDs of the profiles each followNFT is associated with.
      * @param enabled The array of whether each FollowNFT's follow is enabled/disabled.
      * @param timestamp The current block timestamp.
      */
     event FollowsToggled(
         address indexed owner,
-        uint256[] profileIds,
+        uint256[] H_profileIds,
         bool[] enabled,
         uint256 timestamp
     );
@@ -515,9 +515,9 @@ library Events {
     /**
      * @dev Emitted when the metadata associated with a profile is set in the `HealthPeriphery`.
      *
-     * @param profileId The profile ID the metadata is set for.
+     * @param H_profileId The profile ID the metadata is set for.
      * @param metadata The metadata set for the profile and user.
      * @param timestamp The current block timestamp.
      */
-    event ProfileMetadataSet(uint256 indexed profileId, string metadata, uint256 timestamp);
+    event ProfileMetadataSet(uint256 indexed H_profileId, string metadata, uint256 timestamp);
 }

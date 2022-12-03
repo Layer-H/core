@@ -6,7 +6,7 @@ import {IReferenceModule} from '../interfaces/IReferenceModule.sol';
 
 contract MockReferenceModule is IReferenceModule {
     function initializeReferenceModule(
-        uint256 profileId,
+        uint256 H_profileId,
         uint256 pubId,
         bytes calldata data
     ) external pure override returns (bytes memory) {
@@ -16,15 +16,15 @@ contract MockReferenceModule is IReferenceModule {
     }
 
     function processComment(
-        uint256 profileId,
-        uint256 profileIdPointed,
+        uint256 H_profileId,
+        uint256 H_profileIdPointed,
         uint256 pubIdPointed,
         bytes calldata data
     ) external override {}
 
     function processMirror(
-        uint256 profileId,
-        uint256 profileIdPointed,
+        uint256 H_profileId,
+        uint256 H_profileIdPointed,
         uint256 pubIdPointed,
         bytes calldata data
     ) external override {}

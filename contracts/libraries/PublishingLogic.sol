@@ -15,7 +15,7 @@ import {IReferenceModule} from '../interfaces/IReferenceModule.sol';
  * @title PublishingLogic
  * @author Layer-H
  *
- * @notice This is the library that contains the logic for profile creation & publication.
+ * @notice This is the library that contains the logic for profile creation & prescription.
  *
  * @dev The functions are external, so they are called from the hub via `delegateCall` under the hood. Furthermore,
  * expected events are emitted from this library instead of from the hub to alleviate code size concerns.
@@ -31,15 +31,15 @@ library PublishingLogic {
      *      followModule: The follow module to use, can be the zero address.
      *      followModuleInitData: The follow module initialization data, if any
      *      followNFTURI: The URI to set for the follow NFT.
-     * @param profileId The profile ID to associate with this profile NFT (token ID).
-     * @param _profileIdByHandleHash The storage reference to the mapping of profile IDs by handle hash.
+     * @param H_profileId The profile ID to associate with this profile NFT (token ID).
+     * @param _H_profileIdByHandleHash The storage reference to the mapping of profile IDs by handle hash.
      * @param _profileById The storage reference to the mapping of profile structs by IDs.
      * @param _followModuleWhitelisted The storage reference to the mapping of whitelist status by follow module address.
      */
     function createProfile(
         DataTypes.CreateProfileData calldata vars,
-        uint256 profileId,
-        mapping(bytes32 => uint256) storage _profileIdByHandleHash,
+        uint256 H_profileId,
+        mapping(bytes32 => uint256) storage _H_profileIdByHandleHash,
         mapping(uint256 => DataTypes.ProfileStruct) storage _profileById,
         mapping(address => bool) storage _followModuleWhitelisted
     ) external {
@@ -50,38 +50,38 @@ library PublishingLogic {
 
         bytes32 handleHash = keccak256(bytes(vars.handle));
 
-        if (_profileIdByHandleHash[handleHash] != 0) revert Errors.HandleTaken();
+        if (_H_profileIdByHandleHash[handleHash] != 0) revert Errors.HandleTaken();
 
-        _profileIdByHandleHash[handleHash] = profileId;
-        _profileById[profileId].handle = vars.handle;
-        _profileById[profileId].imageURI = vars.imageURI;
-        _profileById[profileId].followNFTURI = vars.followNFTURI;
+        _H_profileIdByHandleHash[handleHash] = H_profileId;
+        _profileById[H_profileId].handle = vars.handle;
+        _profileById[H_profileId].imageURI = vars.imageURI;
+        _profileById[H_profileId].followNFTURI = vars.followNFTURI;
 
         bytes memory followModuleReturnData;
         if (vars.followModule != address(0)) {
-            _profileById[profileId].followModule = vars.followModule;
+            _profileById[H_profileId].followModule = vars.followModule;
             followModuleReturnData = _initFollowModule(
-                profileId,
+                H_profileId,
                 vars.followModule,
                 vars.followModuleInitData,
                 _followModuleWhitelisted
             );
         }
 
-        _emitProfileCreated(profileId, vars, followModuleReturnData);
+        _emitProfileCreated(H_profileId, vars, followModuleReturnData);
     }
 
     /**
      * @notice Sets the follow module for a given profile.
      *
-     * @param profileId The profile ID to set the follow module for.
+     * @param H_profileId The profile ID to set the follow module for.
      * @param followModule The follow module to set for the given profile, if any.
      * @param followModuleInitData The data to pass to the follow module for profile initialization.
      * @param _profile The storage reference to the profile struct associated with the given profile ID.
      * @param _followModuleWhitelisted The storage reference to the mapping of whitelist status by follow module address.
      */
     function setFollowModule(
-        uint256 profileId,
+        uint256 H_profileId,
         address followModule,
         bytes calldata followModuleInitData,
         DataTypes.ProfileStruct storage _profile,
@@ -94,13 +94,13 @@ library PublishingLogic {
         bytes memory followModuleReturnData;
         if (followModule != address(0))
             followModuleReturnData = _initFollowModule(
-                profileId,
+                H_profileId,
                 followModule,
                 followModuleInitData,
                 _followModuleWhitelisted
             );
         emit Events.FollowModuleSet(
-            profileId,
+            H_profileId,
             followModule,
             followModuleReturnData,
             block.timestamp
@@ -108,23 +108,23 @@ library PublishingLogic {
     }
 
     /**
-     * @notice Creates a post publication mapped to the given profile.
+     * @notice Creates a post prescription mapped to the given profile.
      *
      * @dev To avoid a stack too deep error, reference parameters are passed in memory rather than calldata.
      *
-     * @param profileId The profile ID to associate this publication to.
-     * @param contentURI The URI to set for this publication.
-     * @param collectModule The collect module to set for this publication.
-     * @param collectModuleInitData The data to pass to the collect module for publication initialization.
-     * @param referenceModule The reference module to set for this publication, if any.
-     * @param referenceModuleInitData The data to pass to the reference module for publication initialization.
-     * @param pubId The publication ID to associate with this publication.
-     * @param _pubByIdByProfile The storage reference to the mapping of publications by publication ID by profile ID.
+     * @param H_profileId The profile ID to associate this prescription to.
+     * @param contentURI The URI to set for this prescription.
+     * @param collectModule The collect module to set for this prescription.
+     * @param collectModuleInitData The data to pass to the collect module for prescription initialization.
+     * @param referenceModule The reference module to set for this prescription, if any.
+     * @param referenceModuleInitData The data to pass to the reference module for prescription initialization.
+     * @param pubId The prescription ID to associate with this prescription.
+     * @param _pubByIdByProfile The storage reference to the mapping of prescriptions by prescription ID by profile ID.
      * @param _collectModuleWhitelisted The storage reference to the mapping of whitelist status by collect module address.
      * @param _referenceModuleWhitelisted The storage reference to the mapping of whitelist status by reference module address.
      */
     function createPost(
-        uint256 profileId,
+        uint256 H_profileId,
         string memory contentURI,
         address collectModule,
         bytes memory collectModuleInitData,
@@ -136,11 +136,11 @@ library PublishingLogic {
         mapping(address => bool) storage _collectModuleWhitelisted,
         mapping(address => bool) storage _referenceModuleWhitelisted
     ) external {
-        _pubByIdByProfile[profileId][pubId].contentURI = contentURI;
+        _pubByIdByProfile[H_profileId][pubId].contentURI = contentURI;
 
         // Collect module initialization
         bytes memory collectModuleReturnData = _initPubCollectModule(
-            profileId,
+            H_profileId,
             pubId,
             collectModule,
             collectModuleInitData,
@@ -150,7 +150,7 @@ library PublishingLogic {
 
         // Reference module initialization
         bytes memory referenceModuleReturnData = _initPubReferenceModule(
-            profileId,
+            H_profileId,
             pubId,
             referenceModule,
             referenceModuleInitData,
@@ -159,7 +159,7 @@ library PublishingLogic {
         );
 
         emit Events.PostCreated(
-            profileId,
+            H_profileId,
             pubId,
             contentURI,
             collectModule,
@@ -171,15 +171,15 @@ library PublishingLogic {
     }
 
     /**
-     * @notice Creates a comment publication mapped to the given profile.
+     * @notice Creates a comment prescription mapped to the given profile.
      *
      * @dev This function is unique in that it requires many variables, so, unlike the other publishing functions,
      * we need to pass the full CommentData struct in memory to avoid a stack too deep error.
      *
      * @param vars The CommentData struct to use to create the comment.
-     * @param pubId The publication ID to associate with this publication.
+     * @param pubId The prescription ID to associate with this prescription.
      * @param _profileById The storage reference to the mapping of profile structs by IDs.
-     * @param _pubByIdByProfile The storage reference to the mapping of publications by publication ID by profile ID.
+     * @param _pubByIdByProfile The storage reference to the mapping of prescriptions by prescription ID by profile ID.
      * @param _collectModuleWhitelisted The storage reference to the mapping of whitelist status by collect module address.
      * @param _referenceModuleWhitelisted The storage reference to the mapping of whitelist status by reference module address.
      */
@@ -192,22 +192,22 @@ library PublishingLogic {
         mapping(address => bool) storage _collectModuleWhitelisted,
         mapping(address => bool) storage _referenceModuleWhitelisted
     ) external {
-        // Validate existence of the pointed publication
-        uint256 pubCount = _profileById[vars.profileIdPointed].pubCount;
+        // Validate existence of the pointed prescription
+        uint256 pubCount = _profileById[vars.H_profileIdPointed].pubCount;
         if (pubCount < vars.pubIdPointed || vars.pubIdPointed == 0)
             revert Errors.PublicationDoesNotExist();
 
-        // Ensure the pointed publication is not the comment being created
-        if (vars.profileId == vars.profileIdPointed && vars.pubIdPointed == pubId)
+        // Ensure the pointed prescription is not the comment being created
+        if (vars.H_profileId == vars.H_profileIdPointed && vars.pubIdPointed == pubId)
             revert Errors.CannotCommentOnSelf();
 
-        _pubByIdByProfile[vars.profileId][pubId].contentURI = vars.contentURI;
-        _pubByIdByProfile[vars.profileId][pubId].profileIdPointed = vars.profileIdPointed;
-        _pubByIdByProfile[vars.profileId][pubId].pubIdPointed = vars.pubIdPointed;
+        _pubByIdByProfile[vars.H_profileId][pubId].contentURI = vars.contentURI;
+        _pubByIdByProfile[vars.H_profileId][pubId].H_profileIdPointed = vars.H_profileIdPointed;
+        _pubByIdByProfile[vars.H_profileId][pubId].pubIdPointed = vars.pubIdPointed;
 
         // Collect Module Initialization
         bytes memory collectModuleReturnData = _initPubCollectModule(
-            vars.profileId,
+            vars.H_profileId,
             pubId,
             vars.collectModule,
             vars.collectModuleInitData,
@@ -217,7 +217,7 @@ library PublishingLogic {
 
         // Reference module initialization
         bytes memory referenceModuleReturnData = _initPubReferenceModule(
-            vars.profileId,
+            vars.H_profileId,
             pubId,
             vars.referenceModule,
             vars.referenceModuleInitData,
@@ -226,12 +226,12 @@ library PublishingLogic {
         );
 
         // Reference module validation
-        address refModule = _pubByIdByProfile[vars.profileIdPointed][vars.pubIdPointed]
+        address refModule = _pubByIdByProfile[vars.H_profileIdPointed][vars.pubIdPointed]
             .referenceModule;
         if (refModule != address(0)) {
             IReferenceModule(refModule).processComment(
-                vars.profileId,
-                vars.profileIdPointed,
+                vars.H_profileId,
+                vars.H_profileIdPointed,
                 vars.pubIdPointed,
                 vars.referenceModuleData
             );
@@ -242,11 +242,11 @@ library PublishingLogic {
     }
 
     /**
-     * @notice Creates a mirror publication mapped to the given profile.
+     * @notice Creates a mirror prescription mapped to the given profile.
      *
      * @param vars The MirrorData struct to use to create the mirror.
-     * @param pubId The publication ID to associate with this publication.
-     * @param _pubByIdByProfile The storage reference to the mapping of publications by publication ID by profile ID.
+     * @param pubId The prescription ID to associate with this prescription.
+     * @param _pubByIdByProfile The storage reference to the mapping of prescriptions by prescription ID by profile ID.
      * @param _referenceModuleWhitelisted The storage reference to the mapping of whitelist status by reference module address.
      */
     function createMirror(
@@ -256,18 +256,18 @@ library PublishingLogic {
             storage _pubByIdByProfile,
         mapping(address => bool) storage _referenceModuleWhitelisted
     ) external {
-        (uint256 rootProfileIdPointed, uint256 rootPubIdPointed, ) = Helpers.getPointedIfMirror(
-            vars.profileIdPointed,
+        (uint256 rootH_ProfileIdPointed, uint256 rootPubIdPointed, ) = Helpers.getPointedIfMirror(
+            vars.H_profileIdPointed,
             vars.pubIdPointed,
             _pubByIdByProfile
         );
 
-        _pubByIdByProfile[vars.profileId][pubId].profileIdPointed = rootProfileIdPointed;
-        _pubByIdByProfile[vars.profileId][pubId].pubIdPointed = rootPubIdPointed;
+        _pubByIdByProfile[vars.H_profileId][pubId].H_profileIdPointed = rootH_ProfileIdPointed;
+        _pubByIdByProfile[vars.H_profileId][pubId].pubIdPointed = rootPubIdPointed;
 
         // Reference module initialization
         bytes memory referenceModuleReturnData = _initPubReferenceModule(
-            vars.profileId,
+            vars.H_profileId,
             pubId,
             vars.referenceModule,
             vars.referenceModuleInitData,
@@ -276,21 +276,21 @@ library PublishingLogic {
         );
 
         // Reference module validation
-        address refModule = _pubByIdByProfile[rootProfileIdPointed][rootPubIdPointed]
+        address refModule = _pubByIdByProfile[rootH_ProfileIdPointed][rootPubIdPointed]
             .referenceModule;
         if (refModule != address(0)) {
             IReferenceModule(refModule).processMirror(
-                vars.profileId,
-                rootProfileIdPointed,
+                vars.H_profileId,
+                rootH_ProfileIdPointed,
                 rootPubIdPointed,
                 vars.referenceModuleData
             );
         }
 
         emit Events.MirrorCreated(
-            vars.profileId,
+            vars.H_profileId,
             pubId,
-            rootProfileIdPointed,
+            rootH_ProfileIdPointed,
             rootPubIdPointed,
             vars.referenceModuleData,
             vars.referenceModule,
@@ -300,7 +300,7 @@ library PublishingLogic {
     }
 
     function _initPubCollectModule(
-        uint256 profileId,
+        uint256 H_profileId,
         uint256 pubId,
         address collectModule,
         bytes memory collectModuleInitData,
@@ -309,17 +309,17 @@ library PublishingLogic {
         mapping(address => bool) storage _collectModuleWhitelisted
     ) private returns (bytes memory) {
         if (!_collectModuleWhitelisted[collectModule]) revert Errors.CollectModuleNotWhitelisted();
-        _pubByIdByProfile[profileId][pubId].collectModule = collectModule;
+        _pubByIdByProfile[H_profileId][pubId].collectModule = collectModule;
         return
             ICollectModule(collectModule).initializePublicationCollectModule(
-                profileId,
+                H_profileId,
                 pubId,
                 collectModuleInitData
             );
     }
 
     function _initPubReferenceModule(
-        uint256 profileId,
+        uint256 H_profileId,
         uint256 pubId,
         address referenceModule,
         bytes memory referenceModuleInitData,
@@ -330,23 +330,23 @@ library PublishingLogic {
         if (referenceModule == address(0)) return new bytes(0);
         if (!_referenceModuleWhitelisted[referenceModule])
             revert Errors.ReferenceModuleNotWhitelisted();
-        _pubByIdByProfile[profileId][pubId].referenceModule = referenceModule;
+        _pubByIdByProfile[H_profileId][pubId].referenceModule = referenceModule;
         return
             IReferenceModule(referenceModule).initializeReferenceModule(
-                profileId,
+                H_profileId,
                 pubId,
                 referenceModuleInitData
             );
     }
 
     function _initFollowModule(
-        uint256 profileId,
+        uint256 H_profileId,
         address followModule,
         bytes memory followModuleInitData,
         mapping(address => bool) storage _followModuleWhitelisted
     ) private returns (bytes memory) {
         if (!_followModuleWhitelisted[followModule]) revert Errors.FollowModuleNotWhitelisted();
-        return IFollowModule(followModule).initializeFollowModule(profileId, followModuleInitData);
+        return IFollowModule(followModule).initializeFollowModule(H_profileId, followModuleInitData);
     }
 
     function _emitCommentCreated(
@@ -356,10 +356,10 @@ library PublishingLogic {
         bytes memory referenceModuleReturnData
     ) private {
         emit Events.CommentCreated(
-            vars.profileId,
+            vars.H_profileId,
             pubId,
             vars.contentURI,
-            vars.profileIdPointed,
+            vars.H_profileIdPointed,
             vars.pubIdPointed,
             vars.referenceModuleData,
             vars.collectModule,
@@ -371,12 +371,12 @@ library PublishingLogic {
     }
 
     function _emitProfileCreated(
-        uint256 profileId,
+        uint256 H_profileId,
         DataTypes.CreateProfileData calldata vars,
         bytes memory followModuleReturnData
     ) internal {
         emit Events.ProfileCreated(
-            profileId,
+            H_profileId,
             msg.sender, // Creator is always the msg sender
             vars.to,
             vars.handle,

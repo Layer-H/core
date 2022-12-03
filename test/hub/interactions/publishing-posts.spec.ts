@@ -46,7 +46,7 @@ makeSuiteCleanRoom('Publishing Posts', function () {
       it('UserTwo should fail to post to a profile owned by User', async function () {
         await expect(
           healthHub.connect(userTwo).post({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: freeCollectModule.address,
             collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -59,7 +59,7 @@ makeSuiteCleanRoom('Publishing Posts', function () {
       it('User should fail to post with an unwhitelisted collect module', async function () {
         await expect(
           healthHub.post({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: freeCollectModule.address,
             collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -76,7 +76,7 @@ makeSuiteCleanRoom('Publishing Posts', function () {
 
         await expect(
           healthHub.post({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: freeCollectModule.address,
             collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -93,7 +93,7 @@ makeSuiteCleanRoom('Publishing Posts', function () {
 
         await expect(
           healthHub.post({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: timedFeeCollectModule.address,
             collectModuleInitData: [0x12, 0x34],
@@ -114,7 +114,7 @@ makeSuiteCleanRoom('Publishing Posts', function () {
 
         await expect(
           healthHub.post({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: freeCollectModule.address,
             collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -126,7 +126,7 @@ makeSuiteCleanRoom('Publishing Posts', function () {
     });
 
     context('Scenarios', function () {
-      it('Should return the expected token IDs when mirroring publications', async function () {
+      it('Should return the expected token IDs when mirroring prescriptions', async function () {
         await expect(
           healthHub.connect(governance).whitelistCollectModule(freeCollectModule.address, true)
         ).to.not.be.reverted;
@@ -155,7 +155,7 @@ makeSuiteCleanRoom('Publishing Posts', function () {
         expect(
           await postReturningTokenId({
             vars: {
-              profileId: FIRST_PROFILE_ID,
+              H_profileId: FIRST_PROFILE_ID,
               contentURI: MOCK_URI,
               collectModule: freeCollectModule.address,
               collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -169,7 +169,7 @@ makeSuiteCleanRoom('Publishing Posts', function () {
           await postReturningTokenId({
             sender: userTwo,
             vars: {
-              profileId: FIRST_PROFILE_ID + 2,
+              H_profileId: FIRST_PROFILE_ID + 2,
               contentURI: MOCK_URI,
               collectModule: freeCollectModule.address,
               collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -196,7 +196,7 @@ makeSuiteCleanRoom('Publishing Posts', function () {
         expect(
           await postReturningTokenId({
             vars: {
-              profileId: FIRST_PROFILE_ID + 1,
+              H_profileId: FIRST_PROFILE_ID + 1,
               contentURI: MOCK_URI,
               collectModule: freeCollectModule.address,
               collectModuleInitData: collectModuleInitData,
@@ -215,7 +215,7 @@ makeSuiteCleanRoom('Publishing Posts', function () {
         expect(
           await postReturningTokenId({
             vars: {
-              profileId: FIRST_PROFILE_ID,
+              H_profileId: FIRST_PROFILE_ID,
               contentURI: MOCK_URI,
               collectModule: freeCollectModule.address,
               collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -233,7 +233,7 @@ makeSuiteCleanRoom('Publishing Posts', function () {
 
         await expect(
           healthHub.post({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: freeCollectModule.address,
             collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -243,7 +243,7 @@ makeSuiteCleanRoom('Publishing Posts', function () {
         ).to.not.be.reverted;
 
         const pub = await healthHub.getPub(FIRST_PROFILE_ID, 1);
-        expect(pub.profileIdPointed).to.eq(0);
+        expect(pub.H_profileIdPointed).to.eq(0);
         expect(pub.pubIdPointed).to.eq(0);
         expect(pub.contentURI).to.eq(MOCK_URI);
         expect(pub.collectModule).to.eq(freeCollectModule.address);
@@ -261,7 +261,7 @@ makeSuiteCleanRoom('Publishing Posts', function () {
 
         await expect(
           healthHub.post({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: freeCollectModule.address,
             collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -310,7 +310,7 @@ makeSuiteCleanRoom('Publishing Posts', function () {
 
         await expect(
           healthHub.postWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: ZERO_ADDRESS,
             collectModuleInitData: collectModuleInitData,
@@ -348,7 +348,7 @@ makeSuiteCleanRoom('Publishing Posts', function () {
 
         await expect(
           healthHub.postWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: ZERO_ADDRESS,
             collectModuleInitData: collectModuleInitData,
@@ -386,7 +386,7 @@ makeSuiteCleanRoom('Publishing Posts', function () {
 
         await expect(
           healthHub.postWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: ZERO_ADDRESS,
             collectModuleInitData: collectModuleInitData,
@@ -420,7 +420,7 @@ makeSuiteCleanRoom('Publishing Posts', function () {
 
         await expect(
           healthHub.postWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: userAddress,
             collectModuleInitData: collectModuleInitData,
@@ -458,7 +458,7 @@ makeSuiteCleanRoom('Publishing Posts', function () {
 
         await expect(
           healthHub.postWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: freeCollectModule.address,
             collectModuleInitData: collectModuleInitData,
@@ -498,7 +498,7 @@ makeSuiteCleanRoom('Publishing Posts', function () {
 
         await expect(
           healthHub.postWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: freeCollectModule.address,
             collectModuleInitData: collectModuleInitData,
@@ -538,7 +538,7 @@ makeSuiteCleanRoom('Publishing Posts', function () {
 
         await expect(
           healthHub.postWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: freeCollectModule.address,
             collectModuleInitData: collectModuleInitData,
@@ -554,7 +554,7 @@ makeSuiteCleanRoom('Publishing Posts', function () {
         ).to.not.be.reverted;
 
         const pub = await healthHub.getPub(FIRST_PROFILE_ID, 1);
-        expect(pub.profileIdPointed).to.eq(0);
+        expect(pub.H_profileIdPointed).to.eq(0);
         expect(pub.pubIdPointed).to.eq(0);
         expect(pub.contentURI).to.eq(MOCK_URI);
         expect(pub.collectModule).to.eq(freeCollectModule.address);

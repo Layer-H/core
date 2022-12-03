@@ -109,7 +109,7 @@ makeSuiteCleanRoom('Approval Follow Module', function () {
   context('Scenarios', function () {
     context('Initialization', function () {
       it('Profile creation with initial approval data should emit expected event', async function () {
-        const secondProfileId = FIRST_PROFILE_ID + 1;
+        const secondH_ProfileId = FIRST_PROFILE_ID + 1;
         const data = abiCoder.encode(['address[]'], [[userTwoAddress]]);
 
         const tx = healthHub.createProfile({
@@ -124,9 +124,9 @@ makeSuiteCleanRoom('Approval Follow Module', function () {
         const receipt = await waitForTx(tx);
 
         expect(receipt.logs.length).to.eq(2);
-        matchEvent(receipt, 'Transfer', [ZERO_ADDRESS, userAddress, secondProfileId], healthHubImpl);
+        matchEvent(receipt, 'Transfer', [ZERO_ADDRESS, userAddress, secondH_ProfileId], healthHubImpl);
         matchEvent(receipt, 'ProfileCreated', [
-          secondProfileId,
+          secondH_ProfileId,
           userAddress,
           userAddress,
           'secondhandle',

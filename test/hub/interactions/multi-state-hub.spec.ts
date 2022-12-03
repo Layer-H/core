@@ -231,7 +231,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.setFollowModuleWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             followModule: ZERO_ADDRESS,
             followModuleInitData: [],
             sig: {
@@ -249,7 +249,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.setFollowModuleWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             followModule: ZERO_ADDRESS,
             followModuleInitData: [],
             sig: {
@@ -311,7 +311,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.setDispatcherWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             dispatcher: userTwoAddress,
             sig: {
               v,
@@ -328,7 +328,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.setDispatcherWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             dispatcher: userTwoAddress,
             sig: {
               v,
@@ -389,7 +389,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.setProfileImageURIWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             imageURI: MOCK_URI,
             sig: {
               v,
@@ -406,7 +406,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.setProfileImageURIWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             imageURI: MOCK_URI,
             sig: {
               v,
@@ -467,7 +467,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.setFollowNFTURIWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             followNFTURI: MOCK_URI,
             sig: {
               v,
@@ -484,7 +484,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.setFollowNFTURIWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             followNFTURI: MOCK_URI,
             sig: {
               v,
@@ -516,7 +516,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.post({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: freeCollectModule.address,
             collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -531,7 +531,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.post({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: freeCollectModule.address,
             collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -576,7 +576,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.postWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: freeCollectModule.address,
             collectModuleInitData: collectModuleInitData,
@@ -597,7 +597,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.postWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: freeCollectModule.address,
             collectModuleInitData: collectModuleInitData,
@@ -631,7 +631,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.post({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: freeCollectModule.address,
             collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -644,9 +644,9 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.comment({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             referenceModuleData: [],
             collectModule: freeCollectModule.address,
@@ -662,9 +662,9 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.comment({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             referenceModuleData: [],
             collectModule: freeCollectModule.address,
@@ -693,7 +693,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.connect(testWallet).post({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: freeCollectModule.address,
             collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -725,9 +725,9 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.commentWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: '1',
             referenceModuleData: referenceModuleData,
             collectModule: freeCollectModule.address,
@@ -749,9 +749,9 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.commentWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: '1',
             referenceModuleData: referenceModuleData,
             collectModule: freeCollectModule.address,
@@ -786,7 +786,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.post({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: freeCollectModule.address,
             collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -799,8 +799,8 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.mirror({
-            profileId: FIRST_PROFILE_ID,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             referenceModuleData: [],
             referenceModule: ZERO_ADDRESS,
@@ -814,8 +814,8 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.mirror({
-            profileId: FIRST_PROFILE_ID,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             referenceModuleData: [],
             referenceModule: ZERO_ADDRESS,
@@ -842,7 +842,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.connect(testWallet).post({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: freeCollectModule.address,
             collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -870,8 +870,8 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.mirrorWithSig({
-            profileId: FIRST_PROFILE_ID,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: '1',
             referenceModuleData: [],
             referenceModule: ZERO_ADDRESS,
@@ -891,8 +891,8 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.mirrorWithSig({
-            profileId: FIRST_PROFILE_ID,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: '1',
             referenceModuleData: [],
             referenceModule: ZERO_ADDRESS,
@@ -979,7 +979,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
         await expect(
           healthHub.followWithSig({
             follower: testWallet.address,
-            profileIds: [FIRST_PROFILE_ID],
+            H_profileIds: [FIRST_PROFILE_ID],
             datas: [[]],
             sig: {
               v,
@@ -997,7 +997,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
         await expect(
           healthHub.followWithSig({
             follower: testWallet.address,
-            profileIds: [FIRST_PROFILE_ID],
+            H_profileIds: [FIRST_PROFILE_ID],
             datas: [[]],
             sig: {
               v,
@@ -1027,7 +1027,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.post({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: freeCollectModule.address,
             collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -1067,7 +1067,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.connect(testWallet).post({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: freeCollectModule.address,
             collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -1095,7 +1095,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
         await expect(
           healthHub.collectWithSig({
             collector: testWallet.address,
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             pubId: '1',
             data: [],
             sig: {
@@ -1114,7 +1114,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
         await expect(
           healthHub.collectWithSig({
             collector: testWallet.address,
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             pubId: '1',
             data: [],
             sig: {
@@ -1197,7 +1197,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.setFollowModuleWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             followModule: ZERO_ADDRESS,
             followModuleInitData: [],
             sig: {
@@ -1255,7 +1255,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.setDispatcherWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             dispatcher: userTwoAddress,
             sig: {
               v,
@@ -1312,7 +1312,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.setProfileImageURIWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             imageURI: MOCK_URI,
             sig: {
               v,
@@ -1346,7 +1346,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.post({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: freeCollectModule.address,
             collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -1361,7 +1361,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.post({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: freeCollectModule.address,
             collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -1408,7 +1408,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.postWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: freeCollectModule.address,
             collectModuleInitData: collectModuleInitData,
@@ -1429,7 +1429,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.postWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: freeCollectModule.address,
             collectModuleInitData: collectModuleInitData,
@@ -1463,7 +1463,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.post({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: freeCollectModule.address,
             collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -1478,9 +1478,9 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.comment({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             referenceModuleData: [],
             collectModule: freeCollectModule.address,
@@ -1496,9 +1496,9 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.comment({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             referenceModuleData: [],
             collectModule: freeCollectModule.address,
@@ -1527,7 +1527,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.connect(testWallet).post({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: freeCollectModule.address,
             collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -1561,9 +1561,9 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.commentWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: '1',
             referenceModuleData: referenceModuleData,
             collectModule: freeCollectModule.address,
@@ -1585,9 +1585,9 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.commentWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: '1',
             referenceModuleData: referenceModuleData,
             collectModule: freeCollectModule.address,
@@ -1622,7 +1622,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.post({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: freeCollectModule.address,
             collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -1637,8 +1637,8 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.mirror({
-            profileId: FIRST_PROFILE_ID,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             referenceModuleData: [],
             referenceModule: ZERO_ADDRESS,
@@ -1652,8 +1652,8 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.mirror({
-            profileId: FIRST_PROFILE_ID,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             referenceModuleData: [],
             referenceModule: ZERO_ADDRESS,
@@ -1680,7 +1680,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.connect(testWallet).post({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: freeCollectModule.address,
             collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -1710,8 +1710,8 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.mirrorWithSig({
-            profileId: FIRST_PROFILE_ID,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: '1',
             referenceModuleData: [],
             referenceModule: ZERO_ADDRESS,
@@ -1731,8 +1731,8 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.mirrorWithSig({
-            profileId: FIRST_PROFILE_ID,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: '1',
             referenceModuleData: [],
             referenceModule: ZERO_ADDRESS,
@@ -1813,7 +1813,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
         await expect(
           healthHub.followWithSig({
             follower: testWallet.address,
-            profileIds: [FIRST_PROFILE_ID],
+            H_profileIds: [FIRST_PROFILE_ID],
             datas: [[]],
             sig: {
               v,
@@ -1843,7 +1843,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.post({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: freeCollectModule.address,
             collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -1879,7 +1879,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
 
         await expect(
           healthHub.connect(testWallet).post({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: freeCollectModule.address,
             collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -1909,7 +1909,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
         await expect(
           healthHub.collectWithSig({
             collector: testWallet.address,
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             pubId: '1',
             data: [],
             sig: {

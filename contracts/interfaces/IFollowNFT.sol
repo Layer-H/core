@@ -14,9 +14,9 @@ interface IFollowNFT {
     /**
      * @notice Initializes the follow NFT, setting the hub as the privileged minter and storing the associated profile ID.
      *
-     * @param profileId The token ID of the profile in the hub associated with this followNFT, used for transfer hooks.
+     * @param H_profileId The token ID of the profile in the hub associated with this followNFT, used for transfer hooks.
      */
-    function initialize(uint256 profileId) external;
+    function initialize(uint256 H_profileId) external;
 
     /**
      * @notice Mints a follow NFT to the specified address. This can only be called by the hub, and is called

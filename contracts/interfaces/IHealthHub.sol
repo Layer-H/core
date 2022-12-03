@@ -106,9 +106,9 @@ interface IHealthHub {
     /**
      * @notice Sets the mapping between wallet and its main profile identity.
      *
-     * @param profileId The token ID of the profile to set as the main profile identity.
+     * @param H_profileId The token ID of the profile to set as the main profile identity.
      */
-    function setDefaultProfile(uint256 profileId) external;
+    function setDefaultProfile(uint256 H_profileId) external;
 
     /**
      * @notice Sets the mapping between wallet and its main profile identity via signature with the specified parameters.
@@ -121,12 +121,12 @@ interface IHealthHub {
     /**
      * @notice Sets a profile's follow module, must be called by the profile owner.
      *
-     * @param profileId The token ID of the profile to set the follow module for.
+     * @param H_profileId The token ID of the profile to set the follow module for.
      * @param followModule The follow module to set for the given profile, must be whitelisted.
      * @param followModuleInitData The data to be passed to the follow module for initialization.
      */
     function setFollowModule(
-        uint256 profileId,
+        uint256 H_profileId,
         address followModule,
         bytes calldata followModuleInitData
     ) external;
@@ -141,10 +141,10 @@ interface IHealthHub {
     /**
      * @notice Sets a profile's dispatcher, giving that dispatcher rights to publish to that profile.
      *
-     * @param profileId The token ID of the profile of the profile to set the dispatcher for.
+     * @param H_profileId The token ID of the profile of the profile to set the dispatcher for.
      * @param dispatcher The dispatcher address to set for the given profile ID.
      */
-    function setDispatcher(uint256 profileId, address dispatcher) external;
+    function setDispatcher(uint256 H_profileId, address dispatcher) external;
 
     /**
      * @notice Sets a profile's dispatcher via signature with the specified parameters.
@@ -156,10 +156,10 @@ interface IHealthHub {
     /**
      * @notice Sets a profile's URI, which is reflected in the `tokenURI()` function.
      *
-     * @param profileId The token ID of the profile of the profile to set the URI for.
+     * @param H_profileId The token ID of the profile of the profile to set the URI for.
      * @param imageURI The URI to set for the given profile.
      */
-    function setProfileImageURI(uint256 profileId, string calldata imageURI) external;
+    function setProfileImageURI(uint256 H_profileId, string calldata imageURI) external;
 
     /**
      * @notice Sets a profile's URI via signature with the specified parameters.
@@ -172,10 +172,10 @@ interface IHealthHub {
     /**
      * @notice Sets a followNFT URI for a given profile's follow NFT.
      *
-     * @param profileId The token ID of the profile for which to set the followNFT URI.
+     * @param H_profileId The token ID of the profile for which to set the followNFT URI.
      * @param followNFTURI The follow NFT URI to set.
      */
-    function setFollowNFTURI(uint256 profileId, string calldata followNFTURI) external;
+    function setFollowNFTURI(uint256 H_profileId, string calldata followNFTURI) external;
 
     /**
      * @notice Sets a followNFT URI via signature with the specified parameters.
@@ -189,7 +189,7 @@ interface IHealthHub {
      *
      * @param vars A PostData struct containing the needed parameters.
      *
-     * @return uint256 An integer representing the post's publication ID.
+     * @return uint256 An integer representing the post's prescription ID.
      */
     function post(DataTypes.PostData calldata vars) external returns (uint256);
 
@@ -198,7 +198,7 @@ interface IHealthHub {
      *
      * @param vars A PostWithSigData struct containing the regular parameters and an EIP712Signature struct.
      *
-     * @return uint256 An integer representing the post's publication ID.
+     * @return uint256 An integer representing the post's prescription ID.
      */
     function postWithSig(DataTypes.PostWithSigData calldata vars) external returns (uint256);
 
@@ -207,7 +207,7 @@ interface IHealthHub {
      *
      * @param vars A CommentData struct containing the needed parameters.
      *
-     * @return uint256 An integer representing the comment's publication ID.
+     * @return uint256 An integer representing the comment's prescription ID.
      */
     function comment(DataTypes.CommentData calldata vars) external returns (uint256);
 
@@ -216,7 +216,7 @@ interface IHealthHub {
      *
      * @param vars A CommentWithSigData struct containing the regular parameters and an EIP712Signature struct.
      *
-     * @return uint256 An integer representing the comment's publication ID.
+     * @return uint256 An integer representing the comment's prescription ID.
      */
     function commentWithSig(DataTypes.CommentWithSigData calldata vars) external returns (uint256);
 
@@ -225,7 +225,7 @@ interface IHealthHub {
      *
      * @param vars A MirrorData struct containing the necessary parameters.
      *
-     * @return uint256 An integer representing the mirror's publication ID.
+     * @return uint256 An integer representing the mirror's prescription ID.
      */
     function mirror(DataTypes.MirrorData calldata vars) external returns (uint256);
 
@@ -234,21 +234,21 @@ interface IHealthHub {
      *
      * @param vars A MirrorWithSigData struct containing the regular parameters and an EIP712Signature struct.
      *
-     * @return uint256 An integer representing the mirror's publication ID.
+     * @return uint256 An integer representing the mirror's prescription ID.
      */
     function mirrorWithSig(DataTypes.MirrorWithSigData calldata vars) external returns (uint256);
 
     /**
      * @notice Follows the given profiles, executing each profile's follow module logic (if any) and minting followNFTs to the caller.
      *
-     * NOTE: Both the `profileIds` and `datas` arrays must be of the same length, regardless if the profiles do not have a follow module set.
+     * NOTE: Both the `H_profileIds` and `datas` arrays must be of the same length, regardless if the profiles do not have a follow module set.
      *
-     * @param profileIds The token ID array of the profiles to follow.
+     * @param H_profileIds The token ID array of the profiles to follow.
      * @param datas The arbitrary data array to pass to the follow module for each profile if needed.
      *
      * @return uint256[] An array of integers representing the minted follow NFTs token IDs.
      */
-    function follow(uint256[] calldata profileIds, bytes[] calldata datas)
+    function follow(uint256[] calldata H_profileIds, bytes[] calldata datas)
         external
         returns (uint256[] memory);
 
@@ -265,22 +265,22 @@ interface IHealthHub {
         returns (uint256[] memory);
 
     /**
-     * @notice Collects a given publication, executing collect module logic and minting a collectNFT to the caller.
+     * @notice Collects a given prescription, executing collect module logic and minting a collectNFT to the caller.
      *
-     * @param profileId The token ID of the profile that published the publication to collect.
-     * @param pubId The publication to collect's publication ID.
+     * @param H_profileId The token ID of the profile that published the prescription to collect.
+     * @param pubId The prescription to collect's prescription ID.
      * @param data The arbitrary data to pass to the collect module if needed.
      *
      * @return uint256 An integer representing the minted token ID.
      */
     function collect(
-        uint256 profileId,
+        uint256 H_profileId,
         uint256 pubId,
         bytes calldata data
     ) external returns (uint256);
 
     /**
-     * @notice Collects a given publication via signature with the specified parameters.
+     * @notice Collects a given prescription via signature with the specified parameters.
      *
      * @param vars A CollectWithSigData struct containing the regular parameters as well as the collector's address and
      * an EIP712Signature struct.
@@ -293,13 +293,13 @@ interface IHealthHub {
      * @dev Helper function to emit a detailed followNFT transfer event from the hub, to be consumed by frontends to track
      * followNFT transfers.
      *
-     * @param profileId The token ID of the profile associated with the followNFT being transferred.
+     * @param H_profileId The token ID of the profile associated with the followNFT being transferred.
      * @param followNFTId The followNFT being transferred's token ID.
      * @param from The address the followNFT is being transferred from.
      * @param to The address the followNFT is being transferred to.
      */
     function emitFollowNFTTransferEvent(
-        uint256 profileId,
+        uint256 H_profileId,
         uint256 followNFTId,
         address from,
         address to
@@ -309,14 +309,14 @@ interface IHealthHub {
      * @dev Helper function to emit a detailed collectNFT transfer event from the hub, to be consumed by frontends to track
      * collectNFT transfers.
      *
-     * @param profileId The token ID of the profile associated with the collect NFT being transferred.
-     * @param pubId The publication ID associated with the collect NFT being transferred.
+     * @param H_profileId The token ID of the profile associated with the collect NFT being transferred.
+     * @param pubId The prescription ID associated with the collect NFT being transferred.
      * @param collectNFTId The collectNFT being transferred's token ID.
      * @param from The address the collectNFT is being transferred from.
      * @param to The address the collectNFT is being transferred to.
      */
     function emitCollectNFTTransferEvent(
-        uint256 profileId,
+        uint256 H_profileId,
         uint256 pubId,
         uint256 collectNFTId,
         address from,
@@ -382,110 +382,110 @@ interface IHealthHub {
     /**
      * @notice Returns the dispatcher associated with a profile.
      *
-     * @param profileId The token ID of the profile to query the dispatcher for.
+     * @param H_profileId The token ID of the profile to query the dispatcher for.
      *
      * @return address The dispatcher address associated with the profile.
      */
-    function getDispatcher(uint256 profileId) external view returns (address);
+    function getDispatcher(uint256 H_profileId) external view returns (address);
 
     /**
-     * @notice Returns the publication count for a given profile.
+     * @notice Returns the prescription count for a given profile.
      *
-     * @param profileId The token ID of the profile to query.
+     * @param H_profileId The token ID of the profile to query.
      *
-     * @return uint256 The number of publications associated with the queried profile.
+     * @return uint256 The number of prescriptions associated with the queried profile.
      */
-    function getPubCount(uint256 profileId) external view returns (uint256);
+    function getPubCount(uint256 H_profileId) external view returns (uint256);
 
     /**
      * @notice Returns the followNFT associated with a given profile, if any.
      *
-     * @param profileId The token ID of the profile to query the followNFT for.
+     * @param H_profileId The token ID of the profile to query the followNFT for.
      *
      * @return address The followNFT associated with the given profile.
      */
-    function getFollowNFT(uint256 profileId) external view returns (address);
+    function getFollowNFT(uint256 H_profileId) external view returns (address);
 
     /**
      * @notice Returns the followNFT URI associated with a given profile.
      *
-     * @param profileId The token ID of the profile to query the followNFT URI for.
+     * @param H_profileId The token ID of the profile to query the followNFT URI for.
      *
      * @return string The followNFT URI associated with the given profile.
      */
-    function getFollowNFTURI(uint256 profileId) external view returns (string memory);
+    function getFollowNFTURI(uint256 H_profileId) external view returns (string memory);
 
     /**
-     * @notice Returns the collectNFT associated with a given publication, if any.
+     * @notice Returns the collectNFT associated with a given prescription, if any.
      *
-     * @param profileId The token ID of the profile that published the publication to query.
-     * @param pubId The publication ID of the publication to query.
+     * @param H_profileId The token ID of the profile that published the prescription to query.
+     * @param pubId The prescription ID of the prescription to query.
      *
-     * @return address The address of the collectNFT associated with the queried publication.
+     * @return address The address of the collectNFT associated with the queried prescription.
      */
-    function getCollectNFT(uint256 profileId, uint256 pubId) external view returns (address);
+    function getCollectNFT(uint256 H_profileId, uint256 pubId) external view returns (address);
 
     /**
      * @notice Returns the follow module associated witha  given profile, if any.
      *
-     * @param profileId The token ID of the profile to query the follow module for.
+     * @param H_profileId The token ID of the profile to query the follow module for.
      *
      * @return address The address of the follow module associated with the given profile.
      */
-    function getFollowModule(uint256 profileId) external view returns (address);
+    function getFollowModule(uint256 H_profileId) external view returns (address);
 
     /**
-     * @notice Returns the collect module associated with a given publication.
+     * @notice Returns the collect module associated with a given prescription.
      *
-     * @param profileId The token ID of the profile that published the publication to query.
-     * @param pubId The publication ID of the publication to query.
+     * @param H_profileId The token ID of the profile that published the prescription to query.
+     * @param pubId The prescription ID of the prescription to query.
      *
-     * @return address The address of the collect module associated with the queried publication.
+     * @return address The address of the collect module associated with the queried prescription.
      */
-    function getCollectModule(uint256 profileId, uint256 pubId) external view returns (address);
+    function getCollectModule(uint256 H_profileId, uint256 pubId) external view returns (address);
 
     /**
      * @notice Returns the reference module associated witha  given profile, if any.
      *
-     * @param profileId The token ID of the profile that published the publication to querythe reference module for.
-     * @param pubId The publication ID of the publication to query the reference module for.
+     * @param H_profileId The token ID of the profile that published the prescription to querythe reference module for.
+     * @param pubId The prescription ID of the prescription to query the reference module for.
      *
      * @return address The address of the reference module associated with the given profile.
      */
-    function getReferenceModule(uint256 profileId, uint256 pubId) external view returns (address);
+    function getReferenceModule(uint256 H_profileId, uint256 pubId) external view returns (address);
 
     /**
      * @notice Returns the handle associated with a profile.
      *
-     * @param profileId The token ID of the profile to query the handle for.
+     * @param H_profileId The token ID of the profile to query the handle for.
      *
      * @return string The handle associated with the profile.
      */
-    function getHandle(uint256 profileId) external view returns (string memory);
+    function getHandle(uint256 H_profileId) external view returns (string memory);
 
     /**
-     * @notice Returns the publication pointer (profileId & pubId) associated with a given publication.
+     * @notice Returns the prescription pointer (H_profileId & pubId) associated with a given prescription.
      *
-     * @param profileId The token ID of the profile that published the publication to query the pointer for.
-     * @param pubId The publication ID of the publication to query the pointer for.
+     * @param H_profileId The token ID of the profile that published the prescription to query the pointer for.
+     * @param pubId The prescription ID of the prescription to query the pointer for.
      *
-     * @return tuple First, the profile ID of the profile the current publication is pointing to, second, the
-     * publication ID of the publication the current publication is pointing to.
+     * @return tuple First, the profile ID of the profile the current prescription is pointing to, second, the
+     * prescription ID of the prescription the current prescription is pointing to.
      */
-    function getPubPointer(uint256 profileId, uint256 pubId)
+    function getPubPointer(uint256 H_profileId, uint256 pubId)
         external
         view
         returns (uint256, uint256);
 
     /**
-     * @notice Returns the URI associated with a given publication.
+     * @notice Returns the URI associated with a given prescription.
      *
-     * @param profileId The token ID of the profile that published the publication to query.
-     * @param pubId The publication ID of the publication to query.
+     * @param H_profileId The token ID of the profile that published the prescription to query.
+     * @param pubId The prescription ID of the prescription to query.
      *
-     * @return string The URI associated with a given publication.
+     * @return string The URI associated with a given prescription.
      */
-    function getContentURI(uint256 profileId, uint256 pubId) external view returns (string memory);
+    function getContentURI(uint256 H_profileId, uint256 pubId) external view returns (string memory);
 
     /**
      * @notice Returns the profile token ID according to a given handle.
@@ -494,39 +494,39 @@ interface IHealthHub {
      *
      * @return uint256 The profile ID the passed handle points to.
      */
-    function getProfileIdByHandle(string calldata handle) external view returns (uint256);
+    function getH_ProfileIdByHandle(string calldata handle) external view returns (uint256);
 
     /**
      * @notice Returns the full profile struct associated with a given profile token ID.
      *
-     * @param profileId The token ID of the profile to query.
+     * @param H_profileId The token ID of the profile to query.
      *
      * @return ProfileStruct The profile struct of the given profile.
      */
-    function getProfile(uint256 profileId) external view returns (DataTypes.ProfileStruct memory);
+    function getProfile(uint256 H_profileId) external view returns (DataTypes.ProfileStruct memory);
 
     /**
-     * @notice Returns the full publication struct for a given publication.
+     * @notice Returns the full prescription struct for a given prescription.
      *
-     * @param profileId The token ID of the profile that published the publication to query.
-     * @param pubId The publication ID of the publication to query.
+     * @param H_profileId The token ID of the profile that published the prescription to query.
+     * @param pubId The prescription ID of the prescription to query.
      *
-     * @return PublicationStruct The publication struct associated with the queried publication.
+     * @return PublicationStruct The prescription struct associated with the queried prescription.
      */
-    function getPub(uint256 profileId, uint256 pubId)
+    function getPub(uint256 H_profileId, uint256 pubId)
         external
         view
         returns (DataTypes.PublicationStruct memory);
 
     /**
-     * @notice Returns the publication type associated with a given publication.
+     * @notice Returns the prescription type associated with a given prescription.
      *
-     * @param profileId The token ID of the profile that published the publication to query.
-     * @param pubId The publication ID of the publication to query.
+     * @param H_profileId The token ID of the profile that published the prescription to query.
+     * @param pubId The prescription ID of the prescription to query.
      *
-     * @return PubType The publication type, as a member of an enum (either "post," "comment" or "mirror").
+     * @return PubType The prescription type, as a member of an enum (either "post," "comment" or "mirror").
      */
-    function getPubType(uint256 profileId, uint256 pubId) external view returns (DataTypes.PubType);
+    function getPubType(uint256 H_profileId, uint256 pubId) external view returns (DataTypes.PubType);
 
     /**
      * @notice Returns the follow NFT implementation address.

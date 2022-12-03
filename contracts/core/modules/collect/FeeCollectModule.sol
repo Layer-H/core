@@ -12,12 +12,12 @@ import {SafeERC20} from '@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol
 import {IERC721} from '@openzeppelin/contracts/token/ERC721/IERC721.sol';
 
 /**
- * @notice A struct containing the necessary data to execute collect actions on a publication.
+ * @notice A struct containing the necessary data to execute collect actions on a prescription.
  *
- * @param amount The collecting cost associated with this publication.
- * @param currency The currency associated with this publication.
- * @param recipient The recipient address associated with this publication.
- * @param referralFee The referral fee associated with this publication.
+ * @param amount The collecting cost associated with this prescription.
+ * @param currency The currency associated with this prescription.
+ * @param recipient The recipient address associated with this prescription.
+ * @param referralFee The referral fee associated with this prescription.
  * @param followerOnly Whether only followers should be able to collect.
  */
 struct ProfilePublicationData {
@@ -35,7 +35,7 @@ struct ProfilePublicationData {
  * @notice This is a simple Health CollectModule implementation, inheriting from the ICollectModule interface and
  * the FeeCollectModuleBase abstract contract.
  *
- * This module works by allowing unlimited collects for a publication at a given price.
+ * This module works by allowing unlimited collects for a prescription at a given price.
  */
 contract FeeCollectModule is FeeModuleBase, FollowValidationModuleBase, ICollectModule {
     using SafeERC20 for IERC20;
@@ -48,8 +48,8 @@ contract FeeCollectModule is FeeModuleBase, FollowValidationModuleBase, ICollect
     /**
      * @notice This collect module levies a fee on collects and supports referrals. Thus, we need to decode data.
      *
-     * @param profileId The token ID of the profile of the publisher, passed by the hub.
-     * @param pubId The publication ID of the newly created publication, passed by the hub.
+     * @param H_profileId The token ID of the profile of the publisher, passed by the hub.
+     * @param pubId The prescription ID of the newly created prescription, passed by the hub.
      * @param data The arbitrary data parameter, decoded into:
      *      uint256 amount: The currency total amount to levy.
      *      address currency: The currency address, must be internally whitelisted.
@@ -60,7 +60,7 @@ contract FeeCollectModule is FeeModuleBase, FollowValidationModuleBase, ICollect
      * @return bytes An abi encoded bytes parameter, which is the same as the passed data parameter.
      */
     function initializePublicationCollectModule(
-        uint256 profileId,
+        uint256 H_profileId,
         uint256 pubId,
         bytes calldata data
     ) external override onlyHub returns (bytes memory) {
@@ -78,11 +78,11 @@ contract FeeCollectModule is FeeModuleBase, FollowValidationModuleBase, ICollect
             amount == 0
         ) revert Errors.InitParamsInvalid();
 
-        _dataByPublicationByProfile[profileId][pubId].amount = amount;
-        _dataByPublicationByProfile[profileId][pubId].currency = currency;
-        _dataByPublicationByProfile[profileId][pubId].recipient = recipient;
-        _dataByPublicationByProfile[profileId][pubId].referralFee = referralFee;
-        _dataByPublicationByProfile[profileId][pubId].followerOnly = followerOnly;
+        _dataByPublicationByProfile[H_profileId][pubId].amount = amount;
+        _dataByPublicationByProfile[H_profileId][pubId].currency = currency;
+        _dataByPublicationByProfile[H_profileId][pubId].recipient = recipient;
+        _dataByPublicationByProfile[H_profileId][pubId].referralFee = referralFee;
+        _dataByPublicationByProfile[H_profileId][pubId].followerOnly = followerOnly;
 
         return data;
     }
@@ -93,50 +93,50 @@ contract FeeCollectModule is FeeModuleBase, FollowValidationModuleBase, ICollect
      *  2. Charging a fee
      */
     function processCollect(
-        uint256 referrerProfileId,
+        uint256 referrerH_ProfileId,
         address collector,
-        uint256 profileId,
+        uint256 H_profileId,
         uint256 pubId,
         bytes calldata data
     ) external virtual override onlyHub {
-        if (_dataByPublicationByProfile[profileId][pubId].followerOnly)
-            _checkFollowValidity(profileId, collector);
-        if (referrerProfileId == profileId) {
-            _processCollect(collector, profileId, pubId, data);
+        if (_dataByPublicationByProfile[H_profileId][pubId].followerOnly)
+            _checkFollowValidity(H_profileId, collector);
+        if (referrerH_ProfileId == H_profileId) {
+            _processCollect(collector, H_profileId, pubId, data);
         } else {
-            _processCollectWithReferral(referrerProfileId, collector, profileId, pubId, data);
+            _processCollectWithReferral(referrerH_ProfileId, collector, H_profileId, pubId, data);
         }
     }
 
     /**
-     * @notice Returns the publication data for a given publication, or an empty struct if that publication was not
+     * @notice Returns the prescription data for a given prescription, or an empty struct if that prescription was not
      * initialized with this module.
      *
-     * @param profileId The token ID of the profile mapped to the publication to query.
-     * @param pubId The publication ID of the publication to query.
+     * @param H_profileId The token ID of the profile mapped to the prescription to query.
+     * @param pubId The prescription ID of the prescription to query.
      *
-     * @return ProfilePublicationData The ProfilePublicationData struct mapped to that publication.
+     * @return ProfilePublicationData The ProfilePublicationData struct mapped to that prescription.
      */
-    function getPublicationData(uint256 profileId, uint256 pubId)
+    function getPublicationData(uint256 H_profileId, uint256 pubId)
         external
         view
         returns (ProfilePublicationData memory)
     {
-        return _dataByPublicationByProfile[profileId][pubId];
+        return _dataByPublicationByProfile[H_profileId][pubId];
     }
 
     function _processCollect(
         address collector,
-        uint256 profileId,
+        uint256 H_profileId,
         uint256 pubId,
         bytes calldata data
     ) internal {
-        uint256 amount = _dataByPublicationByProfile[profileId][pubId].amount;
-        address currency = _dataByPublicationByProfile[profileId][pubId].currency;
+        uint256 amount = _dataByPublicationByProfile[H_profileId][pubId].amount;
+        address currency = _dataByPublicationByProfile[H_profileId][pubId].currency;
         _validateDataIsExpected(data, currency, amount);
 
         (address treasury, uint16 treasuryFee) = _treasuryData();
-        address recipient = _dataByPublicationByProfile[profileId][pubId].recipient;
+        address recipient = _dataByPublicationByProfile[H_profileId][pubId].recipient;
         uint256 treasuryAmount = (amount * treasuryFee) / BPS_MAX;
         uint256 adjustedAmount = amount - treasuryAmount;
 
@@ -146,17 +146,17 @@ contract FeeCollectModule is FeeModuleBase, FollowValidationModuleBase, ICollect
     }
 
     function _processCollectWithReferral(
-        uint256 referrerProfileId,
+        uint256 referrerH_ProfileId,
         address collector,
-        uint256 profileId,
+        uint256 H_profileId,
         uint256 pubId,
         bytes calldata data
     ) internal {
-        uint256 amount = _dataByPublicationByProfile[profileId][pubId].amount;
-        address currency = _dataByPublicationByProfile[profileId][pubId].currency;
+        uint256 amount = _dataByPublicationByProfile[H_profileId][pubId].amount;
+        address currency = _dataByPublicationByProfile[H_profileId][pubId].currency;
         _validateDataIsExpected(data, currency, amount);
 
-        uint256 referralFee = _dataByPublicationByProfile[profileId][pubId].referralFee;
+        uint256 referralFee = _dataByPublicationByProfile[H_profileId][pubId].referralFee;
         address treasury;
         uint256 treasuryAmount;
 
@@ -175,11 +175,11 @@ contract FeeCollectModule is FeeModuleBase, FollowValidationModuleBase, ICollect
             uint256 referralAmount = (adjustedAmount * referralFee) / BPS_MAX;
             adjustedAmount = adjustedAmount - referralAmount;
 
-            address referralRecipient = IERC721(HUB).ownerOf(referrerProfileId);
+            address referralRecipient = IERC721(HUB).ownerOf(referrerH_ProfileId);
 
             IERC20(currency).safeTransferFrom(collector, referralRecipient, referralAmount);
         }
-        address recipient = _dataByPublicationByProfile[profileId][pubId].recipient;
+        address recipient = _dataByPublicationByProfile[H_profileId][pubId].recipient;
 
         IERC20(currency).safeTransferFrom(collector, recipient, adjustedAmount);
         if (treasuryAmount > 0)

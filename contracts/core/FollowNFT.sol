@@ -38,7 +38,7 @@ contract FollowNFT is HealthNFTBase, IFollowNFT {
     mapping(address => uint256) internal _snapshotCount;
     mapping(uint256 => Snapshot) internal _delSupplySnapshots;
     uint256 internal _delSupplySnapshotCount;
-    uint256 internal _profileId;
+    uint256 internal _H_profileId;
     uint256 internal _tokenIdCounter;
 
     bool private _initialized;
@@ -51,11 +51,11 @@ contract FollowNFT is HealthNFTBase, IFollowNFT {
     }
 
     /// @inheritdoc IFollowNFT
-    function initialize(uint256 profileId) external override {
+    function initialize(uint256 H_profileId) external override {
         if (_initialized) revert Errors.Initialized();
         _initialized = true;
-        _profileId = profileId;
-        emit Events.FollowNFTInitialized(profileId, block.timestamp);
+        _H_profileId = H_profileId;
+        emit Events.FollowNFTInitialized(H_profileId, block.timestamp);
     }
 
     /// @inheritdoc IFollowNFT
@@ -126,12 +126,12 @@ contract FollowNFT is HealthNFTBase, IFollowNFT {
     }
 
     function name() public view override returns (string memory) {
-        string memory handle = IHealthHub(HUB).getHandle(_profileId);
+        string memory handle = IHealthHub(HUB).getHandle(_H_profileId);
         return string(abi.encodePacked(handle, Constants.FOLLOW_NFT_NAME_SUFFIX));
     }
 
     function symbol() public view override returns (string memory) {
-        string memory handle = IHealthHub(HUB).getHandle(_profileId);
+        string memory handle = IHealthHub(HUB).getHandle(_H_profileId);
         bytes4 firstBytes = bytes4(bytes(handle));
         return string(abi.encodePacked(firstBytes, Constants.FOLLOW_NFT_SYMBOL_SUFFIX));
     }
@@ -171,7 +171,7 @@ contract FollowNFT is HealthNFTBase, IFollowNFT {
      */
     function tokenURI(uint256 tokenId) public view override returns (string memory) {
         if (!_exists(tokenId)) revert Errors.TokenDoesNotExist();
-        return IHealthHub(HUB).getFollowNFTURI(_profileId);
+        return IHealthHub(HUB).getFollowNFTURI(_H_profileId);
     }
 
     /**
@@ -184,14 +184,14 @@ contract FollowNFT is HealthNFTBase, IFollowNFT {
     ) internal override {
         address fromDelegatee = _delegates[from];
         address toDelegatee = _delegates[to];
-        address followModule = IHealthHub(HUB).getFollowModule(_profileId);
+        address followModule = IHealthHub(HUB).getFollowModule(_H_profileId);
 
         _moveDelegate(fromDelegatee, toDelegatee, 1);
 
         super._beforeTokenTransfer(from, to, tokenId);
-        IHealthHub(HUB).emitFollowNFTTransferEvent(_profileId, tokenId, from, to);
+        IHealthHub(HUB).emitFollowNFTTransferEvent(_H_profileId, tokenId, from, to);
         if (followModule != address(0)) {
-            IFollowModule(followModule).followModuleTransferHook(_profileId, from, to, tokenId);
+            IFollowModule(followModule).followModuleTransferHook(_H_profileId, from, to, tokenId);
         }
     }
 

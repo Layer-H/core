@@ -21,11 +21,11 @@ abstract contract FollowValidatorFollowModuleBase is ModuleBase, IFollowModule {
      * and other properties.
      */
     function isFollowing(
-        uint256 profileId,
+        uint256 H_profileId,
         address follower,
         uint256 followNFTTokenId
     ) external view override returns (bool) {
-        address followNFT = IHealthHub(HUB).getFollowNFT(profileId);
+        address followNFT = IHealthHub(HUB).getFollowNFT(H_profileId);
         if (followNFT == address(0)) {
             return false;
         } else {

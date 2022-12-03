@@ -37,7 +37,7 @@ makeSuiteCleanRoom('Collect NFT', function () {
     ).to.not.be.reverted;
     await expect(
       healthHub.post({
-        profileId: FIRST_PROFILE_ID,
+        H_profileId: FIRST_PROFILE_ID,
         contentURI: MOCK_URI,
         collectModule: freeCollectModule.address,
         collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -80,7 +80,7 @@ makeSuiteCleanRoom('Collect NFT', function () {
       expect(await collectNFT.tokenURI(1)).to.eq(MOCK_URI);
     });
 
-    it('Collect NFT source publication pointer should be accurate', async function () {
+    it('Collect NFT source prescription pointer should be accurate', async function () {
       const pointer = await collectNFT.getSourcePublicationPointer();
       expect(pointer[0]).to.eq(FIRST_PROFILE_ID);
       expect(pointer[1]).to.eq(1);

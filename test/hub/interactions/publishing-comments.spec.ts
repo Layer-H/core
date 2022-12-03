@@ -55,7 +55,7 @@ makeSuiteCleanRoom('Publishing Comments', function () {
 
       await expect(
         healthHub.post({
-          profileId: FIRST_PROFILE_ID,
+          H_profileId: FIRST_PROFILE_ID,
           contentURI: MOCK_URI,
           collectModule: freeCollectModule.address,
           collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -69,9 +69,9 @@ makeSuiteCleanRoom('Publishing Comments', function () {
       it('UserTwo should fail to publish a comment to a profile owned by User', async function () {
         await expect(
           healthHub.connect(userTwo).comment({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             collectModule: ZERO_ADDRESS,
             collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -85,9 +85,9 @@ makeSuiteCleanRoom('Publishing Comments', function () {
       it('User should fail to comment with an unwhitelisted collect module', async function () {
         await expect(
           healthHub.comment({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             collectModule: ZERO_ADDRESS,
             collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -101,9 +101,9 @@ makeSuiteCleanRoom('Publishing Comments', function () {
       it('User should fail to comment with an unwhitelisted reference module', async function () {
         await expect(
           healthHub.comment({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             referenceModuleData: [],
             collectModule: freeCollectModule.address,
@@ -117,9 +117,9 @@ makeSuiteCleanRoom('Publishing Comments', function () {
       it('User should fail to comment with invalid collect module data format', async function () {
         await expect(
           healthHub.comment({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             collectModule: timedFeeCollectModule.address,
             collectModuleInitData: [0x2, 0x12, 0x20],
@@ -133,9 +133,9 @@ makeSuiteCleanRoom('Publishing Comments', function () {
       it('User should fail to comment with invalid reference module data format', async function () {
         await expect(
           healthHub.comment({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             referenceModuleData: [],
             collectModule: freeCollectModule.address,
@@ -146,12 +146,12 @@ makeSuiteCleanRoom('Publishing Comments', function () {
         ).to.be.revertedWith(ERRORS.NO_REASON_ABI_DECODE);
       });
 
-      it('User should fail to comment on a publication that does not exist', async function () {
+      it('User should fail to comment on a prescription that does not exist', async function () {
         await expect(
           healthHub.comment({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 3,
             collectModule: freeCollectModule.address,
             collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -165,9 +165,9 @@ makeSuiteCleanRoom('Publishing Comments', function () {
       it('User should fail to comment on the same comment they are creating (pubId = 2, commentCeption)', async function () {
         await expect(
           healthHub.comment({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 2,
             collectModule: freeCollectModule.address,
             collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -183,9 +183,9 @@ makeSuiteCleanRoom('Publishing Comments', function () {
       it('User should create a comment with empty collect module data, reference module, and reference module data, fetched comment data should be accurate', async function () {
         await expect(
           healthHub.comment({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
             referenceModuleData: [],
             collectModule: freeCollectModule.address,
@@ -196,7 +196,7 @@ makeSuiteCleanRoom('Publishing Comments', function () {
         ).to.not.be.reverted;
 
         const pub = await healthHub.getPub(FIRST_PROFILE_ID, 2);
-        expect(pub.profileIdPointed).to.eq(FIRST_PROFILE_ID);
+        expect(pub.H_profileIdPointed).to.eq(FIRST_PROFILE_ID);
         expect(pub.pubIdPointed).to.eq(1);
         expect(pub.contentURI).to.eq(MOCK_URI);
         expect(pub.collectModule).to.eq(freeCollectModule.address);
@@ -204,7 +204,7 @@ makeSuiteCleanRoom('Publishing Comments', function () {
         expect(pub.referenceModule).to.eq(ZERO_ADDRESS);
       });
 
-      it('Should return the expected token IDs when commenting publications', async function () {
+      it('Should return the expected token IDs when commenting prescriptions', async function () {
         await expect(
           healthHub.connect(testWallet).createProfile({
             to: testWallet.address,
@@ -247,9 +247,9 @@ makeSuiteCleanRoom('Publishing Comments', function () {
         expect(
           await commentReturningTokenId({
             vars: {
-              profileId: FIRST_PROFILE_ID + 1,
+              H_profileId: FIRST_PROFILE_ID + 1,
               contentURI: OTHER_MOCK_URI,
-              profileIdPointed: FIRST_PROFILE_ID,
+              H_profileIdPointed: FIRST_PROFILE_ID,
               pubIdPointed: '1',
               collectModule: freeCollectModule.address,
               collectModuleInitData: collectModuleInitData,
@@ -270,9 +270,9 @@ makeSuiteCleanRoom('Publishing Comments', function () {
           await commentReturningTokenId({
             sender: userTwo,
             vars: {
-              profileId: FIRST_PROFILE_ID + 2,
+              H_profileId: FIRST_PROFILE_ID + 2,
               contentURI: MOCK_URI,
-              profileIdPointed: FIRST_PROFILE_ID,
+              H_profileIdPointed: FIRST_PROFILE_ID,
               pubIdPointed: 1,
               collectModule: freeCollectModule.address,
               collectModuleInitData: collectModuleInitData,
@@ -287,9 +287,9 @@ makeSuiteCleanRoom('Publishing Comments', function () {
           await commentReturningTokenId({
             sender: testWallet,
             vars: {
-              profileId: FIRST_PROFILE_ID + 1,
+              H_profileId: FIRST_PROFILE_ID + 1,
               contentURI: MOCK_URI,
-              profileIdPointed: FIRST_PROFILE_ID,
+              H_profileIdPointed: FIRST_PROFILE_ID,
               pubIdPointed: 1,
               collectModule: freeCollectModule.address,
               collectModuleInitData: collectModuleInitData,
@@ -303,9 +303,9 @@ makeSuiteCleanRoom('Publishing Comments', function () {
         expect(
           await commentReturningTokenId({
             vars: {
-              profileId: FIRST_PROFILE_ID,
+              H_profileId: FIRST_PROFILE_ID,
               contentURI: MOCK_URI,
-              profileIdPointed: FIRST_PROFILE_ID,
+              H_profileIdPointed: FIRST_PROFILE_ID,
               pubIdPointed: 1,
               collectModule: freeCollectModule.address,
               collectModuleInitData: collectModuleInitData,
@@ -321,7 +321,7 @@ makeSuiteCleanRoom('Publishing Comments', function () {
         const data = abiCoder.encode(['uint256'], ['1']);
         await expect(
           healthHub.post({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: freeCollectModule.address,
             collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -332,11 +332,11 @@ makeSuiteCleanRoom('Publishing Comments', function () {
 
         await expect(
           healthHub.comment({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
             collectModule: freeCollectModule.address,
             collectModuleInitData: abiCoder.encode(['bool'], [true]),
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 2,
             referenceModuleData: [],
             referenceModule: ZERO_ADDRESS,
@@ -366,7 +366,7 @@ makeSuiteCleanRoom('Publishing Comments', function () {
 
       await expect(
         healthHub.connect(testWallet).post({
-          profileId: FIRST_PROFILE_ID,
+          H_profileId: FIRST_PROFILE_ID,
           contentURI: MOCK_URI,
           collectModule: freeCollectModule.address,
           collectModuleInitData: abiCoder.encode(['bool'], [true]),
@@ -399,9 +399,9 @@ makeSuiteCleanRoom('Publishing Comments', function () {
 
         await expect(
           healthHub.commentWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: '1',
             referenceModuleData: referenceModuleData,
             collectModule: ZERO_ADDRESS,
@@ -440,9 +440,9 @@ makeSuiteCleanRoom('Publishing Comments', function () {
 
         await expect(
           healthHub.commentWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: '1',
             referenceModuleData: referenceModuleData,
             collectModule: ZERO_ADDRESS,
@@ -481,9 +481,9 @@ makeSuiteCleanRoom('Publishing Comments', function () {
 
         await expect(
           healthHub.commentWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: '1',
             referenceModuleData: referenceModuleData,
             collectModule: ZERO_ADDRESS,
@@ -522,9 +522,9 @@ makeSuiteCleanRoom('Publishing Comments', function () {
 
         await expect(
           healthHub.commentWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: '1',
             referenceModuleData: referenceModuleData,
             collectModule: userAddress,
@@ -567,9 +567,9 @@ makeSuiteCleanRoom('Publishing Comments', function () {
 
         await expect(
           healthHub.commentWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: MOCK_URI,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: '1',
             referenceModuleData,
             collectModule: freeCollectModule.address,
@@ -586,7 +586,7 @@ makeSuiteCleanRoom('Publishing Comments', function () {
         ).to.be.revertedWith(ERRORS.REFERENCE_MODULE_NOT_WHITELISTED);
       });
 
-      it('TestWallet should fail to comment with sig on a publication that does not exist', async function () {
+      it('TestWallet should fail to comment with sig on a prescription that does not exist', async function () {
         await expect(
           healthHub.connect(governance).whitelistCollectModule(freeCollectModule.address, true)
         ).to.not.be.reverted;
@@ -612,9 +612,9 @@ makeSuiteCleanRoom('Publishing Comments', function () {
 
         await expect(
           healthHub.commentWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: OTHER_MOCK_URI,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: '3',
             referenceModuleData: referenceModuleData,
             collectModule: freeCollectModule.address,
@@ -656,9 +656,9 @@ makeSuiteCleanRoom('Publishing Comments', function () {
 
         await expect(
           healthHub.commentWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: OTHER_MOCK_URI,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: '2',
             referenceModuleData: referenceModuleData,
             collectModule: freeCollectModule.address,
@@ -703,9 +703,9 @@ makeSuiteCleanRoom('Publishing Comments', function () {
 
         await expect(
           healthHub.commentWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: OTHER_MOCK_URI,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: '1',
             referenceModuleData: referenceModuleData,
             collectModule: freeCollectModule.address,
@@ -750,9 +750,9 @@ makeSuiteCleanRoom('Publishing Comments', function () {
 
         await expect(
           healthHub.commentWithSig({
-            profileId: FIRST_PROFILE_ID,
+            H_profileId: FIRST_PROFILE_ID,
             contentURI: OTHER_MOCK_URI,
-            profileIdPointed: FIRST_PROFILE_ID,
+            H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: '1',
             referenceModuleData: referenceModuleData,
             collectModule: freeCollectModule.address,
@@ -769,7 +769,7 @@ makeSuiteCleanRoom('Publishing Comments', function () {
         ).to.not.be.reverted;
 
         const pub = await healthHub.getPub(FIRST_PROFILE_ID, 2);
-        expect(pub.profileIdPointed).to.eq(FIRST_PROFILE_ID);
+        expect(pub.H_profileIdPointed).to.eq(FIRST_PROFILE_ID);
         expect(pub.pubIdPointed).to.eq(1);
         expect(pub.contentURI).to.eq(OTHER_MOCK_URI);
         expect(pub.collectModule).to.eq(freeCollectModule.address);

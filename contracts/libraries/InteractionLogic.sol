@@ -31,33 +31,33 @@ library InteractionLogic {
      * NFT(s) to the follower.
      *
      * @param follower The address executing the follow.
-     * @param profileIds The array of profile token IDs to follow.
+     * @param H_profileIds The array of profile token IDs to follow.
      * @param followModuleDatas The array of follow module data parameters to pass to each profile's follow module.
      * @param _profileById A pointer to the storage mapping of profile structs by profile ID.
-     * @param _profileIdByHandleHash A pointer to the storage mapping of profile IDs by handle hash.
+     * @param _H_profileIdByHandleHash A pointer to the storage mapping of profile IDs by handle hash.
      *
      * @return uint256[] An array of integers representing the minted follow NFTs token IDs.
      */
     function follow(
         address follower,
-        uint256[] calldata profileIds,
+        uint256[] calldata H_profileIds,
         bytes[] calldata followModuleDatas,
         mapping(uint256 => DataTypes.ProfileStruct) storage _profileById,
-        mapping(bytes32 => uint256) storage _profileIdByHandleHash
+        mapping(bytes32 => uint256) storage _H_profileIdByHandleHash
     ) external returns (uint256[] memory) {
-        if (profileIds.length != followModuleDatas.length) revert Errors.ArrayMismatch();
-        uint256[] memory tokenIds = new uint256[](profileIds.length);
-        for (uint256 i = 0; i < profileIds.length; ) {
-            string memory handle = _profileById[profileIds[i]].handle;
-            if (_profileIdByHandleHash[keccak256(bytes(handle))] != profileIds[i])
+        if (H_profileIds.length != followModuleDatas.length) revert Errors.ArrayMismatch();
+        uint256[] memory tokenIds = new uint256[](H_profileIds.length);
+        for (uint256 i = 0; i < H_profileIds.length; ) {
+            string memory handle = _profileById[H_profileIds[i]].handle;
+            if (_H_profileIdByHandleHash[keccak256(bytes(handle))] != H_profileIds[i])
                 revert Errors.TokenDoesNotExist();
 
-            address followModule = _profileById[profileIds[i]].followModule;
-            address followNFT = _profileById[profileIds[i]].followNFT;
+            address followModule = _profileById[H_profileIds[i]].followModule;
+            address followNFT = _profileById[H_profileIds[i]].followNFT;
 
             if (followNFT == address(0)) {
-                followNFT = _deployFollowNFT(profileIds[i]);
-                _profileById[profileIds[i]].followNFT = followNFT;
+                followNFT = _deployFollowNFT(H_profileIds[i]);
+                _profileById[H_profileIds[i]].followNFT = followNFT;
             }
 
             tokenIds[i] = IFollowNFT(followNFT).mint(follower);
@@ -65,7 +65,7 @@ library InteractionLogic {
             if (followModule != address(0)) {
                 IFollowModule(followModule).processFollow(
                     follower,
-                    profileIds[i],
+                    H_profileIds[i],
                     followModuleDatas[i]
                 );
             }
@@ -73,27 +73,27 @@ library InteractionLogic {
                 ++i;
             }
         }
-        emit Events.Followed(follower, profileIds, followModuleDatas, block.timestamp);
+        emit Events.Followed(follower, H_profileIds, followModuleDatas, block.timestamp);
         return tokenIds;
     }
 
     /**
-     * @notice Collects the given publication, executing the necessary logic and module call before minting the
+     * @notice Collects the given prescription, executing the necessary logic and module call before minting the
      * collect NFT to the collector.
      *
      * @param collector The address executing the collect.
-     * @param profileId The token ID of the publication being collected's parent profile.
-     * @param pubId The publication ID of the publication being collected.
-     * @param collectModuleData The data to pass to the publication's collect module.
+     * @param H_profileId The token ID of the prescription being collected's parent profile.
+     * @param pubId The prescription ID of the prescription being collected.
+     * @param collectModuleData The data to pass to the prescription's collect module.
      * @param collectNFTImpl The address of the collect NFT implementation, which has to be passed because it's an immutable in the hub.
-     * @param _pubByIdByProfile A pointer to the storage mapping of publications by pubId by profile ID.
+     * @param _pubByIdByProfile A pointer to the storage mapping of prescriptions by pubId by profile ID.
      * @param _profileById A pointer to the storage mapping of profile structs by profile ID.
      *
      * @return uint256 An integer representing the minted token ID.
      */
     function collect(
         address collector,
-        uint256 profileId,
+        uint256 H_profileId,
         uint256 pubId,
         bytes calldata collectModuleData,
         address collectNFTImpl,
@@ -101,37 +101,37 @@ library InteractionLogic {
             storage _pubByIdByProfile,
         mapping(uint256 => DataTypes.ProfileStruct) storage _profileById
     ) external returns (uint256) {
-        (uint256 rootProfileId, uint256 rootPubId, address rootCollectModule) = Helpers
-            .getPointedIfMirror(profileId, pubId, _pubByIdByProfile);
+        (uint256 rootH_ProfileId, uint256 rootPubId, address rootCollectModule) = Helpers
+            .getPointedIfMirror(H_profileId, pubId, _pubByIdByProfile);
 
         uint256 tokenId;
         // Avoids stack too deep
         {
-            address collectNFT = _pubByIdByProfile[rootProfileId][rootPubId].collectNFT;
+            address collectNFT = _pubByIdByProfile[rootH_ProfileId][rootPubId].collectNFT;
             if (collectNFT == address(0)) {
                 collectNFT = _deployCollectNFT(
-                    rootProfileId,
+                    rootH_ProfileId,
                     rootPubId,
-                    _profileById[rootProfileId].handle,
+                    _profileById[rootH_ProfileId].handle,
                     collectNFTImpl
                 );
-                _pubByIdByProfile[rootProfileId][rootPubId].collectNFT = collectNFT;
+                _pubByIdByProfile[rootH_ProfileId][rootPubId].collectNFT = collectNFT;
             }
             tokenId = ICollectNFT(collectNFT).mint(collector);
         }
 
         ICollectModule(rootCollectModule).processCollect(
-            profileId,
+            H_profileId,
             collector,
-            rootProfileId,
+            rootH_ProfileId,
             rootPubId,
             collectModuleData
         );
         _emitCollectedEvent(
             collector,
-            profileId,
+            H_profileId,
             pubId,
-            rootProfileId,
+            rootH_ProfileId,
             rootPubId,
             collectModuleData
         );
@@ -142,17 +142,17 @@ library InteractionLogic {
     /**
      * @notice Deploys the given profile's Follow NFT contract.
      *
-     * @param profileId The token ID of the profile which Follow NFT should be deployed.
+     * @param H_profileId The token ID of the profile which Follow NFT should be deployed.
      *
      * @return address The address of the deployed Follow NFT contract.
      */
-    function _deployFollowNFT(uint256 profileId) private returns (address) {
+    function _deployFollowNFT(uint256 H_profileId) private returns (address) {
         bytes memory functionData = abi.encodeWithSelector(
             IFollowNFT.initialize.selector,
-            profileId
+            H_profileId
         );
         address followNFT = address(new FollowNFTProxy(functionData));
-        emit Events.FollowNFTDeployed(profileId, followNFT, block.timestamp);
+        emit Events.FollowNFTDeployed(H_profileId, followNFT, block.timestamp);
 
         return followNFT;
     }
@@ -160,15 +160,15 @@ library InteractionLogic {
     /**
      * @notice Deploys the given profile's Collect NFT contract.
      *
-     * @param profileId The token ID of the profile which Collect NFT should be deployed.
-     * @param pubId The publication ID of the publication being collected, which Collect NFT should be deployed.
+     * @param H_profileId The token ID of the profile which Collect NFT should be deployed.
+     * @param pubId The prescription ID of the prescription being collected, which Collect NFT should be deployed.
      * @param handle The profile's associated handle.
      * @param collectNFTImpl The address of the Collect NFT implementation that should be used for the deployment.
      *
      * @return address The address of the deployed Collect NFT contract.
      */
     function _deployCollectNFT(
-        uint256 profileId,
+        uint256 H_profileId,
         uint256 pubId,
         string memory handle,
         address collectNFTImpl
@@ -184,8 +184,8 @@ library InteractionLogic {
             abi.encodePacked(firstBytes, Constants.COLLECT_NFT_SYMBOL_INFIX, pubId.toString())
         );
 
-        ICollectNFT(collectNFT).initialize(profileId, pubId, collectNFTName, collectNFTSymbol);
-        emit Events.CollectNFTDeployed(profileId, pubId, collectNFT, block.timestamp);
+        ICollectNFT(collectNFT).initialize(H_profileId, pubId, collectNFTName, collectNFTSymbol);
+        emit Events.CollectNFTDeployed(H_profileId, pubId, collectNFT, block.timestamp);
 
         return collectNFT;
     }
@@ -195,26 +195,26 @@ library InteractionLogic {
      *
      * @dev This is done through this function to prevent stack too deep compilation error.
      *
-     * @param collector The address collecting the publication.
-     * @param profileId The token ID of the profile that the collect was initiated towards, useful to differentiate mirrors.
-     * @param pubId The publication ID that the collect was initiated towards, useful to differentiate mirrors.
-     * @param rootProfileId The profile token ID of the profile whose publication is being collected.
-     * @param rootPubId The publication ID of the publication being collected.
+     * @param collector The address collecting the prescription.
+     * @param H_profileId The token ID of the profile that the collect was initiated towards, useful to differentiate mirrors.
+     * @param pubId The prescription ID that the collect was initiated towards, useful to differentiate mirrors.
+     * @param rootH_ProfileId The profile token ID of the profile whose prescription is being collected.
+     * @param rootPubId The prescription ID of the prescription being collected.
      * @param data The data passed to the collect module.
      */
     function _emitCollectedEvent(
         address collector,
-        uint256 profileId,
+        uint256 H_profileId,
         uint256 pubId,
-        uint256 rootProfileId,
+        uint256 rootH_ProfileId,
         uint256 rootPubId,
         bytes calldata data
     ) private {
         emit Events.Collected(
             collector,
-            profileId,
+            H_profileId,
             pubId,
-            rootProfileId,
+            rootH_ProfileId,
             rootPubId,
             data,
             block.timestamp
