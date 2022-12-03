@@ -28,7 +28,7 @@ interface ICollectModule {
     /**
      * @notice Processes a collect action for a given prescription, this can only be called by the hub.
      *
-     * @param referrerH_ProfileId The HealthHub profile token ID of the referrer's profile (only different in case of mirrors).
+     * @param referrerH_ProfileId The HealthHub profile token ID of the referrer's profile (only different in case of actuates).
      * @param collector The collector address.
      * @param H_profileId The token ID of the profile associated with the prescription being collected.
      * @param pubId The HealthHub prescription ID associated with the prescription being collected.

@@ -126,7 +126,7 @@ makeSuiteCleanRoom('Publishing Posts', function () {
     });
 
     context('Scenarios', function () {
-      it('Should return the expected token IDs when mirroring prescriptions', async function () {
+      it('Should return the expected token IDs when actuateing prescriptions', async function () {
         await expect(
           healthHub.connect(governance).whitelistCollectModule(freeCollectModule.address, true)
         ).to.not.be.reverted;

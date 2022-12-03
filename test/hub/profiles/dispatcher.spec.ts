@@ -67,7 +67,7 @@ makeSuiteCleanRoom('Dispatcher Functionality', function () {
     });
 
     context('Scenarios', function () {
-      it('User should set user two as a dispatcher on their profile, user two should post, comment and mirror', async function () {
+      it('User should set user two as a dispatcher on their profile, user two should post, comment and actuate', async function () {
         await expect(healthHub.setDispatcher(FIRST_PROFILE_ID, userTwoAddress)).to.not.be.reverted;
 
         await expect(
@@ -96,7 +96,7 @@ makeSuiteCleanRoom('Dispatcher Functionality', function () {
         ).to.not.be.reverted;
 
         await expect(
-          healthHub.connect(userTwo).mirror({
+          healthHub.connect(userTwo).actuate({
             H_profileId: FIRST_PROFILE_ID,
             H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
@@ -223,7 +223,7 @@ makeSuiteCleanRoom('Dispatcher Functionality', function () {
     });
 
     context('Scenarios', function () {
-      it('TestWallet should set user two as dispatcher for their profile, user two should post, comment and mirror', async function () {
+      it('TestWallet should set user two as dispatcher for their profile, user two should post, comment and actuate', async function () {
         const nonce = (await healthHub.sigNonces(testWallet.address)).toNumber();
         const { v, r, s } = await getSetDispatcherWithSigParts(
           FIRST_PROFILE_ID,
@@ -271,7 +271,7 @@ makeSuiteCleanRoom('Dispatcher Functionality', function () {
         ).to.not.be.reverted;
 
         await expect(
-          healthHub.connect(userTwo).mirror({
+          healthHub.connect(userTwo).actuate({
             H_profileId: FIRST_PROFILE_ID,
             H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,

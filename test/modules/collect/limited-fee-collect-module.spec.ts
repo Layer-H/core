@@ -217,7 +217,7 @@ makeSuiteCleanRoom('Limited Fee Collect Module', function () {
         );
       });
 
-      it('UserTwo should mirror the original post, governance should set the treasury fee BPS to zero, userTwo collecting their mirror should not emit a transfer event to the treasury', async function () {
+      it('UserTwo should actuate the original post, governance should set the treasury fee BPS to zero, userTwo collecting their actuate should not emit a transfer event to the treasury', async function () {
         const secondH_ProfileId = FIRST_PROFILE_ID + 1;
         await expect(
           healthHub.connect(userTwo).createProfile({
@@ -230,7 +230,7 @@ makeSuiteCleanRoom('Limited Fee Collect Module', function () {
           })
         ).to.not.be.reverted;
         await expect(
-          healthHub.connect(userTwo).mirror({
+          healthHub.connect(userTwo).actuate({
             H_profileId: secondH_ProfileId,
             H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
@@ -330,7 +330,7 @@ makeSuiteCleanRoom('Limited Fee Collect Module', function () {
         ).to.be.revertedWith(ERRORS.ERC20_INSUFFICIENT_ALLOWANCE);
       });
 
-      it('UserTwo should mirror the original post, fail to collect from their mirror without following the original profile', async function () {
+      it('UserTwo should actuate the original post, fail to collect from their actuate without following the original profile', async function () {
         const secondH_ProfileId = FIRST_PROFILE_ID + 1;
         await expect(
           healthHub.connect(userTwo).createProfile({
@@ -343,7 +343,7 @@ makeSuiteCleanRoom('Limited Fee Collect Module', function () {
           })
         ).to.not.be.reverted;
         await expect(
-          healthHub.connect(userTwo).mirror({
+          healthHub.connect(userTwo).actuate({
             H_profileId: secondH_ProfileId,
             H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
@@ -362,7 +362,7 @@ makeSuiteCleanRoom('Limited Fee Collect Module', function () {
         );
       });
 
-      it('UserTwo should mirror the original post, fail to collect from their mirror passing a different expected price in data', async function () {
+      it('UserTwo should actuate the original post, fail to collect from their actuate passing a different expected price in data', async function () {
         const secondH_ProfileId = FIRST_PROFILE_ID + 1;
         await expect(
           healthHub.connect(userTwo).createProfile({
@@ -375,7 +375,7 @@ makeSuiteCleanRoom('Limited Fee Collect Module', function () {
           })
         ).to.not.be.reverted;
         await expect(
-          healthHub.connect(userTwo).mirror({
+          healthHub.connect(userTwo).actuate({
             H_profileId: secondH_ProfileId,
             H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
@@ -395,7 +395,7 @@ makeSuiteCleanRoom('Limited Fee Collect Module', function () {
         );
       });
 
-      it('UserTwo should mirror the original post, fail to collect from their mirror passing a different expected currency in data', async function () {
+      it('UserTwo should actuate the original post, fail to collect from their actuate passing a different expected currency in data', async function () {
         const secondH_ProfileId = FIRST_PROFILE_ID + 1;
         await expect(
           healthHub.connect(userTwo).createProfile({
@@ -408,7 +408,7 @@ makeSuiteCleanRoom('Limited Fee Collect Module', function () {
           })
         ).to.not.be.reverted;
         await expect(
-          healthHub.connect(userTwo).mirror({
+          healthHub.connect(userTwo).actuate({
             H_profileId: secondH_ProfileId,
             H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
@@ -637,7 +637,7 @@ makeSuiteCleanRoom('Limited Fee Collect Module', function () {
       expect(await currency.balanceOf(treasuryAddress)).to.eq(expectedTreasuryAmount.mul(2));
     });
 
-    it('User should post with limited fee collect module as the collect module and data, user two mirrors, follows, then collects from their mirror and pays fee, fee distribution is valid', async function () {
+    it('User should post with limited fee collect module as the collect module and data, user two actuates, follows, then collects from their actuate and pays fee, fee distribution is valid', async function () {
       const secondH_ProfileId = FIRST_PROFILE_ID + 1;
       const collectModuleInitData = abiCoder.encode(
         ['uint256', 'uint256', 'address', 'address', 'uint16', 'bool'],
@@ -672,7 +672,7 @@ makeSuiteCleanRoom('Limited Fee Collect Module', function () {
         })
       ).to.not.be.reverted;
       await expect(
-        healthHub.connect(userTwo).mirror({
+        healthHub.connect(userTwo).actuate({
           H_profileId: secondH_ProfileId,
           H_profileIdPointed: FIRST_PROFILE_ID,
           pubIdPointed: 1,
@@ -712,7 +712,7 @@ makeSuiteCleanRoom('Limited Fee Collect Module', function () {
       expect(await currency.balanceOf(treasuryAddress)).to.eq(expectedTreasuryAmount);
     });
 
-    it('User should post with limited fee collect module as the collect module and data, with no referral fee, user two mirrors, follows, then collects from their mirror and pays fee, fee distribution is valid', async function () {
+    it('User should post with limited fee collect module as the collect module and data, with no referral fee, user two actuates, follows, then collects from their actuate and pays fee, fee distribution is valid', async function () {
       const secondH_ProfileId = FIRST_PROFILE_ID + 1;
       const collectModuleInitData = abiCoder.encode(
         ['uint256', 'uint256', 'address', 'address', 'uint16', 'bool'],
@@ -740,7 +740,7 @@ makeSuiteCleanRoom('Limited Fee Collect Module', function () {
         })
       ).to.not.be.reverted;
       await expect(
-        healthHub.connect(userTwo).mirror({
+        healthHub.connect(userTwo).actuate({
           H_profileId: secondH_ProfileId,
           H_profileIdPointed: FIRST_PROFILE_ID,
           pubIdPointed: 1,
@@ -774,7 +774,7 @@ makeSuiteCleanRoom('Limited Fee Collect Module', function () {
       expect(await currency.balanceOf(treasuryAddress)).to.eq(expectedTreasuryAmount);
     });
 
-    it('User should post with limited fee collect module as the collect module and data, user two mirrors, follows, then collects once from the original, twice from the mirror, and fails to collect a third time from either the mirror or the original', async function () {
+    it('User should post with limited fee collect module as the collect module and data, user two actuates, follows, then collects once from the original, twice from the actuate, and fails to collect a third time from either the actuate or the original', async function () {
       const secondH_ProfileId = FIRST_PROFILE_ID + 1;
       const collectModuleInitData = abiCoder.encode(
         ['uint256', 'uint256', 'address', 'address', 'uint16', 'bool'],
@@ -809,7 +809,7 @@ makeSuiteCleanRoom('Limited Fee Collect Module', function () {
         })
       ).to.not.be.reverted;
       await expect(
-        healthHub.connect(userTwo).mirror({
+        healthHub.connect(userTwo).actuate({
           H_profileId: secondH_ProfileId,
           H_profileIdPointed: FIRST_PROFILE_ID,
           pubIdPointed: 1,

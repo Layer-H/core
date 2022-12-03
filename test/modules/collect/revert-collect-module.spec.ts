@@ -51,7 +51,7 @@ makeSuiteCleanRoom('Revert Collect Module', function () {
       );
     });
 
-    it('UserTwo should mirror the original post, fail to collect from their mirror without following the original profile', async function () {
+    it('UserTwo should actuate the original post, fail to collect from their actuate without following the original profile', async function () {
       const secondH_ProfileId = FIRST_PROFILE_ID + 1;
       await expect(
         healthHub.connect(userTwo).createProfile({
@@ -64,7 +64,7 @@ makeSuiteCleanRoom('Revert Collect Module', function () {
         })
       ).to.not.be.reverted;
       await expect(
-        healthHub.connect(userTwo).mirror({
+        healthHub.connect(userTwo).actuate({
           H_profileId: secondH_ProfileId,
           H_profileIdPointed: FIRST_PROFILE_ID,
           pubIdPointed: 1,
@@ -86,7 +86,7 @@ makeSuiteCleanRoom('Revert Collect Module', function () {
       );
     });
 
-    it('UserTwo should mirror the original post, fail to collect from their mirror while following the original profile', async function () {
+    it('UserTwo should actuate the original post, fail to collect from their actuate while following the original profile', async function () {
       const secondH_ProfileId = FIRST_PROFILE_ID + 1;
       await expect(
         healthHub.connect(userTwo).createProfile({
@@ -99,7 +99,7 @@ makeSuiteCleanRoom('Revert Collect Module', function () {
         })
       ).to.not.be.reverted;
       await expect(
-        healthHub.connect(userTwo).mirror({
+        healthHub.connect(userTwo).actuate({
           H_profileId: secondH_ProfileId,
           H_profileIdPointed: FIRST_PROFILE_ID,
           pubIdPointed: 1,

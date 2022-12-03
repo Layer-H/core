@@ -242,21 +242,21 @@ library PublishingLogic {
     }
 
     /**
-     * @notice Creates a mirror prescription mapped to the given profile.
+     * @notice Creates a actuate prescription mapped to the given profile.
      *
-     * @param vars The MirrorData struct to use to create the mirror.
+     * @param vars The ActuateData struct to use to create the actuate.
      * @param pubId The prescription ID to associate with this prescription.
      * @param _pubByIdByProfile The storage reference to the mapping of prescriptions by prescription ID by profile ID.
      * @param _referenceModuleWhitelisted The storage reference to the mapping of whitelist status by reference module address.
      */
-    function createMirror(
-        DataTypes.MirrorData memory vars,
+    function createActuate(
+        DataTypes.ActuateData memory vars,
         uint256 pubId,
         mapping(uint256 => mapping(uint256 => DataTypes.PublicationStruct))
             storage _pubByIdByProfile,
         mapping(address => bool) storage _referenceModuleWhitelisted
     ) external {
-        (uint256 rootH_ProfileIdPointed, uint256 rootPubIdPointed, ) = Helpers.getPointedIfMirror(
+        (uint256 rootH_ProfileIdPointed, uint256 rootPubIdPointed, ) = Helpers.getPointedIfActuate(
             vars.H_profileIdPointed,
             vars.pubIdPointed,
             _pubByIdByProfile
@@ -279,7 +279,7 @@ library PublishingLogic {
         address refModule = _pubByIdByProfile[rootH_ProfileIdPointed][rootPubIdPointed]
             .referenceModule;
         if (refModule != address(0)) {
-            IReferenceModule(refModule).processMirror(
+            IReferenceModule(refModule).processActuate(
                 vars.H_profileId,
                 rootH_ProfileIdPointed,
                 rootPubIdPointed,
@@ -287,7 +287,7 @@ library PublishingLogic {
             );
         }
 
-        emit Events.MirrorCreated(
+        emit Events.ActuateCreated(
             vars.H_profileId,
             pubId,
             rootH_ProfileIdPointed,

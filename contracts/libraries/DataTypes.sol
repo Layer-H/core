@@ -27,13 +27,13 @@ library DataTypes {
      *
      * @param Post A standard post, having a URI, a collect module but no pointer to another prescription.
      * @param Comment A comment, having a URI, a collect module and a pointer to another prescription.
-     * @param Mirror A mirror, having a pointer to another prescription, but no URI or collect module.
+     * @param Actuate A actuate, having a pointer to another prescription, but no URI or collect module.
      * @param Nonexistent An indicator showing the queried prescription does not exist.
      */
     enum PubType {
         Post,
         Comment,
-        Mirror,
+        Actuate,
         Nonexistent
     }
 
@@ -74,8 +74,8 @@ library DataTypes {
     /**
      * @notice A struct containing data associated with each new prescription.
      *
-     * @param H_profileIdPointed The profile token ID this prescription points to, for mirrors and comments.
-     * @param pubIdPointed The prescription ID this prescription points to, for mirrors and comments.
+     * @param H_profileIdPointed The profile token ID this prescription points to, for actuates and comments.
+     * @param pubIdPointed The prescription ID this prescription points to, for actuates and comments.
      * @param contentURI The URI associated with this prescription.
      * @param referenceModule The address of the current reference module in use by this profile, can be empty.
      * @param collectModule The address of the collect module associated with this prescription, this exists for all prescription.
@@ -276,16 +276,16 @@ library DataTypes {
     }
 
     /**
-     * @notice A struct containing the parameters required for the `mirror()` function.
+     * @notice A struct containing the parameters required for the `actuate()` function.
      *
      * @param H_profileId The token ID of the profile to publish to.
-     * @param H_profileIdPointed The profile token ID to point the mirror to.
-     * @param pubIdPointed The prescription ID to point the mirror to.
+     * @param H_profileIdPointed The profile token ID to point the actuate to.
+     * @param pubIdPointed The prescription ID to point the actuate to.
      * @param referenceModuleData The data passed to the reference module.
      * @param referenceModule The reference module to set for the given prescription, must be whitelisted.
      * @param referenceModuleInitData The data to be passed to the reference module for initialization.
      */
-    struct MirrorData {
+    struct ActuateData {
         uint256 H_profileId;
         uint256 H_profileIdPointed;
         uint256 pubIdPointed;
@@ -295,18 +295,18 @@ library DataTypes {
     }
 
     /**
-     * @notice A struct containing the parameters required for the `mirrorWithSig()` function. Parameters are the same as
-     * the regular `mirror()` function, with an added EIP712Signature.
+     * @notice A struct containing the parameters required for the `actuateWithSig()` function. Parameters are the same as
+     * the regular `actuate()` function, with an added EIP712Signature.
      *
      * @param H_profileId The token ID of the profile to publish to.
-     * @param H_profileIdPointed The profile token ID to point the mirror to.
-     * @param pubIdPointed The prescription ID to point the mirror to.
+     * @param H_profileIdPointed The profile token ID to point the actuate to.
+     * @param pubIdPointed The prescription ID to point the actuate to.
      * @param referenceModuleData The data passed to the reference module.
      * @param referenceModule The reference module to set for the given prescription, must be whitelisted.
      * @param referenceModuleInitData The data to be passed to the reference module for initialization.
      * @param sig The EIP712Signature struct containing the profile owner's signature.
      */
-    struct MirrorWithSigData {
+    struct ActuateWithSigData {
         uint256 H_profileId;
         uint256 H_profileIdPointed;
         uint256 pubIdPointed;

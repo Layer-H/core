@@ -113,10 +113,10 @@ makeSuiteCleanRoom('Follower Only Reference Module', function () {
       });
     });
 
-    context('Mirroring', function () {
-      it('Mirroring should fail if mirrorer is not a follower and follow NFT not yet deployed', async function () {
+    context('Actuateing', function () {
+      it('Actuateing should fail if actuateer is not a follower and follow NFT not yet deployed', async function () {
         await expect(
-          healthHub.connect(userTwo).mirror({
+          healthHub.connect(userTwo).actuate({
             H_profileId: SECOND_PROFILE_ID,
             H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
@@ -127,7 +127,7 @@ makeSuiteCleanRoom('Follower Only Reference Module', function () {
         ).to.be.revertedWith(ERRORS.FOLLOW_INVALID);
       });
 
-      it('Mirroring should fail if mirrorer follows, then transfers the follow NFT before attempting to mirror', async function () {
+      it('Actuateing should fail if actuateer follows, then transfers the follow NFT before attempting to actuate', async function () {
         await expect(healthHub.connect(userTwo).follow([FIRST_PROFILE_ID], [[]])).to.not.be.reverted;
         const followNFT = FollowNFT__factory.connect(
           await healthHub.getFollowNFT(FIRST_PROFILE_ID),
@@ -139,7 +139,7 @@ makeSuiteCleanRoom('Follower Only Reference Module', function () {
         ).to.not.be.reverted;
 
         await expect(
-          healthHub.connect(userTwo).mirror({
+          healthHub.connect(userTwo).actuate({
             H_profileId: SECOND_PROFILE_ID,
             H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
@@ -293,8 +293,8 @@ makeSuiteCleanRoom('Follower Only Reference Module', function () {
       });
     });
 
-    context('Mirroring', function () {
-      it('Mirroring should work if mirrorer is a follower', async function () {
+    context('Actuateing', function () {
+      it('Actuateing should work if actuateer is a follower', async function () {
         await expect(healthHub.connect(userTwo).follow([FIRST_PROFILE_ID], [[]])).to.not.be.reverted;
         const followNFT = FollowNFT__factory.connect(
           await healthHub.getFollowNFT(FIRST_PROFILE_ID),
@@ -302,7 +302,7 @@ makeSuiteCleanRoom('Follower Only Reference Module', function () {
         );
 
         await expect(
-          healthHub.connect(userTwo).mirror({
+          healthHub.connect(userTwo).actuate({
             H_profileId: SECOND_PROFILE_ID,
             H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
@@ -313,7 +313,7 @@ makeSuiteCleanRoom('Follower Only Reference Module', function () {
         ).to.not.be.reverted;
       });
 
-      it('Mirroring should work if mirrorer follows, transfers the follow NFT then receives it back before attempting to mirror', async function () {
+      it('Actuateing should work if actuateer follows, transfers the follow NFT then receives it back before attempting to actuate', async function () {
         await expect(healthHub.connect(userTwo).follow([FIRST_PROFILE_ID], [[]])).to.not.be.reverted;
         const followNFT = FollowNFT__factory.connect(
           await healthHub.getFollowNFT(FIRST_PROFILE_ID),
@@ -327,7 +327,7 @@ makeSuiteCleanRoom('Follower Only Reference Module', function () {
         await expect(followNFT.transferFrom(userAddress, userTwoAddress, 1)).to.not.be.reverted;
 
         await expect(
-          healthHub.connect(userTwo).mirror({
+          healthHub.connect(userTwo).actuate({
             H_profileId: SECOND_PROFILE_ID,
             H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
@@ -338,7 +338,7 @@ makeSuiteCleanRoom('Follower Only Reference Module', function () {
         ).to.not.be.reverted;
       });
 
-      it('Mirroring should work if the mirrorer is the prescription owner and he is following himself', async function () {
+      it('Actuateing should work if the actuateer is the prescription owner and he is following himself', async function () {
         await expect(healthHub.follow([FIRST_PROFILE_ID], [[]])).to.not.be.reverted;
         const followNFT = FollowNFT__factory.connect(
           await healthHub.getFollowNFT(FIRST_PROFILE_ID),
@@ -346,7 +346,7 @@ makeSuiteCleanRoom('Follower Only Reference Module', function () {
         );
 
         await expect(
-          healthHub.mirror({
+          healthHub.actuate({
             H_profileId: FIRST_PROFILE_ID,
             H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
@@ -357,9 +357,9 @@ makeSuiteCleanRoom('Follower Only Reference Module', function () {
         ).to.not.be.reverted;
       });
 
-      it('Mirroring should work if the mirrorer is the prescription owner even when he is not following himself and follow NFT was not deployed', async function () {
+      it('Actuateing should work if the actuateer is the prescription owner even when he is not following himself and follow NFT was not deployed', async function () {
         await expect(
-          healthHub.mirror({
+          healthHub.actuate({
             H_profileId: FIRST_PROFILE_ID,
             H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
@@ -370,7 +370,7 @@ makeSuiteCleanRoom('Follower Only Reference Module', function () {
         ).to.not.be.reverted;
       });
 
-      it('Mirroring should work if the mirrorer is the prescription owner even when he is not following himself and follow NFT was deployed', async function () {
+      it('Actuateing should work if the actuateer is the prescription owner even when he is not following himself and follow NFT was deployed', async function () {
         await expect(healthHub.follow([FIRST_PROFILE_ID], [[]])).to.not.be.reverted;
         const followNFT = FollowNFT__factory.connect(
           await healthHub.getFollowNFT(FIRST_PROFILE_ID),
@@ -380,7 +380,7 @@ makeSuiteCleanRoom('Follower Only Reference Module', function () {
         await expect(followNFT.transferFrom(userAddress, userTwoAddress, 1)).to.not.be.reverted;
 
         await expect(
-          healthHub.mirror({
+          healthHub.actuate({
             H_profileId: FIRST_PROFILE_ID,
             H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,

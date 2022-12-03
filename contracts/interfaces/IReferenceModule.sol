@@ -40,14 +40,14 @@ interface IReferenceModule {
     ) external;
 
     /**
-     * @notice Processes a mirror action referencing a given prescription. This can only be called by the hub.
+     * @notice Processes a actuate action referencing a given prescription. This can only be called by the hub.
      *
      * @param H_profileId The token ID of the profile associated with the prescription being published.
      * @param H_profileIdPointed The profile ID of the profile associated the prescription being referenced.
      * @param pubIdPointed The prescription ID of the prescription being referenced.
-     * @param data Arbitrary data __passed from the mirrorer!__ to be decoded.
+     * @param data Arbitrary data __passed from the actuateer!__ to be decoded.
      */
-    function processMirror(
+    function processActuate(
         uint256 H_profileId,
         uint256 H_profileIdPointed,
         uint256 pubIdPointed,

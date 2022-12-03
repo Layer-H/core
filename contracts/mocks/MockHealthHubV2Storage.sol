@@ -37,7 +37,7 @@ contract MockHealthHubV2Storage {
     bytes32 internal constant MIRROR_WITH_SIG_TYPEHASH =
         0x64f4578fc098f96a2450fbe601cb8c5318ebeb2ff72d2031a36be1ff6932d5ee;
     // keccak256(
-    // 'MirrorWithSig(uint256 H_profileId,uint256 H_profileIdPointed,uint256 pubIdPointed,address referenceModule,bytes referenceModuleData,uint256 nonce,uint256 deadline)'
+    // 'ActuateWithSig(uint256 H_profileId,uint256 H_profileIdPointed,uint256 pubIdPointed,address referenceModule,bytes referenceModuleData,uint256 nonce,uint256 deadline)'
     // );
     bytes32 internal constant FOLLOW_WITH_SIG_TYPEHASH =
         0xfb6b7f1cd1b38daf3822aff0abbe78124db5d62a4748bcff007c15ccd6d30bc5;

@@ -394,7 +394,7 @@ makeSuiteCleanRoom('Events', function () {
       ]);
     });
 
-    it('Mirroring should emit the correct events', async function () {
+    it('Actuateing should emit the correct events', async function () {
       await createProfile();
 
       await waitForTx(
@@ -412,7 +412,7 @@ makeSuiteCleanRoom('Events', function () {
       );
 
       receipt = await waitForTx(
-        healthHub.mirror({
+        healthHub.actuate({
           H_profileId: FIRST_PROFILE_ID,
           H_profileIdPointed: FIRST_PROFILE_ID,
           pubIdPointed: 1,
@@ -424,7 +424,7 @@ makeSuiteCleanRoom('Events', function () {
 
       expect(receipt.logs.length).to.eq(1);
 
-      matchEvent(receipt, 'MirrorCreated', [
+      matchEvent(receipt, 'ActuateCreated', [
         FIRST_PROFILE_ID,
         2,
         FIRST_PROFILE_ID,
@@ -535,7 +535,7 @@ makeSuiteCleanRoom('Events', function () {
       ]);
     });
 
-    it('Collecting from a mirror should emit correct events', async function () {
+    it('Collecting from a actuate should emit correct events', async function () {
       const secondH_ProfileId = FIRST_PROFILE_ID + 1;
       await createProfile();
 
@@ -576,7 +576,7 @@ makeSuiteCleanRoom('Events', function () {
       );
 
       await waitForTx(
-        healthHub.connect(userTwo).mirror({
+        healthHub.connect(userTwo).actuate({
           H_profileId: secondH_ProfileId,
           H_profileIdPointed: FIRST_PROFILE_ID,
           pubIdPointed: 1,

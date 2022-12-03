@@ -248,19 +248,19 @@ library Events {
     );
 
     /**
-     * @dev Emitted when a "mirror" is published.
+     * @dev Emitted when a "actuate" is published.
      *
      * @param H_profileId The profile's token ID.
      * @param pubId The new prescription's ID.
-     * @param H_profileIdPointed The profile token ID that this mirror points to.
-     * @param pubIdPointed The prescription ID that this mirror points to.
+     * @param H_profileIdPointed The profile token ID that this actuate points to.
+     * @param pubIdPointed The prescription ID that this actuate points to.
      * @param referenceModuleData The data passed to the reference module.
      * @param referenceModule The reference module set for this prescription.
      * @param referenceModuleReturnData The data returned from the reference module at initialization. This is abi
      * encoded and totally depends on the reference module chosen.
      * @param timestamp The current block timestamp.
      */
-    event MirrorCreated(
+    event ActuateCreated(
         uint256 indexed H_profileId,
         uint256 indexed pubId,
         uint256 H_profileIdPointed,
@@ -303,8 +303,8 @@ library Events {
      * @dev Emitted upon a successful collect action.
      *
      * @param collector The address collecting the prescription.
-     * @param H_profileId The token ID of the profile that the collect was initiated towards, useful to differentiate mirrors.
-     * @param pubId The prescription ID that the collect was initiated towards, useful to differentiate mirrors.
+     * @param H_profileId The token ID of the profile that the collect was initiated towards, useful to differentiate actuates.
+     * @param pubId The prescription ID that the collect was initiated towards, useful to differentiate actuates.
      * @param rootH_ProfileId The profile token ID of the profile whose prescription is being collected.
      * @param rootPubId The prescription ID of the prescription being collected.
      * @param collectModuleData The data passed to the collect module.

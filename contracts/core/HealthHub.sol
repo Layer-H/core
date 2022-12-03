@@ -469,18 +469,18 @@ contract HealthHub is HealthNFTBase, VersionedInitializable, HealthMultiState, H
     }
 
     /// @inheritdoc IHealthHub
-    function mirror(DataTypes.MirrorData calldata vars)
+    function actuate(DataTypes.ActuateData calldata vars)
         external
         override
         whenPublishingEnabled
         returns (uint256)
     {
         _validateCallerIsProfileOwnerOrDispatcher(vars.H_profileId);
-        return _createMirror(vars);
+        return _createActuate(vars);
     }
 
     /// @inheritdoc IHealthHub
-    function mirrorWithSig(DataTypes.MirrorWithSigData calldata vars)
+    function actuateWithSig(DataTypes.ActuateWithSigData calldata vars)
         external
         override
         whenPublishingEnabled
@@ -509,8 +509,8 @@ contract HealthHub is HealthNFTBase, VersionedInitializable, HealthMultiState, H
             );
         }
         return
-            _createMirror(
-                DataTypes.MirrorData(
+            _createActuate(
+                DataTypes.ActuateData(
                     vars.H_profileId,
                     vars.H_profileIdPointed,
                     vars.pubIdPointed,
@@ -827,7 +827,7 @@ contract HealthHub is HealthNFTBase, VersionedInitializable, HealthMultiState, H
         override
         returns (string memory)
     {
-        (uint256 rootH_ProfileId, uint256 rootPubId, ) = Helpers.getPointedIfMirror(
+        (uint256 rootH_ProfileId, uint256 rootPubId, ) = Helpers.getPointedIfActuate(
             H_profileId,
             pubId,
             _pubByIdByProfile
@@ -871,7 +871,7 @@ contract HealthHub is HealthNFTBase, VersionedInitializable, HealthMultiState, H
         if (pubId == 0 || _profileById[H_profileId].pubCount < pubId) {
             return DataTypes.PubType.Nonexistent;
         } else if (_pubByIdByProfile[H_profileId][pubId].collectModule == address(0)) {
-            return DataTypes.PubType.Mirror;
+            return DataTypes.PubType.Actuate;
         } else if (_pubByIdByProfile[H_profileId][pubId].H_profileIdPointed == 0) {
             return DataTypes.PubType.Post;
         } else {
@@ -968,10 +968,10 @@ contract HealthHub is HealthNFTBase, VersionedInitializable, HealthMultiState, H
         }
     }
 
-    function _createMirror(DataTypes.MirrorData memory vars) internal returns (uint256) {
+    function _createActuate(DataTypes.ActuateData memory vars) internal returns (uint256) {
         unchecked {
             uint256 pubId = ++_profileById[vars.H_profileId].pubCount;
-            PublishingLogic.createMirror(
+            PublishingLogic.createActuate(
                 vars,
                 pubId,
                 _pubByIdByProfile,

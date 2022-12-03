@@ -24,8 +24,8 @@ import {
   CommentWithSigDataStruct,
   CreateProfileDataStruct,
   FollowWithSigDataStruct,
-  MirrorDataStruct,
-  MirrorWithSigDataStruct,
+  ActuateDataStruct,
+  ActuateWithSigDataStruct,
   PostDataStruct,
   PostWithSigDataStruct,
 } from '../../typechain-types/HealthHub';
@@ -422,7 +422,7 @@ export async function getCommentWithSigParts(
   return await getSig(msgParams);
 }
 
-export async function getMirrorWithSigParts(
+export async function getActuateWithSigParts(
   H_profileId: BigNumberish,
   H_profileIdPointed: BigNumberish,
   pubIdPointed: string,
@@ -432,7 +432,7 @@ export async function getMirrorWithSigParts(
   nonce: number,
   deadline: string
 ): Promise<{ v: number; r: string; s: string }> {
-  const msgParams = buildMirrorWithSigParams(
+  const msgParams = buildActuateWithSigParams(
     H_profileId,
     H_profileIdPointed,
     pubIdPointed,
@@ -591,22 +591,22 @@ export async function commentReturningTokenId({
   return tokenId;
 }
 
-export interface MirrorReturningTokenIdStruct {
+export interface ActuateReturningTokenIdStruct {
   sender?: Signer;
-  vars: MirrorDataStruct | MirrorWithSigDataStruct;
+  vars: ActuateDataStruct | ActuateWithSigDataStruct;
 }
 
-export async function mirrorReturningTokenId({
+export async function actuateReturningTokenId({
   sender = user,
   vars,
-}: MirrorReturningTokenIdStruct): Promise<BigNumber> {
+}: ActuateReturningTokenIdStruct): Promise<BigNumber> {
   let tokenId;
   if ('sig' in vars) {
-    tokenId = await healthHub.connect(sender).callStatic.mirrorWithSig(vars);
-    await expect(healthHub.connect(sender).mirrorWithSig(vars)).to.not.be.reverted;
+    tokenId = await healthHub.connect(sender).callStatic.actuateWithSig(vars);
+    await expect(healthHub.connect(sender).actuateWithSig(vars)).to.not.be.reverted;
   } else {
-    tokenId = await healthHub.connect(sender).callStatic.mirror(vars);
-    await expect(healthHub.connect(sender).mirror(vars)).to.not.be.reverted;
+    tokenId = await healthHub.connect(sender).callStatic.actuate(vars);
+    await expect(healthHub.connect(sender).actuate(vars)).to.not.be.reverted;
   }
   return tokenId;
 }
@@ -958,7 +958,7 @@ const buildCommentWithSigParams = (
   },
 });
 
-const buildMirrorWithSigParams = (
+const buildActuateWithSigParams = (
   H_profileId: BigNumberish,
   H_profileIdPointed: BigNumberish,
   pubIdPointed: string,
@@ -969,7 +969,7 @@ const buildMirrorWithSigParams = (
   deadline: string
 ) => ({
   types: {
-    MirrorWithSig: [
+    ActuateWithSig: [
       { name: 'H_profileId', type: 'uint256' },
       { name: 'H_profileIdPointed', type: 'uint256' },
       { name: 'pubIdPointed', type: 'uint256' },

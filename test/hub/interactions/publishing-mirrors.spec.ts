@@ -4,8 +4,8 @@ import { MAX_UINT256, ZERO_ADDRESS } from '../../helpers/constants';
 import { ERRORS } from '../../helpers/errors';
 import {
   cancelWithPermitForAll,
-  getMirrorWithSigParts,
-  mirrorReturningTokenId,
+  getActuateWithSigParts,
+  actuateReturningTokenId,
 } from '../../helpers/utils';
 import {
   abiCoder,
@@ -25,7 +25,7 @@ import {
   userTwoAddress,
 } from '../../__setup.spec';
 
-makeSuiteCleanRoom('Publishing mirrors', function () {
+makeSuiteCleanRoom('Publishing actuates', function () {
   context('Generic', function () {
     beforeEach(async function () {
       await expect(
@@ -60,9 +60,9 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
     });
 
     context('Negatives', function () {
-      it('UserTwo should fail to publish a mirror to a profile owned by User', async function () {
+      it('UserTwo should fail to publish a actuate to a profile owned by User', async function () {
         await expect(
-          healthHub.connect(userTwo).mirror({
+          healthHub.connect(userTwo).actuate({
             H_profileId: FIRST_PROFILE_ID,
             H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
@@ -73,9 +73,9 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
         ).to.be.revertedWith(ERRORS.NOT_PROFILE_OWNER_OR_DISPATCHER);
       });
 
-      it('User should fail to mirror with an unwhitelisted reference module', async function () {
+      it('User should fail to actuate with an unwhitelisted reference module', async function () {
         await expect(
-          healthHub.mirror({
+          healthHub.actuate({
             H_profileId: FIRST_PROFILE_ID,
             H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
@@ -86,9 +86,9 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
         ).to.be.revertedWith(ERRORS.REFERENCE_MODULE_NOT_WHITELISTED);
       });
 
-      it('User should fail to mirror with invalid reference module data format', async function () {
+      it('User should fail to actuate with invalid reference module data format', async function () {
         await expect(
-          healthHub.mirror({
+          healthHub.actuate({
             H_profileId: FIRST_PROFILE_ID,
             H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
@@ -99,9 +99,9 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
         ).to.be.revertedWith(ERRORS.NO_REASON_ABI_DECODE);
       });
 
-      it('User should fail to mirror a prescription that does not exist', async function () {
+      it('User should fail to actuate a prescription that does not exist', async function () {
         await expect(
-          healthHub.mirror({
+          healthHub.actuate({
             H_profileId: FIRST_PROFILE_ID,
             H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 2,
@@ -114,7 +114,7 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
     });
 
     context('Scenarios', function () {
-      it('Should return the expected token IDs when mirroring prescriptions', async function () {
+      it('Should return the expected token IDs when actuateing prescriptions', async function () {
         await expect(
           healthHub.createProfile({
             to: testWallet.address,
@@ -137,7 +137,7 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
         ).to.not.be.reverted;
 
         expect(
-          await mirrorReturningTokenId({
+          await actuateReturningTokenId({
             vars: {
               H_profileId: FIRST_PROFILE_ID,
               H_profileIdPointed: FIRST_PROFILE_ID,
@@ -150,7 +150,7 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
         ).to.eq(2);
 
         expect(
-          await mirrorReturningTokenId({
+          await actuateReturningTokenId({
             sender: userTwo,
             vars: {
               H_profileId: FIRST_PROFILE_ID + 2,
@@ -167,7 +167,7 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
         const referenceModuleInitData = [];
         const referenceModuleData = [];
 
-        const { v, r, s } = await getMirrorWithSigParts(
+        const { v, r, s } = await getActuateWithSigParts(
           FIRST_PROFILE_ID + 1,
           FIRST_PROFILE_ID,
           '1',
@@ -178,7 +178,7 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
           MAX_UINT256
         );
         expect(
-          await mirrorReturningTokenId({
+          await actuateReturningTokenId({
             vars: {
               H_profileId: FIRST_PROFILE_ID + 1,
               H_profileIdPointed: FIRST_PROFILE_ID,
@@ -197,7 +197,7 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
         ).to.eq(1);
 
         expect(
-          await mirrorReturningTokenId({
+          await actuateReturningTokenId({
             vars: {
               H_profileId: FIRST_PROFILE_ID,
               H_profileIdPointed: FIRST_PROFILE_ID + 1,
@@ -210,9 +210,9 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
         ).to.eq(3);
       });
 
-      it('User should create a mirror with empty reference module and reference module data, fetched mirror data should be accurate', async function () {
+      it('User should create a actuate with empty reference module and reference module data, fetched actuate data should be accurate', async function () {
         await expect(
-          healthHub.mirror({
+          healthHub.actuate({
             H_profileId: FIRST_PROFILE_ID,
             H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
@@ -231,9 +231,9 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
         expect(pub.referenceModule).to.eq(ZERO_ADDRESS);
       });
 
-      it('User should mirror a mirror with empty reference module and reference module data, fetched mirror data should be accurate and point to the original post', async function () {
+      it('User should actuate a actuate with empty reference module and reference module data, fetched actuate data should be accurate and point to the original post', async function () {
         await expect(
-          healthHub.mirror({
+          healthHub.actuate({
             H_profileId: FIRST_PROFILE_ID,
             H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
@@ -244,7 +244,7 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
         ).to.not.be.reverted;
 
         await expect(
-          healthHub.mirror({
+          healthHub.actuate({
             H_profileId: FIRST_PROFILE_ID,
             H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 2,
@@ -263,7 +263,7 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
         expect(pub.referenceModule).to.eq(ZERO_ADDRESS);
       });
 
-      it('User should create a post using the mock reference module as reference module, then mirror that post', async function () {
+      it('User should create a post using the mock reference module as reference module, then actuate that post', async function () {
         const data = abiCoder.encode(['uint256'], ['1']);
         await expect(
           healthHub.post({
@@ -277,7 +277,7 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
         ).to.not.be.reverted;
 
         await expect(
-          healthHub.mirror({
+          healthHub.actuate({
             H_profileId: FIRST_PROFILE_ID,
             H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 2,
@@ -320,12 +320,12 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
     });
 
     context('Negatives', function () {
-      it('Testwallet should fail to mirror with sig with signature deadline mismatch', async function () {
+      it('Testwallet should fail to actuate with sig with signature deadline mismatch', async function () {
         const nonce = (await healthHub.sigNonces(testWallet.address)).toNumber();
         const referenceModuleInitData = [];
         const referenceModuleData = [];
 
-        const { v, r, s } = await getMirrorWithSigParts(
+        const { v, r, s } = await getActuateWithSigParts(
           FIRST_PROFILE_ID,
           FIRST_PROFILE_ID,
           '1',
@@ -337,7 +337,7 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
         );
 
         await expect(
-          healthHub.mirrorWithSig({
+          healthHub.actuateWithSig({
             H_profileId: FIRST_PROFILE_ID,
             H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: '1',
@@ -354,12 +354,12 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
         ).to.be.revertedWith(ERRORS.SIGNATURE_INVALID);
       });
 
-      it('Testwallet should fail to mirror with sig with invalid deadline', async function () {
+      it('Testwallet should fail to actuate with sig with invalid deadline', async function () {
         const nonce = (await healthHub.sigNonces(testWallet.address)).toNumber();
         const referenceModuleInitData = [];
         const referenceModuleData = [];
 
-        const { v, r, s } = await getMirrorWithSigParts(
+        const { v, r, s } = await getActuateWithSigParts(
           FIRST_PROFILE_ID,
           FIRST_PROFILE_ID,
           '1',
@@ -371,7 +371,7 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
         );
 
         await expect(
-          healthHub.mirrorWithSig({
+          healthHub.actuateWithSig({
             H_profileId: FIRST_PROFILE_ID,
             H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: '1',
@@ -388,12 +388,12 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
         ).to.be.revertedWith(ERRORS.SIGNATURE_EXPIRED);
       });
 
-      it('Testwallet should fail to mirror with sig with invalid deadline', async function () {
+      it('Testwallet should fail to actuate with sig with invalid deadline', async function () {
         const nonce = (await healthHub.sigNonces(testWallet.address)).toNumber();
         const referenceModuleInitData = [];
         const referenceModuleData = [];
 
-        const { v, r, s } = await getMirrorWithSigParts(
+        const { v, r, s } = await getActuateWithSigParts(
           FIRST_PROFILE_ID,
           FIRST_PROFILE_ID,
           '1',
@@ -405,7 +405,7 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
         );
 
         await expect(
-          healthHub.mirrorWithSig({
+          healthHub.actuateWithSig({
             H_profileId: FIRST_PROFILE_ID,
             H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: '1',
@@ -422,11 +422,11 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
         ).to.be.revertedWith(ERRORS.SIGNATURE_INVALID);
       });
 
-      it('Testwallet should fail to mirror with sig with unwhitelisted reference module', async function () {
+      it('Testwallet should fail to actuate with sig with unwhitelisted reference module', async function () {
         const nonce = (await healthHub.sigNonces(testWallet.address)).toNumber();
         const referenceModuleInitData = [];
         const referenceModuleData = [];
-        const { v, r, s } = await getMirrorWithSigParts(
+        const { v, r, s } = await getActuateWithSigParts(
           FIRST_PROFILE_ID,
           FIRST_PROFILE_ID,
           '1',
@@ -438,7 +438,7 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
         );
 
         await expect(
-          healthHub.mirrorWithSig({
+          healthHub.actuateWithSig({
             H_profileId: FIRST_PROFILE_ID,
             H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: '1',
@@ -455,12 +455,12 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
         ).to.be.revertedWith(ERRORS.REFERENCE_MODULE_NOT_WHITELISTED);
       });
 
-      it('TestWallet should fail to mirror a prescription with sig that does not exist yet', async function () {
+      it('TestWallet should fail to actuate a prescription with sig that does not exist yet', async function () {
         const nonce = (await healthHub.sigNonces(testWallet.address)).toNumber();
         const referenceModuleInitData = [];
         const referenceModuleData = [];
 
-        const { v, r, s } = await getMirrorWithSigParts(
+        const { v, r, s } = await getActuateWithSigParts(
           FIRST_PROFILE_ID,
           FIRST_PROFILE_ID,
           '2',
@@ -472,7 +472,7 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
         );
 
         await expect(
-          healthHub.mirrorWithSig({
+          healthHub.actuateWithSig({
             H_profileId: FIRST_PROFILE_ID,
             H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: '2',
@@ -489,12 +489,12 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
         ).to.be.revertedWith(ERRORS.PUBLICATION_DOES_NOT_EXIST);
       });
 
-      it('TestWallet should sign attempt to mirror with sig, cancel via empty permitForAll, then fail to mirror with sig', async function () {
+      it('TestWallet should sign attempt to actuate with sig, cancel via empty permitForAll, then fail to actuate with sig', async function () {
         const nonce = (await healthHub.sigNonces(testWallet.address)).toNumber();
         const referenceModuleInitData = [];
         const referenceModuleData = [];
 
-        const { v, r, s } = await getMirrorWithSigParts(
+        const { v, r, s } = await getActuateWithSigParts(
           FIRST_PROFILE_ID,
           FIRST_PROFILE_ID,
           '1',
@@ -508,7 +508,7 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
         await cancelWithPermitForAll();
 
         await expect(
-          healthHub.mirrorWithSig({
+          healthHub.actuateWithSig({
             H_profileId: FIRST_PROFILE_ID,
             H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: '1',
@@ -527,12 +527,12 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
     });
 
     context('Scenarios', function () {
-      it('Testwallet should mirror with sig, fetched mirror data should be accurate', async function () {
+      it('Testwallet should actuate with sig, fetched actuate data should be accurate', async function () {
         const nonce = (await healthHub.sigNonces(testWallet.address)).toNumber();
         const referenceModuleInitData = [];
         const referenceModuleData = [];
 
-        const { v, r, s } = await getMirrorWithSigParts(
+        const { v, r, s } = await getActuateWithSigParts(
           FIRST_PROFILE_ID,
           FIRST_PROFILE_ID,
           '1',
@@ -544,7 +544,7 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
         );
 
         await expect(
-          healthHub.mirrorWithSig({
+          healthHub.actuateWithSig({
             H_profileId: FIRST_PROFILE_ID,
             H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: '1',
@@ -569,9 +569,9 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
         expect(pub.referenceModule).to.eq(ZERO_ADDRESS);
       });
 
-      it('TestWallet should mirror a mirror with sig, fetched mirror data should be accurate', async function () {
+      it('TestWallet should actuate a actuate with sig, fetched actuate data should be accurate', async function () {
         await expect(
-          healthHub.connect(testWallet).mirror({
+          healthHub.connect(testWallet).actuate({
             H_profileId: FIRST_PROFILE_ID,
             H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
@@ -585,7 +585,7 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
         const referenceModuleInitData = [];
         const referenceModuleData = [];
         
-        const { v, r, s } = await getMirrorWithSigParts(
+        const { v, r, s } = await getActuateWithSigParts(
           FIRST_PROFILE_ID,
           FIRST_PROFILE_ID,
           '2',
@@ -597,7 +597,7 @@ makeSuiteCleanRoom('Publishing mirrors', function () {
         );
 
         await expect(
-          healthHub.mirrorWithSig({
+          healthHub.actuateWithSig({
             H_profileId: FIRST_PROFILE_ID,
             H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: '2',

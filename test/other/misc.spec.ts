@@ -288,7 +288,7 @@ makeSuiteCleanRoom('Misc', function () {
       expect(pointer[1]).to.eq(1);
     });
 
-    it('Publication pointer getter should return the correct pointer for mirrors', async function () {
+    it('Publication pointer getter should return the correct pointer for actuates', async function () {
       await expect(
         healthHub.connect(governance).whitelistCollectModule(freeCollectModule.address, true)
       ).to.not.be.reverted;
@@ -305,7 +305,7 @@ makeSuiteCleanRoom('Misc', function () {
       ).to.not.be.reverted;
 
       await expect(
-        healthHub.mirror({
+        healthHub.actuate({
           H_profileId: FIRST_PROFILE_ID,
           H_profileIdPointed: FIRST_PROFILE_ID,
           pubIdPointed: 1,
@@ -372,7 +372,7 @@ makeSuiteCleanRoom('Misc', function () {
       expect(await healthHub.getContentURI(FIRST_PROFILE_ID, 2)).to.eq(OTHER_MOCK_URI);
     });
 
-    it('Publication content URI getter should return the correct URI for mirrors', async function () {
+    it('Publication content URI getter should return the correct URI for actuates', async function () {
       await expect(
         healthHub.connect(governance).whitelistCollectModule(freeCollectModule.address, true)
       ).to.not.be.reverted;
@@ -389,7 +389,7 @@ makeSuiteCleanRoom('Misc', function () {
       ).to.not.be.reverted;
 
       await expect(
-        healthHub.mirror({
+        healthHub.actuate({
           H_profileId: FIRST_PROFILE_ID,
           H_profileIdPointed: FIRST_PROFILE_ID,
           pubIdPointed: 1,
@@ -437,7 +437,7 @@ makeSuiteCleanRoom('Misc', function () {
       ).to.not.be.reverted;
 
       await expect(
-        healthHub.mirror({
+        healthHub.actuate({
           H_profileId: FIRST_PROFILE_ID,
           H_profileIdPointed: FIRST_PROFILE_ID,
           pubIdPointed: 1,
@@ -464,7 +464,7 @@ makeSuiteCleanRoom('Misc', function () {
       expect(await healthHub.getCollectModule(FIRST_PROFILE_ID, 3)).to.eq(freeCollectModule.address);
     });
 
-    it('Publication collect module getter should return the zero address for mirrors', async function () {
+    it('Publication collect module getter should return the zero address for actuates', async function () {
       await expect(
         healthHub.connect(governance).whitelistCollectModule(freeCollectModule.address, true)
       ).to.not.be.reverted;
@@ -481,7 +481,7 @@ makeSuiteCleanRoom('Misc', function () {
       ).to.not.be.reverted;
 
       await expect(
-        healthHub.mirror({
+        healthHub.actuate({
           H_profileId: FIRST_PROFILE_ID,
           H_profileIdPointed: FIRST_PROFILE_ID,
           pubIdPointed: 1,
@@ -525,7 +525,7 @@ makeSuiteCleanRoom('Misc', function () {
       ).to.not.be.reverted;
 
       await expect(
-        healthHub.mirror({
+        healthHub.actuate({
           H_profileId: FIRST_PROFILE_ID,
           H_profileIdPointed: FIRST_PROFILE_ID,
           pubIdPointed: 1,

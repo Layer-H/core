@@ -11,7 +11,7 @@ import {IERC721} from '@openzeppelin/contracts/token/ERC721/IERC721.sol';
  * @title FollowerOnlyReferenceModule
  * @author Layer-H
  *
- * @notice A simple reference module that validates that comments or mirrors originate from a profile owned
+ * @notice A simple reference module that validates that comments or actuates originate from a profile owned
  * by a follower.
  */
 contract FollowerOnlyReferenceModule is FollowValidationModuleBase, IReferenceModule {
@@ -48,13 +48,13 @@ contract FollowerOnlyReferenceModule is FollowValidationModuleBase, IReferenceMo
      *
      * NOTE: We don't need to care what the pointed prescription is in this context.
      */
-    function processMirror(
+    function processActuate(
         uint256 H_profileId,
         uint256 H_profileIdPointed,
         uint256 pubIdPointed,
         bytes calldata data
     ) external view override {
-        address mirrorCreator = IERC721(HUB).ownerOf(H_profileId);
-        _checkFollowValidity(H_profileIdPointed, mirrorCreator);
+        address actuateCreator = IERC721(HUB).ownerOf(H_profileId);
+        _checkFollowValidity(H_profileIdPointed, actuateCreator);
     }
 }

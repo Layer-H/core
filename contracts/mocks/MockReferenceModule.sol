@@ -22,7 +22,7 @@ contract MockReferenceModule is IReferenceModule {
         bytes calldata data
     ) external override {}
 
-    function processMirror(
+    function processActuate(
         uint256 H_profileId,
         uint256 H_profileIdPointed,
         uint256 pubIdPointed,

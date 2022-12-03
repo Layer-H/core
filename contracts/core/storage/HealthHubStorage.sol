@@ -43,7 +43,7 @@ abstract contract HealthHubStorage {
         );
     bytes32 internal constant MIRROR_WITH_SIG_TYPEHASH =
         keccak256(
-            'MirrorWithSig(uint256 H_profileId,uint256 H_profileIdPointed,uint256 pubIdPointed,bytes referenceModuleData,address referenceModule,bytes referenceModuleInitData,uint256 nonce,uint256 deadline)'
+            'ActuateWithSig(uint256 H_profileId,uint256 H_profileIdPointed,uint256 pubIdPointed,bytes referenceModuleData,address referenceModule,bytes referenceModuleInitData,uint256 nonce,uint256 deadline)'
         );
     bytes32 internal constant FOLLOW_WITH_SIG_TYPEHASH =
         keccak256(

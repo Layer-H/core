@@ -102,7 +102,7 @@ library InteractionLogic {
         mapping(uint256 => DataTypes.ProfileStruct) storage _profileById
     ) external returns (uint256) {
         (uint256 rootH_ProfileId, uint256 rootPubId, address rootCollectModule) = Helpers
-            .getPointedIfMirror(H_profileId, pubId, _pubByIdByProfile);
+            .getPointedIfActuate(H_profileId, pubId, _pubByIdByProfile);
 
         uint256 tokenId;
         // Avoids stack too deep
@@ -196,8 +196,8 @@ library InteractionLogic {
      * @dev This is done through this function to prevent stack too deep compilation error.
      *
      * @param collector The address collecting the prescription.
-     * @param H_profileId The token ID of the profile that the collect was initiated towards, useful to differentiate mirrors.
-     * @param pubId The prescription ID that the collect was initiated towards, useful to differentiate mirrors.
+     * @param H_profileId The token ID of the profile that the collect was initiated towards, useful to differentiate actuates.
+     * @param pubId The prescription ID that the collect was initiated towards, useful to differentiate actuates.
      * @param rootH_ProfileId The profile token ID of the profile whose prescription is being collected.
      * @param rootPubId The prescription ID of the prescription being collected.
      * @param data The data passed to the collect module.

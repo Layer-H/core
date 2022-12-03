@@ -6,7 +6,7 @@ import {
   getCollectWithSigParts,
   getCommentWithSigParts,
   getFollowWithSigParts,
-  getMirrorWithSigParts,
+  getActuateWithSigParts,
   getPostWithSigParts,
   getSetDispatcherWithSigParts,
   getSetFollowModuleWithSigParts,
@@ -768,7 +768,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
         ).to.not.be.reverted;
       });
 
-      it('Governance should pause the hub, mirroring should fail, then governance unpauses the hub and mirroring should work', async function () {
+      it('Governance should pause the hub, actuateing should fail, then governance unpauses the hub and actuateing should work', async function () {
         await expect(
           healthHub.createProfile({
             to: userAddress,
@@ -798,7 +798,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
         await expect(healthHub.connect(governance).setState(ProtocolState.Paused)).to.not.be.reverted;
 
         await expect(
-          healthHub.mirror({
+          healthHub.actuate({
             H_profileId: FIRST_PROFILE_ID,
             H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
@@ -813,7 +813,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
         ).to.not.be.reverted;
 
         await expect(
-          healthHub.mirror({
+          healthHub.actuate({
             H_profileId: FIRST_PROFILE_ID,
             H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
@@ -824,7 +824,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
         ).to.not.be.reverted;
       });
 
-      it('Governance should pause the hub, mirroring with sig should fail, then governance unpauses the hub and mirroring with sig should work', async function () {
+      it('Governance should pause the hub, actuateing with sig should fail, then governance unpauses the hub and actuateing with sig should work', async function () {
         await expect(
           healthHub.connect(testWallet).createProfile({
             to: testWallet.address,
@@ -857,7 +857,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
         const referenceModuleInitData = [];
         const referenceModuleData = [];
 
-        const { v, r, s } = await getMirrorWithSigParts(
+        const { v, r, s } = await getActuateWithSigParts(
           FIRST_PROFILE_ID,
           FIRST_PROFILE_ID,
           '1',
@@ -869,7 +869,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
         );
 
         await expect(
-          healthHub.mirrorWithSig({
+          healthHub.actuateWithSig({
             H_profileId: FIRST_PROFILE_ID,
             H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: '1',
@@ -890,7 +890,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
         ).to.not.be.reverted;
 
         await expect(
-          healthHub.mirrorWithSig({
+          healthHub.actuateWithSig({
             H_profileId: FIRST_PROFILE_ID,
             H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: '1',
@@ -1604,7 +1604,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
         ).to.not.be.reverted;
       });
 
-      it('Governance should pause publishing, mirroring should fail, then governance unpauses the hub and mirroring should work', async function () {
+      it('Governance should pause publishing, actuateing should fail, then governance unpauses the hub and actuateing should work', async function () {
         await expect(
           healthHub.createProfile({
             to: userAddress,
@@ -1636,7 +1636,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
         ).to.not.be.reverted;
 
         await expect(
-          healthHub.mirror({
+          healthHub.actuate({
             H_profileId: FIRST_PROFILE_ID,
             H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
@@ -1651,7 +1651,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
         ).to.not.be.reverted;
 
         await expect(
-          healthHub.mirror({
+          healthHub.actuate({
             H_profileId: FIRST_PROFILE_ID,
             H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
@@ -1662,7 +1662,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
         ).to.not.be.reverted;
       });
 
-      it('Governance should pause publishing, mirroring with sig should fail, then governance unpauses the hub and mirroring with sig should work', async function () {
+      it('Governance should pause publishing, actuateing with sig should fail, then governance unpauses the hub and actuateing with sig should work', async function () {
         await expect(
           healthHub.connect(testWallet).createProfile({
             to: testWallet.address,
@@ -1697,7 +1697,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
         const referenceModuleInitData = [];
         const referenceModuleData = [];
 
-        const { v, r, s } = await getMirrorWithSigParts(
+        const { v, r, s } = await getActuateWithSigParts(
           FIRST_PROFILE_ID,
           FIRST_PROFILE_ID,
           '1',
@@ -1709,7 +1709,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
         );
 
         await expect(
-          healthHub.mirrorWithSig({
+          healthHub.actuateWithSig({
             H_profileId: FIRST_PROFILE_ID,
             H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: '1',
@@ -1730,7 +1730,7 @@ makeSuiteCleanRoom('Multi-State Hub', function () {
         ).to.not.be.reverted;
 
         await expect(
-          healthHub.mirrorWithSig({
+          healthHub.actuateWithSig({
             H_profileId: FIRST_PROFILE_ID,
             H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: '1',

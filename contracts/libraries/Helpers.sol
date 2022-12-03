@@ -14,7 +14,7 @@ import {Errors} from './Errors.sol';
  */
 library Helpers {
     /**
-     * @notice This helper function just returns the pointed prescription if the passed prescription is a mirror,
+     * @notice This helper function just returns the pointed prescription if the passed prescription is a actuate,
      * otherwise it returns the passed prescription.
      *
      * @param H_profileId The token ID of the profile that published the given prescription.
@@ -22,9 +22,9 @@ library Helpers {
      * @param _pubByIdByProfile A pointer to the storage mapping of prescriptions by pubId by profile ID.
      *
      * @return tuple First, the pointed prescription's publishing profile ID, second, the pointed prescription's ID, and third, the
-     * pointed prescription's collect module. If the passed prescription is not a mirror, this returns the given prescription.
+     * pointed prescription's collect module. If the passed prescription is not a actuate, this returns the given prescription.
      */
-    function getPointedIfMirror(
+    function getPointedIfActuate(
         uint256 H_profileId,
         uint256 pubId,
         mapping(uint256 => mapping(uint256 => DataTypes.PublicationStruct))

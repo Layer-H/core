@@ -221,22 +221,22 @@ interface IHealthHub {
     function commentWithSig(DataTypes.CommentWithSigData calldata vars) external returns (uint256);
 
     /**
-     * @notice Publishes a mirror to a given profile, must be called by the profile owner.
+     * @notice Publishes a actuate to a given profile, must be called by the profile owner.
      *
-     * @param vars A MirrorData struct containing the necessary parameters.
+     * @param vars A ActuateData struct containing the necessary parameters.
      *
-     * @return uint256 An integer representing the mirror's prescription ID.
+     * @return uint256 An integer representing the actuate's prescription ID.
      */
-    function mirror(DataTypes.MirrorData calldata vars) external returns (uint256);
+    function actuate(DataTypes.ActuateData calldata vars) external returns (uint256);
 
     /**
-     * @notice Publishes a mirror to a given profile via signature with the specified parameters.
+     * @notice Publishes a actuate to a given profile via signature with the specified parameters.
      *
-     * @param vars A MirrorWithSigData struct containing the regular parameters and an EIP712Signature struct.
+     * @param vars A ActuateWithSigData struct containing the regular parameters and an EIP712Signature struct.
      *
-     * @return uint256 An integer representing the mirror's prescription ID.
+     * @return uint256 An integer representing the actuate's prescription ID.
      */
-    function mirrorWithSig(DataTypes.MirrorWithSigData calldata vars) external returns (uint256);
+    function actuateWithSig(DataTypes.ActuateWithSigData calldata vars) external returns (uint256);
 
     /**
      * @notice Follows the given profiles, executing each profile's follow module logic (if any) and minting followNFTs to the caller.
@@ -524,7 +524,7 @@ interface IHealthHub {
      * @param H_profileId The token ID of the profile that published the prescription to query.
      * @param pubId The prescription ID of the prescription to query.
      *
-     * @return PubType The prescription type, as a member of an enum (either "post," "comment" or "mirror").
+     * @return PubType The prescription type, as a member of an enum (either "post," "comment" or "actuate").
      */
     function getPubType(uint256 H_profileId, uint256 pubId) external view returns (DataTypes.PubType);
 
