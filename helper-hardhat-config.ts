@@ -21,5 +21,6 @@ export const NETWORKS_RPC_URL: iParamsPerNetwork<string> = {
   [eEthereumNetwork.tenderlyMain]: `https://rpc.tenderly.co/fork/${TENDERLY_FORK_ID}`,
   [ePolygonNetwork.mumbai]: process.env.MUMBAI_RPC_URL,
   [ePolygonNetwork.matic]: process.env.POLYGON_RPC_URL,
+  [ePolygonNetwork.zkevm]: process.env.ZKEVM_RPC_URL,
   [eXDaiNetwork.xdai]: 'https://rpc.xdaichain.com/',
 };

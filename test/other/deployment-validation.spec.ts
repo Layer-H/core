@@ -17,8 +17,8 @@ import {
   deployerAddress,
   governanceAddress,
   hubLibs,
-  lensHub,
-  lensHubImpl,
+  healthHub,
+  healthHubImpl,
   HEALTH_HUB_NFT_NAME,
   HEALTH_HUB_NFT_SYMBOL,
   makeSuiteCleanRoom,
@@ -56,14 +56,14 @@ makeSuiteCleanRoom('deployment validation', () => {
 
   it('Deployer should not be able to initialize implementation due to address(this) check', async function () {
     await expect(
-      lensHubImpl.initialize(HEALTH_HUB_NFT_NAME, HEALTH_HUB_NFT_SYMBOL, governanceAddress)
+      healthHubImpl.initialize(HEALTH_HUB_NFT_NAME, HEALTH_HUB_NFT_SYMBOL, governanceAddress)
     ).to.be.revertedWith(ERRORS.CANNOT_INIT_IMPL);
   });
 
-  it("User should fail to initialize lensHub proxy after it's already been initialized via the proxy constructor", async function () {
+  it("User should fail to initialize healthHub proxy after it's already been initialized via the proxy constructor", async function () {
     // Initialization happens in __setup.spec.ts
     await expect(
-      lensHub.connect(user).initialize('name', 'symbol', userAddress)
+      healthHub.connect(user).initialize('name', 'symbol', userAddress)
     ).to.be.revertedWith(ERRORS.INITIALIZED);
   });
 
@@ -88,19 +88,19 @@ makeSuiteCleanRoom('deployment validation', () => {
   });
 
   it('User should not be able to call admin-only functions on proxy (should fallback) since deployer is admin', async function () {
-    const proxy = TransparentUpgradeableProxy__factory.connect(lensHub.address, user);
+    const proxy = TransparentUpgradeableProxy__factory.connect(healthHub.address, user);
     await expect(proxy.upgradeTo(userAddress)).to.be.revertedWith(ERRORS.NO_SELECTOR);
     await expect(proxy.upgradeToAndCall(userAddress, [])).to.be.revertedWith(ERRORS.NO_SELECTOR);
   });
 
   it('Deployer should be able to call admin-only functions on proxy', async function () {
-    const proxy = TransparentUpgradeableProxy__factory.connect(lensHub.address, deployer);
+    const proxy = TransparentUpgradeableProxy__factory.connect(healthHub.address, deployer);
     const newImpl = await new HealthHub__factory(hubLibs, deployer).deploy(userAddress, userAddress);
     await expect(proxy.upgradeTo(newImpl.address)).to.not.be.reverted;
   });
 
   it('Deployer should transfer admin to user, deployer should fail to call admin-only functions, user should call admin-only functions', async function () {
-    const proxy = TransparentUpgradeableProxy__factory.connect(lensHub.address, deployer);
+    const proxy = TransparentUpgradeableProxy__factory.connect(healthHub.address, deployer);
 
     await expect(proxy.changeAdmin(userAddress)).to.not.be.reverted;
 
@@ -120,7 +120,7 @@ makeSuiteCleanRoom('deployment validation', () => {
 
   it('Should fail to deploy a fee collect module with zero address module globals', async function () {
     await expect(
-      new TimedFeeCollectModule__factory(deployer).deploy(lensHub.address, ZERO_ADDRESS)
+      new TimedFeeCollectModule__factory(deployer).deploy(healthHub.address, ZERO_ADDRESS)
     ).to.be.revertedWith(ERRORS.INIT_PARAMS_INVALID);
   });
 
@@ -132,7 +132,7 @@ makeSuiteCleanRoom('deployment validation', () => {
 
   it('Should fail to deploy a fee follow module with zero address module globals', async function () {
     await expect(
-      new FeeFollowModule__factory(deployer).deploy(lensHub.address, ZERO_ADDRESS)
+      new FeeFollowModule__factory(deployer).deploy(healthHub.address, ZERO_ADDRESS)
     ).to.be.revertedWith(ERRORS.INIT_PARAMS_INVALID);
   });
 
@@ -166,7 +166,7 @@ makeSuiteCleanRoom('deployment validation', () => {
 
   it('Validates HealthHub name & symbol', async function () {
     const name = HEALTH_HUB_NFT_NAME;
-    const symbol = await lensHub.symbol();
+    const symbol = await healthHub.symbol();
 
     expect(name).to.eq(HEALTH_HUB_NFT_NAME);
     expect(symbol).to.eq(HEALTH_HUB_NFT_SYMBOL);

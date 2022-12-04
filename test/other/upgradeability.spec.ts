@@ -7,14 +7,14 @@ import {
   TransparentUpgradeableProxy__factory,
 } from '../../typechain-types';
 import { ERRORS } from '../helpers/errors';
-import { abiCoder, deployer, HealthHub, makeSuiteCleanRoom, user } from '../__setup.spec';
+import { abiCoder, deployer, healthHub, makeSuiteCleanRoom, user } from '../__setup.spec';
 
 makeSuiteCleanRoom('Upgradeability', function () {
   const valueToSet = 123;
 
   it('Should fail to initialize an implementation with the same revision', async function () {
     const newImpl = await new MockHealthHubV2BadRevision__factory(deployer).deploy();
-    const proxyHub = TransparentUpgradeableProxy__factory.connect(HealthHub.address, deployer);
+    const proxyHub = TransparentUpgradeableProxy__factory.connect(healthHub.address, deployer);
     const hub = MockHealthHubV2BadRevision__factory.connect(proxyHub.address, user);
     await expect(proxyHub.upgradeTo(newImpl.address)).to.not.be.reverted;
     await expect(hub.initialize(valueToSet)).to.be.revertedWith(ERRORS.INITIALIZED);
@@ -24,7 +24,7 @@ makeSuiteCleanRoom('Upgradeability', function () {
   // We're going to validate the first 23 slots and the 24rd slot before and after the change
   it("Should upgrade and set a new variable's value, previous storage is unchanged, new value is accurate", async function () {
     const newImpl = await new MockHealthHubV2__factory(deployer).deploy();
-    const proxyHub = TransparentUpgradeableProxy__factory.connect(HealthHub.address, deployer);
+    const proxyHub = TransparentUpgradeableProxy__factory.connect(healthHub.address, deployer);
 
     let prevStorage: string[] = [];
     for (let i = 0; i < 24; i++) {

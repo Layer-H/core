@@ -189,7 +189,7 @@ makeSuiteCleanRoom('Collecting', function () {
         expect(mintTimestamp).to.eq(timestamp);
       });
 
-      it('UserTwo should follow, then mirror, then collect on their mirror, receive a collect NFT with expected properties', async function () {
+      it('UserTwo should follow, then actuate, then collect on their actuate, receive a collect NFT with expected properties', async function () {
         await expect(healthHub.connect(userTwo).follow([FIRST_PROFILE_ID], [[]])).to.not.be.reverted;
         const secondProfileId = FIRST_PROFILE_ID + 1;
         await expect(
@@ -204,7 +204,7 @@ makeSuiteCleanRoom('Collecting', function () {
         ).to.not.be.reverted;
 
         await expect(
-          healthHub.connect(userTwo).mirror({
+          healthHub.connect(userTwo).actuate({
             H_profileId: secondProfileId,
             H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
@@ -233,7 +233,7 @@ makeSuiteCleanRoom('Collecting', function () {
         expect(pointer[1]).to.eq(1);
       });
 
-      it('UserTwo should follow, then mirror, mirror their mirror then collect on their latest mirror, receive a collect NFT with expected properties', async function () {
+      it('UserTwo should follow, then actuate, actuate their actuate then collect on their latest actuate, receive a collect NFT with expected properties', async function () {
         await expect(healthHub.connect(userTwo).follow([FIRST_PROFILE_ID], [[]])).to.not.be.reverted;
         const secondProfileId = FIRST_PROFILE_ID + 1;
         await expect(
@@ -248,7 +248,7 @@ makeSuiteCleanRoom('Collecting', function () {
         ).to.not.be.reverted;
 
         await expect(
-          healthHub.connect(userTwo).mirror({
+          healthHub.connect(userTwo).actuate({
             H_profileId: secondProfileId,
             H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,
@@ -259,7 +259,7 @@ makeSuiteCleanRoom('Collecting', function () {
         ).to.not.be.reverted;
 
         await expect(
-          healthHub.connect(userTwo).mirror({
+          healthHub.connect(userTwo).actuate({
             H_profileId: secondProfileId,
             H_profileIdPointed: secondProfileId,
             pubIdPointed: 1,
@@ -470,7 +470,7 @@ makeSuiteCleanRoom('Collecting', function () {
         expect(pointer[1]).to.eq(1);
       });
 
-      it('TestWallet should follow, mirror, then collect with sig on their mirror', async function () {
+      it('TestWallet should follow, actuate, then collect with sig on their actuate', async function () {
         await expect(
           healthHub.connect(testWallet).follow([FIRST_PROFILE_ID], [[]])
         ).to.not.be.reverted;
@@ -487,7 +487,7 @@ makeSuiteCleanRoom('Collecting', function () {
         ).to.not.be.reverted;
 
         await expect(
-          healthHub.connect(testWallet).mirror({
+          healthHub.connect(testWallet).actuate({
             H_profileId: secondProfileId,
             H_profileIdPointed: FIRST_PROFILE_ID,
             pubIdPointed: 1,

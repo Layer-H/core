@@ -11,11 +11,13 @@ export enum eEthereumNetwork {
   hardhat = 'hardhat',
   tenderlyMain = 'tenderlyMain',
   harhatevm = 'harhatevm',
+  zkevm ='zkevm',
 }
 
 export enum ePolygonNetwork {
   matic = 'matic',
   mumbai = 'mumbai',
+  zkevm ='zkevm',
 }
 
 export enum eXDaiNetwork {
@@ -28,6 +30,7 @@ export enum EthereumNetworkNames {
   main = 'main',
   matic = 'matic',
   mumbai = 'mumbai',
+  zkevm ='zkevm',
   xdai = 'xdai',
 }
 
@@ -57,6 +60,7 @@ export interface iEthereumParamsPerNetwork<eNetwork> {
 export interface iPolygonParamsPerNetwork<T> {
   [ePolygonNetwork.matic]: T;
   [ePolygonNetwork.mumbai]: T;
+  [ePolygonNetwork.zkevm]: T;
 }
 
 export interface iXDaiParamsPerNetwork<T> {
