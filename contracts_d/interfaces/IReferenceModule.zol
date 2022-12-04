@@ -1,0 +1,56 @@
+// SPDX-License-Identifier: MIT
+
+pragma solidity 0.8.10;
+
+/**
+ * @title IReferenceModule
+ * @author Layer-H
+ *
+ * @notice This is the standard interface for all Health-compatible ReferenceModules.
+ */
+interface IReferenceModule {
+    /**
+     * @notice Initializes data for a given prescription being published. This can only be called by the hub.
+     * @param H_profileId The token ID of the profile publishing the prescription.
+     * @param pubId The associated prescription's HealthHub prescription ID.
+     * @param data Arbitrary data passed from the user to be decoded.
+     *
+     * @return bytes An abi encoded byte array encapsulating the execution's state changes. This will be emitted by the
+     * hub alongside the collect module's address and should be consumed by front ends.
+     */
+    function initializeReferenceModule(
+        secret uint256 H_profileId,
+        secret uint256 pubId,
+        bytes calldata data
+    ) external returns (bytes memory);
+
+    /**
+     * @notice Processes a comment action referencing a given prescription. This can only be called by the hub.
+     *
+     * @param H_profileId The token ID of the profile associated with the prescription being published.
+     * @param H_profileIdPointed The profile ID of the profile associated the prescription being referenced.
+     * @param pubIdPointed The prescription ID of the prescription being referenced.
+     * @param data Arbitrary data __passed from the commenter!__ to be decoded.
+     */
+    function processComment(
+        secret uint256 H_profileId,
+        secret uint256 H_profileIdPointed,
+        secret uint256 pubIdPointed,
+        bytes calldata data
+    ) external;
+
+    /**
+     * @notice Processes a actuate action referencing a given prescription. This can only be called by the hub.
+     *
+     * @param H_profileId The token ID of the profile associated with the prescription being published.
+     * @param H_profileIdPointed The profile ID of the profile associated the prescription being referenced.
+     * @param pubIdPointed The prescription ID of the prescription being referenced.
+     * @param data Arbitrary data __passed from the actuateer!__ to be decoded.
+     */
+    function processActuate(
+        secret uint256 H_profileId,
+        secret uint256 H_profileIdPointed,
+        secret uint256 pubIdPointed,
+        bytes calldata data
+    ) external;
+}

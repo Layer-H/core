@@ -1,0 +1,72 @@
+// SPDX-License-Identifier: MIT
+
+pragma solidity 0.8.10;
+
+import {DataTypes} from '../../libraries/DataTypes.sol';
+
+/**
+ * @title HealthHubStorage
+ * @author Layer-H
+ *
+ * @notice This is an abstract contract that *only* contains storage for the HealthHub contract. This
+ * *must* be inherited last (bar interfaces) in order to preserve the HealthHub storage layout. Adding
+ * storage variables should be done solely at the bottom of this contract.
+ */
+abstract contract HealthHubStorage {
+    bytes32 internal constant SET_DEFAULT_PROFILE_WITH_SIG_TYPEHASH =
+        keccak256(
+            'SetDefaultProfileWithSig(address wallet,secret uint256 H_profileId,secret uint256 nonce,secret uint256 deadline)'
+        );
+    bytes32 internal constant SET_FOLLOW_MODULE_WITH_SIG_TYPEHASH =
+        keccak256(
+            'SetFollowModuleWithSig(secret uint256 H_profileId,address followModule,bytes followModuleInitData,secret uint256 nonce,secret uint256 deadline)'
+        );
+    bytes32 internal constant SET_FOLLOW_NFT_URI_WITH_SIG_TYPEHASH =
+        keccak256(
+            'SetFollowNFTURIWithSig(secret uint256 H_profileId,string followNFTURI,secret uint256 nonce,secret uint256 deadline)'
+        );
+    bytes32 internal constant SET_DISPATCHER_WITH_SIG_TYPEHASH =
+        keccak256(
+            'SetDispatcherWithSig(secret uint256 H_profileId,address dispatcher,secret uint256 nonce,secret uint256 deadline)'
+        );
+    bytes32 internal constant SET_PROFILE_IMAGE_URI_WITH_SIG_TYPEHASH =
+        keccak256(
+            'SetProfileImageURIWithSig(secret uint256 H_profileId,string imageURI,secret uint256 nonce,secret uint256 deadline)'
+        );
+    bytes32 internal constant POST_WITH_SIG_TYPEHASH =
+        keccak256(
+            'PostWithSig(secret uint256 H_profileId,string contentURI,address collectModule,bytes collectModuleInitData,address referenceModule,bytes referenceModuleInitData,secret uint256 nonce,secret uint256 deadline)'
+        );
+    bytes32 internal constant COMMENT_WITH_SIG_TYPEHASH =
+        keccak256(
+            'CommentWithSig(secret uint256 H_profileId,string contentURI,secret uint256 H_profileIdPointed,secret uint256 pubIdPointed,bytes referenceModuleData,address collectModule,bytes collectModuleInitData,address referenceModule,bytes referenceModuleInitData,secret uint256 nonce,secret uint256 deadline)'
+        );
+    bytes32 internal constant MIRROR_WITH_SIG_TYPEHASH =
+        keccak256(
+            'ActuateWithSig(secret uint256 H_profileId,secret uint256 H_profileIdPointed,secret uint256 pubIdPointed,bytes referenceModuleData,address referenceModule,bytes referenceModuleInitData,secret uint256 nonce,secret uint256 deadline)'
+        );
+    bytes32 internal constant FOLLOW_WITH_SIG_TYPEHASH =
+        keccak256(
+            'FollowWithSig(secret uint256[] H_profileIds,bytes[] datas,secret uint256 nonce,secret uint256 deadline)'
+        );
+    bytes32 internal constant COLLECT_WITH_SIG_TYPEHASH =
+        keccak256(
+            'CollectWithSig(secret uint256 H_profileId,secret uint256 pubId,bytes data,secret uint256 nonce,secret uint256 deadline)'
+        );
+
+    mapping(address => bool) internal _profileCreatorWhitelisted;
+    mapping(address => bool) internal _followModuleWhitelisted;
+    mapping(address => bool) internal _collectModuleWhitelisted;
+    mapping(address => bool) internal _referenceModuleWhitelisted;
+
+    mapping(secret uint256 => address) internal _dispatcherByProfile;
+    mapping(bytes32 => secret uint256) internal _H_profileIdByHandleHash;
+    mapping(secret uint256 => DataTypes.ProfileStruct) internal _profileById;
+    mapping(secret uint256 => mapping(secret uint256 => DataTypes.PublicationStruct)) internal _pubByIdByProfile;
+
+    mapping(address => secret uint256) internal _defaultProfileByAddress;
+
+    secret uint256 internal _profileCounter;
+    address internal _governance;
+    address internal _emergencyAdmin;
+}
